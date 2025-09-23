@@ -1,0 +1,38 @@
+settings:
+  platform: ps
+  global_threshold_percent: 5
+  dashboard_channel_id: 1419372663985541150
+players:
+- name: Konaté
+  url: https://www.futbin.com/26/player/251/ibrahima-konate
+  active: true
+- name: Kane
+  url: https://www.futbin.com/26/player/18919/harry-kane
+  active: true
+- name: Karchaoui
+  url: https://www.futbin.com/26/player/104/sakina-karchaoui
+  active: true
+- name: Abedi Pelé
+  url: https://www.futbin.com/26/player/18820/ayew
+  active: true
+- name: Saliba
+  url: https://www.futbin.com/26/player/225/william-saliba
+  active: true
+- name: Marcos Llorente
+  url: https://www.futbin.com/26/player/18924/marcos-llorente-moreno
+  active: true
+- name: Hakimi
+  url: https://www.futbin.com/26/player/91/achraf-hakimi
+  active: true
+- name: Adeyemi
+  url: https://www.futbin.com/26/player/700/karim-adeyemi
+  active: true
+- name: Díaz
+  url: https://www.futbin.com/26/player/991/luis-diaz
+  active: true
+- name: Frimpong
+  url: https://www.futbin.com/26/player/331/jeremie-frimpong
+  active: true
+- name: Marmoush
+  url: https://www.futbin.com/26/player/417/omar-marmoush
+  active: true

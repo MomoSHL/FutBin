@@ -1,0 +1,12 @@
+{
+  "https://test.com/player1": {
+    "price": 150000,
+    "image": "test.png",
+    "last_check": 1758472935.047713,
+    "price_history": [
+      140000,
+      145000,
+      150000
+    ]
+  }
+}

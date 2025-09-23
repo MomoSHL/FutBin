@@ -1,0 +1,519 @@
+[2025-09-23 00:47:06,060] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-23 00:47:06,061] WARNING: Bot-Konfigurationsdatei fehlt � erstelle Beispiel.
+[2025-09-23 00:47:06,088] INFO: logging in using static token
+[2025-09-23 00:47:06,987] INFO: Shard ID None has connected to Gateway (Session ID: 2ae7f70a33ea1a9da2c543c35e9b7c40).
+[2025-09-23 00:47:09,008] INFO: FutBin#9551 ist online und bereit!
+[2025-09-23 00:47:09,011] INFO: Bot ID: 1419302777494048768
+[2025-09-23 00:47:09,011] INFO: Verbunden mit 1 Server(n)
+[2025-09-23 00:47:09,012] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-23 00:47:09,012] INFO: Dashboard Views registriert
+[2025-09-23 00:47:09,012] INFO: Preis-Checker gestartet
+[2025-09-23 00:47:09,040] INFO: Dashboard-Updater gestartet
+[2025-09-23 00:47:09,042] INFO: Starte Preis-Check f�r 1 Spieler...
+[2025-09-23 00:47:09,348] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-23 00:47:09,364] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-23 00:47:09,365] INFO:   - /dashboard: Dashboard neu ausgeben/aktualisieren
+[2025-09-23 00:47:09,365] INFO:   - /add_player: F�gt einen Spieler zur �berwachung hinzu
+[2025-09-23 00:47:09,365] INFO:   - /remove_player: Entfernt einen Spieler aus der �berwachung
+[2025-09-23 00:47:09,365] INFO:   - /list_players: Zeigt alle �berwachten Spieler an
+[2025-09-23 00:47:09,366] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-23 00:47:09,366] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-23 00:47:09,367] INFO:   - /test: Testet Bot-Funktionalit�t und Permissions
+[2025-09-23 00:47:09,367] INFO:   - /set_alert: Setzt einen Preis-Alert f�r einen Spieler
+[2025-09-23 00:47:09,367] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-23 00:47:09,367] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-23 00:47:09,368] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-23 00:47:09,368] INFO:   - /categories: Zeigt alle verf�gbaren Kategorien
+[2025-09-23 00:47:09,368] INFO:   - /set_category: Setzt die Kategorie f�r einen Spieler
+[2025-09-23 00:47:09,368] INFO:   - /add_note: F�gt eine Notiz zu einem Spieler hinzu
+[2025-09-23 00:47:09,368] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-23 00:47:09,368] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-23 00:47:09,369] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-23 00:47:09,505] INFO: Preis�nderung erkannt: Harry Kane None -> 177000
+[2025-09-23 00:47:09,507] INFO: Preis-Check abgeschlossen: 1/1 erfolgreich in 0.5s
+[2025-09-23 00:47:25,771] INFO: Starte Preis-Check f�r 1 Spieler...
+[2025-09-23 00:47:26,295] INFO: Preis-Check abgeschlossen: 1/1 erfolgreich in 0.5s
+[2025-09-23 00:47:26,296] WARNING: Dashboard Channel nicht gesetzt - �berspringe Update
+[2025-09-23 00:48:12,774] INFO: Neues Dashboard erstellt - Message ID: 1419817592654266388
+[2025-09-23 00:48:41,829] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-23 00:48:41,860] INFO: logging in using static token
+[2025-09-23 00:48:43,353] INFO: Shard ID None has connected to Gateway (Session ID: 7b49e5e75de3329018a2a929d4e2ed5d).
+[2025-09-23 00:48:45,361] INFO: FutBin#9551 ist online und bereit!
+[2025-09-23 00:48:45,361] INFO: Bot ID: 1419302777494048768
+[2025-09-23 00:48:45,362] INFO: Verbunden mit 1 Server(n)
+[2025-09-23 00:48:45,362] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-23 00:48:45,362] INFO: Dashboard Views registriert
+[2025-09-23 00:48:45,362] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-23 00:48:45,363] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-23 00:48:45,363] INFO: - Send Messages: True
+[2025-09-23 00:48:45,364] INFO: - Embed Links: True
+[2025-09-23 00:48:45,364] INFO: - Use External Emojis: True
+[2025-09-23 00:48:45,364] INFO: - Read Message History: True
+[2025-09-23 00:48:45,364] INFO: Preis-Checker gestartet
+[2025-09-23 00:48:45,365] INFO: Dashboard-Updater gestartet
+[2025-09-23 00:48:45,366] INFO: Starte Preis-Check f�r 1 Spieler...
+[2025-09-23 00:48:45,655] INFO: Neues Dashboard erstellt - Message ID: 1419817730638479380
+[2025-09-23 00:48:45,982] INFO: Preis-Check abgeschlossen: 1/1 erfolgreich in 0.6s
+[2025-09-23 00:48:47,129] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-23 00:48:47,130] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-23 00:48:47,130] INFO:   - /dashboard: Dashboard neu ausgeben/aktualisieren
+[2025-09-23 00:48:47,130] INFO:   - /add_player: F�gt einen Spieler zur �berwachung hinzu
+[2025-09-23 00:48:47,131] INFO:   - /remove_player: Entfernt einen Spieler aus der �berwachung
+[2025-09-23 00:48:47,131] INFO:   - /list_players: Zeigt alle �berwachten Spieler an
+[2025-09-23 00:48:47,131] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-23 00:48:47,132] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-23 00:48:47,132] INFO:   - /test: Testet Bot-Funktionalit�t und Permissions
+[2025-09-23 00:48:47,132] INFO:   - /set_alert: Setzt einen Preis-Alert f�r einen Spieler
+[2025-09-23 00:48:47,133] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-23 00:48:47,133] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-23 00:48:47,133] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-23 00:48:47,133] INFO:   - /categories: Zeigt alle verf�gbaren Kategorien
+[2025-09-23 00:48:47,133] INFO:   - /set_category: Setzt die Kategorie f�r einen Spieler
+[2025-09-23 00:48:47,133] INFO:   - /add_note: F�gt eine Notiz zu einem Spieler hinzu
+[2025-09-23 00:48:47,134] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-23 00:48:47,134] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-23 00:48:47,134] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-23 00:48:53,055] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 00:50:25,369] INFO: Starte Preis-Check f�r 1 Spieler...
+[2025-09-23 00:50:25,847] INFO: Preis-Check abgeschlossen: 1/1 erfolgreich in 0.5s
+[2025-09-23 00:52:05,379] INFO: Starte Preis-Check f�r 1 Spieler...
+[2025-09-23 00:52:05,869] INFO: Preis-Check abgeschlossen: 1/1 erfolgreich in 0.5s
+[2025-09-23 00:53:37,692] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-23 00:53:37,696] INFO: logging in using static token
+[2025-09-23 00:53:38,908] INFO: Shard ID None has connected to Gateway (Session ID: 848289d27632f696180dd0a6e4f437de).
+[2025-09-23 00:53:40,910] INFO: FutBin#9551 ist online und bereit!
+[2025-09-23 00:53:40,910] INFO: Bot ID: 1419302777494048768
+[2025-09-23 00:53:40,911] INFO: Verbunden mit 1 Server(n)
+[2025-09-23 00:53:40,912] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-23 00:53:40,912] INFO: Dashboard Views registriert
+[2025-09-23 00:53:40,913] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-23 00:53:40,913] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-23 00:53:40,914] INFO: - Send Messages: True
+[2025-09-23 00:53:40,914] INFO: - Embed Links: True
+[2025-09-23 00:53:40,914] INFO: - Use External Emojis: True
+[2025-09-23 00:53:40,915] INFO: - Read Message History: True
+[2025-09-23 00:53:40,915] INFO: Preis-Checker gestartet
+[2025-09-23 00:53:40,916] INFO: Dashboard-Updater gestartet
+[2025-09-23 00:53:40,917] INFO: Starte Preis-Check f�r 10 Spieler...
+[2025-09-23 00:53:41,184] INFO: Neues Dashboard erstellt - Message ID: 1419818969832886457
+[2025-09-23 00:53:41,205] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-23 00:53:41,207] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-23 00:53:41,207] INFO:   - /dashboard: Dashboard neu ausgeben/aktualisieren
+[2025-09-23 00:53:41,207] INFO:   - /add_player: F�gt einen Spieler zur �berwachung hinzu
+[2025-09-23 00:53:41,208] INFO:   - /remove_player: Entfernt einen Spieler aus der �berwachung
+[2025-09-23 00:53:41,208] INFO:   - /list_players: Zeigt alle �berwachten Spieler an
+[2025-09-23 00:53:41,209] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-23 00:53:41,209] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-23 00:53:41,209] INFO:   - /test: Testet Bot-Funktionalit�t und Permissions
+[2025-09-23 00:53:41,209] INFO:   - /set_alert: Setzt einen Preis-Alert f�r einen Spieler
+[2025-09-23 00:53:41,209] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-23 00:53:41,209] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-23 00:53:41,210] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-23 00:53:41,210] INFO:   - /categories: Zeigt alle verf�gbaren Kategorien
+[2025-09-23 00:53:41,210] INFO:   - /set_category: Setzt die Kategorie f�r einen Spieler
+[2025-09-23 00:53:41,210] INFO:   - /add_note: F�gt eine Notiz zu einem Spieler hinzu
+[2025-09-23 00:53:41,211] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-23 00:53:41,212] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-23 00:53:41,213] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-23 00:53:44,218] INFO: Preis�nderung erkannt: Karchaoui 75500 -> 79500
+[2025-09-23 00:53:45,664] INFO: Preis�nderung erkannt: Abedi Pel� 739000 -> 701000
+[2025-09-23 00:53:47,082] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 00:53:52,884] INFO: Preis�nderung erkannt: D�az 34000 -> 32000
+[2025-09-23 00:53:54,323] INFO: Preis-Check abgeschlossen: 10/10 erfolgreich in 13.4s
+[2025-09-23 00:55:20,918] INFO: Starte Preis-Check f�r 10 Spieler...
+[2025-09-23 00:55:35,404] INFO: Preis-Check abgeschlossen: 10/10 erfolgreich in 14.5s
+[2025-09-23 00:57:00,935] INFO: Starte Preis-Check f�r 10 Spieler...
+[2025-09-23 00:57:14,335] INFO: Preis-Check abgeschlossen: 10/10 erfolgreich in 13.4s
+[2025-09-23 00:57:36,434] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-23 00:57:36,439] INFO: logging in using static token
+[2025-09-23 00:57:37,369] INFO: Shard ID None has connected to Gateway (Session ID: 578e9a525e3dc653c0739a44ef8adbd6).
+[2025-09-23 00:57:39,396] INFO: FutBin#9551 ist online und bereit!
+[2025-09-23 00:57:39,398] INFO: Bot ID: 1419302777494048768
+[2025-09-23 00:57:39,400] INFO: Verbunden mit 1 Server(n)
+[2025-09-23 00:57:39,401] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-23 00:57:39,402] INFO: Dashboard Views registriert
+[2025-09-23 00:57:39,402] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-23 00:57:39,403] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-23 00:57:39,403] INFO: - Send Messages: True
+[2025-09-23 00:57:39,404] INFO: - Embed Links: True
+[2025-09-23 00:57:39,404] INFO: - Use External Emojis: True
+[2025-09-23 00:57:39,405] INFO: - Read Message History: True
+[2025-09-23 00:57:39,406] INFO: Preis-Checker gestartet
+[2025-09-23 00:57:39,406] INFO: Dashboard-Updater gestartet
+[2025-09-23 00:57:39,410] INFO: Starte Preis-Check für 10 Spieler...
+[2025-09-23 00:57:39,660] INFO: Neues Dashboard erstellt - Message ID: 1419819970464059522
+[2025-09-23 00:57:39,700] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-23 00:57:39,701] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-23 00:57:39,701] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-23 00:57:39,702] INFO:   - /dashboard: Dashboard neu ausgeben/aktualisieren
+[2025-09-23 00:57:39,703] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-23 00:57:39,703] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-23 00:57:39,703] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-23 00:57:39,704] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-23 00:57:39,704] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-23 00:57:39,704] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-23 00:57:39,705] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-23 00:57:39,705] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-23 00:57:39,705] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-23 00:57:39,705] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-23 00:57:39,705] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-23 00:57:39,705] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-23 00:57:39,705] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-23 00:57:39,705] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-23 00:57:39,705] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-23 00:57:39,708] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-23 00:57:39,968] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-23 00:57:45,805] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 00:57:45,806] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-23 00:57:52,744] INFO: Preis-Check abgeschlossen: 10/10 erfolgreich in 13.3s
+[2025-09-23 00:59:19,414] INFO: Starte Preis-Check für 10 Spieler...
+[2025-09-23 00:59:32,996] INFO: Preis-Check abgeschlossen: 10/10 erfolgreich in 13.6s
+[2025-09-23 01:00:59,412] INFO: Starte Preis-Check für 10 Spieler...
+[2025-09-23 01:01:13,269] INFO: Preis-Check abgeschlossen: 10/10 erfolgreich in 13.9s
+[2025-09-23 01:02:39,423] INFO: Starte Preis-Check für 10 Spieler...
+[2025-09-23 01:02:40,036] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:02:52,866] INFO: Preis-Check abgeschlossen: 10/10 erfolgreich in 13.4s
+[2025-09-23 01:04:19,412] INFO: Starte Preis-Check für 10 Spieler...
+[2025-09-23 01:04:32,841] INFO: Preis-Check abgeschlossen: 10/10 erfolgreich in 13.4s
+[2025-09-23 01:05:27,400] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-23 01:05:27,412] INFO: logging in using static token
+[2025-09-23 01:05:28,517] INFO: Shard ID None has connected to Gateway (Session ID: 56e40a39bebfa41ff70ef975cb001757).
+[2025-09-23 01:05:30,523] INFO: FutBin#9551 ist online und bereit!
+[2025-09-23 01:05:30,524] INFO: Bot ID: 1419302777494048768
+[2025-09-23 01:05:30,525] INFO: Verbunden mit 1 Server(n)
+[2025-09-23 01:05:30,526] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-23 01:05:30,527] INFO: Dashboard Views registriert
+[2025-09-23 01:05:30,527] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-23 01:05:30,528] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-23 01:05:30,528] INFO: - Send Messages: True
+[2025-09-23 01:05:30,529] INFO: - Embed Links: True
+[2025-09-23 01:05:30,530] INFO: - Use External Emojis: True
+[2025-09-23 01:05:30,531] INFO: - Read Message History: True
+[2025-09-23 01:05:30,532] INFO: Preis-Checker gestartet
+[2025-09-23 01:05:30,532] INFO: Dashboard-Updater gestartet
+[2025-09-23 01:05:30,535] INFO: Starte Preis-Check für 10 Spieler...
+[2025-09-23 01:05:30,811] INFO: Neues Dashboard erstellt - Message ID: 1419821946530566254
+[2025-09-23 01:05:30,946] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-23 01:05:30,947] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-23 01:05:30,947] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-23 01:05:30,949] INFO:   - /dashboard: Dashboard neu ausgeben/aktualisieren
+[2025-09-23 01:05:30,950] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-23 01:05:30,950] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-23 01:05:30,951] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-23 01:05:30,952] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-23 01:05:30,952] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-23 01:05:30,953] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-23 01:05:30,954] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-23 01:05:30,954] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-23 01:05:30,955] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-23 01:05:30,955] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-23 01:05:30,955] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-23 01:05:30,955] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-23 01:05:30,955] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-23 01:05:30,956] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-23 01:05:30,956] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-23 01:05:30,957] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-23 01:05:31,596] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-23 01:05:37,412] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:05:37,412] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-23 01:05:45,354] INFO: Preis-Check abgeschlossen: 10/10 erfolgreich in 14.8s
+[2025-09-23 01:06:41,988] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:07:10,544] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:07:27,779] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.2s
+[2025-09-23 01:08:50,551] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:09:07,386] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.8s
+[2025-09-23 01:10:30,539] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:10:31,160] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:10:47,938] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.4s
+[2025-09-23 01:12:10,544] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:12:27,143] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.6s
+[2025-09-23 01:13:50,559] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:14:07,094] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.5s
+[2025-09-23 01:15:30,532] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:15:31,176] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:15:47,678] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.1s
+[2025-09-23 01:17:10,548] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:17:27,383] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.8s
+[2025-09-23 01:18:50,543] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:19:07,380] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.8s
+[2025-09-23 01:20:30,542] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:20:31,217] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:20:35,883] INFO: Preisänderung erkannt: Abedi Pelé 708000 -> 747000
+[2025-09-23 01:20:47,583] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.0s
+[2025-09-23 01:22:10,535] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:22:15,822] INFO: Preisänderung erkannt: Abedi Pelé 747000 -> 708000
+[2025-09-23 01:22:27,261] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.7s
+[2025-09-23 01:23:50,545] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:23:55,901] INFO: Preisänderung erkannt: Abedi Pelé 708000 -> 747000
+[2025-09-23 01:24:07,379] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.8s
+[2025-09-23 01:25:30,548] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:25:31,076] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:25:47,115] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.6s
+[2025-09-23 01:27:10,548] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:27:27,966] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.4s
+[2025-09-23 01:28:50,538] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:29:06,870] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.3s
+[2025-09-23 01:30:30,538] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:30:31,347] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:30:48,068] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.5s
+[2025-09-23 01:32:10,536] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:32:27,523] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.0s
+[2025-09-23 01:33:50,547] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:34:07,671] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.1s
+[2025-09-23 01:35:30,548] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:35:30,974] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:35:48,370] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.8s
+[2025-09-23 01:37:10,531] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:37:26,968] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.4s
+[2025-09-23 01:38:50,550] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:39:07,585] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.0s
+[2025-09-23 01:40:30,538] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:40:31,090] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:40:47,400] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.9s
+[2025-09-23 01:42:10,542] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:42:27,466] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.9s
+[2025-09-23 01:43:50,544] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:44:07,729] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.2s
+[2025-09-23 01:45:30,531] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:45:31,274] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:45:46,718] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.2s
+[2025-09-23 01:46:44,933] INFO: Shard ID None has successfully RESUMED session 56e40a39bebfa41ff70ef975cb001757.
+[2025-09-23 01:47:10,561] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:47:28,024] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.5s
+[2025-09-23 01:48:50,530] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:49:07,195] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.7s
+[2025-09-23 01:50:30,540] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:50:31,446] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:50:47,705] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.2s
+[2025-09-23 01:52:10,560] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:52:27,592] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.0s
+[2025-09-23 01:53:50,543] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:54:07,246] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.7s
+[2025-09-23 01:55:30,539] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:55:31,095] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 01:55:48,083] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 17.5s
+[2025-09-23 01:57:10,558] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:57:27,071] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.5s
+[2025-09-23 01:58:50,538] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 01:59:05,623] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.1s
+[2025-09-23 02:00:30,547] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:00:31,030] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 02:00:45,704] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.2s
+[2025-09-23 02:02:10,541] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:02:26,015] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.5s
+[2025-09-23 02:03:50,555] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:04:06,016] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.5s
+[2025-09-23 02:05:30,534] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:05:31,200] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 02:05:46,033] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.5s
+[2025-09-23 02:07:10,551] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:07:26,018] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.5s
+[2025-09-23 02:08:50,541] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:09:05,572] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.0s
+[2025-09-23 02:10:30,539] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:10:31,030] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 02:10:32,581] INFO: Preisänderung erkannt: Kane 182000 -> 170000
+[2025-09-23 02:10:45,892] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.4s
+[2025-09-23 02:12:10,543] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:12:26,335] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.8s
+[2025-09-23 02:13:50,528] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:14:05,617] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.1s
+[2025-09-23 02:15:30,535] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:15:31,065] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 02:15:46,017] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.5s
+[2025-09-23 02:17:10,551] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:17:12,584] INFO: Preisänderung erkannt: Kane 170000 -> 183000
+[2025-09-23 02:17:26,158] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.6s
+[2025-09-23 02:18:50,537] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:19:06,131] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.6s
+[2025-09-23 02:20:30,546] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:20:31,093] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 02:20:46,203] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.7s
+[2025-09-23 02:22:10,556] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:22:26,486] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.9s
+[2025-09-23 02:23:50,543] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:24:05,978] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.4s
+[2025-09-23 02:25:30,544] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:25:31,332] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 02:25:45,717] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.2s
+[2025-09-23 02:27:10,543] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:27:26,315] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.8s
+[2025-09-23 02:28:50,556] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:29:05,800] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.2s
+[2025-09-23 02:30:30,533] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:30:31,124] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 02:30:46,362] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.8s
+[2025-09-23 02:32:10,542] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:32:26,665] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 16.1s
+[2025-09-23 02:33:50,543] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:34:05,626] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.1s
+[2025-09-23 02:35:30,551] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 02:35:31,098] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 02:35:46,180] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 15.6s
+[2025-09-23 15:50:26,803] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-23 15:50:26,807] INFO: logging in using static token
+[2025-09-23 15:50:27,844] INFO: Shard ID None has connected to Gateway (Session ID: b8689a3af86c99d86b94279dd47dee91).
+[2025-09-23 15:50:29,863] INFO: FutBin#9551 ist online und bereit!
+[2025-09-23 15:50:29,863] INFO: Bot ID: 1419302777494048768
+[2025-09-23 15:50:29,863] INFO: Verbunden mit 1 Server(n)
+[2025-09-23 15:50:29,863] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-23 15:50:29,864] INFO: Dashboard Views registriert
+[2025-09-23 15:50:29,864] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-23 15:50:29,864] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-23 15:50:29,864] INFO: - Send Messages: True
+[2025-09-23 15:50:29,864] INFO: - Embed Links: True
+[2025-09-23 15:50:29,864] INFO: - Use External Emojis: True
+[2025-09-23 15:50:29,864] INFO: - Read Message History: True
+[2025-09-23 15:50:29,865] INFO: Preis-Checker gestartet
+[2025-09-23 15:50:29,865] INFO: Dashboard-Updater gestartet
+[2025-09-23 15:50:29,865] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 15:50:30,242] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-23 15:50:30,242] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-23 15:50:30,242] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-23 15:50:30,242] INFO:   - /dashboard: Dashboard neu ausgeben/aktualisieren
+[2025-09-23 15:50:30,242] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-23 15:50:30,242] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-23 15:50:30,242] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-23 15:50:30,243] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-23 15:50:30,243] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-23 15:50:30,243] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-23 15:50:30,243] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-23 15:50:30,243] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-23 15:50:30,243] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-23 15:50:30,243] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-23 15:50:30,243] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-23 15:50:30,243] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-23 15:50:30,243] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-23 15:50:30,244] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-23 15:50:30,244] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-23 15:50:30,244] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-23 15:50:30,282] INFO: Neues Dashboard erstellt - Message ID: 1420044656951037994
+[2025-09-23 15:50:30,514] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-23 15:50:36,295] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 15:50:36,295] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-23 15:50:39,185] INFO: Preisänderung erkannt: Adeyemi 20500 -> 22500
+[2025-09-23 15:50:40,425] INFO: Preisänderung erkannt: Díaz 31750 -> 30000
+[2025-09-23 15:50:42,939] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.1s
+[2025-09-23 15:52:09,870] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 15:52:13,995] INFO: Preisänderung erkannt: Abedi Pelé 725000 -> 685000
+[2025-09-23 15:52:23,065] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.2s
+[2025-09-23 22:11:13,409] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-23 22:11:13,414] INFO: logging in using static token
+[2025-09-23 22:11:14,592] INFO: Shard ID None has connected to Gateway (Session ID: 948399c88e372119956e757b9d1540f4).
+[2025-09-23 22:11:16,617] INFO: FutBin#9551 ist online und bereit!
+[2025-09-23 22:11:16,617] INFO: Bot ID: 1419302777494048768
+[2025-09-23 22:11:16,617] INFO: Verbunden mit 1 Server(n)
+[2025-09-23 22:11:16,617] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-23 22:11:16,618] INFO: Dashboard Views registriert
+[2025-09-23 22:11:16,618] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-23 22:11:16,618] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-23 22:11:16,618] INFO: - Send Messages: True
+[2025-09-23 22:11:16,618] INFO: - Embed Links: True
+[2025-09-23 22:11:16,619] INFO: - Use External Emojis: True
+[2025-09-23 22:11:16,619] INFO: - Read Message History: True
+[2025-09-23 22:11:16,619] INFO: Preis-Checker gestartet
+[2025-09-23 22:11:16,619] INFO: Dashboard-Updater gestartet
+[2025-09-23 22:11:16,620] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:11:16,915] INFO: Preisänderung erkannt: Konaté 51500 -> 47500
+[2025-09-23 22:11:16,916] INFO: Neues Dashboard erstellt - Message ID: 1420140486512869457
+[2025-09-23 22:11:16,917] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-23 22:11:16,917] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-23 22:11:16,917] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-23 22:11:16,917] INFO:   - /dashboard: Dashboard neu ausgeben/aktualisieren
+[2025-09-23 22:11:16,917] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-23 22:11:16,917] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-23 22:11:16,917] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-23 22:11:16,917] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-23 22:11:16,918] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-23 22:11:16,918] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-23 22:11:16,918] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-23 22:11:16,918] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-23 22:11:16,918] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-23 22:11:16,918] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-23 22:11:16,918] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-23 22:11:16,918] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-23 22:11:16,919] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-23 22:11:16,919] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-23 22:11:16,919] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-23 22:11:16,919] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-23 22:11:17,183] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-23 22:11:19,454] INFO: Preisänderung erkannt: Karchaoui 80000 -> 76000
+[2025-09-23 22:11:21,945] INFO: Preisänderung erkannt: Saliba 178000 -> 162000
+[2025-09-23 22:11:22,937] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 22:11:22,937] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-23 22:11:23,250] INFO: Preisänderung erkannt: Marcos Llorente 442000 -> 470000
+[2025-09-23 22:11:24,474] INFO: Preisänderung erkannt: Hakimi 275000 -> 290000
+[2025-09-23 22:11:25,832] INFO: Preisänderung erkannt: Adeyemi 22750 -> 18500
+[2025-09-23 22:11:27,171] INFO: Preisänderung erkannt: Díaz 31000 -> 29000
+[2025-09-23 22:11:28,400] INFO: Preisänderung erkannt: Frimpong 43500 -> 39000
+[2025-09-23 22:11:29,651] INFO: Preisänderung erkannt: Marmoush 48500 -> 42000
+[2025-09-23 22:11:29,654] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.0s
+[2025-09-23 22:12:46,630] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:12:59,683] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.1s
+[2025-09-23 22:14:16,614] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:14:17,121] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 22:14:29,942] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.3s
+[2025-09-23 22:15:46,629] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:15:59,649] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.0s
+[2025-09-23 22:17:16,622] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:17:17,099] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 22:17:29,648] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.0s
+[2025-09-23 22:18:46,635] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:18:59,598] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.0s
+[2025-09-23 22:20:16,637] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:20:17,101] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 22:20:29,558] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 12.9s
+[2025-09-23 22:21:46,632] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:21:59,727] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.1s
+[2025-09-23 22:23:16,631] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:23:17,351] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 22:23:29,612] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.0s
+[2025-09-23 22:30:08,761] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-23 22:30:08,775] INFO: logging in using static token
+[2025-09-23 22:30:09,685] INFO: Shard ID None has connected to Gateway (Session ID: 41fe73d767f4d0b2e6fade5c55288146).
+[2025-09-23 22:30:11,700] INFO: FutBin#9551 ist online und bereit!
+[2025-09-23 22:30:11,700] INFO: Bot ID: 1419302777494048768
+[2025-09-23 22:30:11,700] INFO: Verbunden mit 1 Server(n)
+[2025-09-23 22:30:11,700] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-23 22:30:11,701] INFO: Dashboard Views registriert
+[2025-09-23 22:30:11,701] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-23 22:30:11,701] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-23 22:30:11,701] INFO: - Send Messages: True
+[2025-09-23 22:30:11,702] INFO: - Embed Links: True
+[2025-09-23 22:30:11,702] INFO: - Use External Emojis: True
+[2025-09-23 22:30:11,702] INFO: - Read Message History: True
+[2025-09-23 22:30:11,702] INFO: Preis-Checker gestartet
+[2025-09-23 22:30:11,702] INFO: Dashboard-Updater gestartet
+[2025-09-23 22:30:11,703] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:30:12,002] INFO: Neues Dashboard erstellt - Message ID: 1420145247291179089
+[2025-09-23 22:30:12,044] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-23 22:30:12,044] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-23 22:30:12,044] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-23 22:30:12,044] INFO:   - /dashboard: Dashboard neu ausgeben/aktualisieren
+[2025-09-23 22:30:12,045] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-23 22:30:12,045] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-23 22:30:12,045] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-23 22:30:12,045] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-23 22:30:12,046] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-23 22:30:12,046] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-23 22:30:12,046] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-23 22:30:12,046] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-23 22:30:12,047] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-23 22:30:12,047] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-23 22:30:12,047] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-23 22:30:12,047] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-23 22:30:12,047] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-23 22:30:12,048] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-23 22:30:12,048] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-23 22:30:12,048] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-23 22:30:12,301] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-23 22:30:17,969] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-23 22:30:17,970] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-23 22:30:24,535] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 12.8s
+[2025-09-23 22:32:11,725] INFO: Starte Preis-Check für 11 Spieler...
+[2025-09-23 22:32:24,688] INFO: Preis-Check abgeschlossen: 11/11 erfolgreich in 13.0s
+[2025-09-24 01:36:42,768] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-24 01:36:42,771] INFO: logging in using static token
+[2025-09-24 01:36:43,739] INFO: Shard ID None has connected to Gateway (Session ID: 3e3c4d24b6e08b85222323016748a814).
+[2025-09-24 01:36:55,327] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-24 01:36:55,331] INFO: logging in using static token
