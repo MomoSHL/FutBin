@@ -1,0 +1,24 @@
+# Discord Bot Dependencies
+discord.py>=2.3.0
+
+# Web Scraping & HTTP Requests
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Configuration & Data Handling
+PyYAML>=6.0
+
+# Asynchronous Programming (meist schon in Python enthalten, aber für Klarheit)
+asyncio
+
+# Standard Library Modules (bereits in Python enthalten - nur zur Dokumentation)
+# json
+# logging
+# time
+# datetime
+# pathlib
+# dataclasses
+# typing
+# shutil
+# io
+# asyncio
