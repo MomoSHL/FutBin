@@ -28,7 +28,7 @@ logging.basicConfig(
 # KONFIGURATION
 ###############################################
 # Discord Bot Token
-BOT_TOKEN = "MTQxOTMwMjc3NzQ5NDA0ODc2OA.G9vPX_.TLBWBZLqxMKXMZdLozX1ZSqvMTsfCQ1d8DrgYQ"
+BOT_TOKEN = ""
 
 # FutBin Tracking Konfiguration
 BASE_DIR = Path(__file__).resolve().parent
