@@ -91,6 +91,12 @@ import gc  # Garbage Collector für Memory-Management
 # Semaphore für Preis-Checks (verhindert gleichzeitige Requests)
 price_check_semaphore = asyncio.Semaphore(1)
 
+# HTTP Session Management (verhindert Memory Leaks)
+import requests.adapters
+requests.adapters.DEFAULT_POOLBLOCK = True
+requests.adapters.DEFAULT_POOLSIZE = 5  # Reduzierte Pool-Größe
+requests.adapters.DEFAULT_RETRIES = 1
+
 # Nachrichten-Cleanup Hilfsfunktion
 async def delete_message_after_delay(message, delay_seconds=TEMP_MESSAGE_DELETE_AFTER):
     """Löscht eine Nachricht nach einer bestimmten Zeit"""
@@ -647,6 +653,11 @@ class FutBinBot(commands.Bot):
         self.state: Dict[str, Any] = {}
         self.global_threshold = 5.0
         
+        # Task Health Monitoring
+        self.last_price_check = None
+        self.last_dashboard_update = None
+        self.task_errors = {"price_checker": 0, "dashboard_updater": 0}
+        
         self._ensure_config_exists()
         self._load_config()
         self._load_state()
@@ -790,6 +801,25 @@ class FutBinBot(commands.Bot):
                 logging.info(f"  - /{cmd.name}: {cmd.description}")
         except Exception as e:
             logging.error(f"[ERROR] Fehler beim Synchronisieren der Commands: {e}")
+    
+    async def on_error(self, event_method: str, *args, **kwargs):
+        """Globaler Error Handler für Discord Events"""
+        logging.error(f"Discord Event Error in {event_method}: {args}, {kwargs}")
+        
+        # Versuche Bot zu stabilisieren
+        try:
+            gc.collect()  # Memory freigeben
+            await asyncio.sleep(5)  # Kurze Pause
+        except Exception as recovery_error:
+            logging.error(f"Fehler bei Error Recovery: {recovery_error}")
+    
+    async def on_disconnect(self):
+        """Handler für Discord Disconnections"""
+        logging.warning("Bot wurde von Discord getrennt")
+        
+    async def on_resumed(self):
+        """Handler für Discord Reconnections"""
+        logging.info("Bot Verbindung zu Discord wiederhergestellt")
         
         # Teste eine einfache Nachricht im Dashboard Channel
         if self.dashboard_channel:
@@ -1298,20 +1328,30 @@ class FutBinBot(commands.Bot):
             return
             
         async with price_check_semaphore:
-            start_time = time.time()
-            logging.info(f"Starte Preis-Check für {len(self.players)} Spieler...")
-            
-            changes = []
-            errors = []
-            successful_checks = 0
-            
+            try:
+                # Timeout für gesamten Preis-Check-Durchlauf (max 5 Minuten)
+                await asyncio.wait_for(self._run_price_check(), timeout=300.0)
+            except asyncio.TimeoutError:
+                logging.error("Preis-Check Timeout erreicht (5 Minuten) - wird abgebrochen")
+            except Exception as e:
+                logging.error(f"Kritischer Fehler im Preis-Checker: {e}")
+                await asyncio.sleep(30)  # Pause bei kritischen Fehlern
+    
+    async def _run_price_check(self):
+        """Führt den eigentlichen Preis-Check durch"""
+        start_time = time.time()
+        logging.info(f"Starte Preis-Check für {len(self.players)} Spieler...")
+        
+        changes = []
+        errors = []
+        successful_checks = 0
+        
+        try:
             for i, player in enumerate(self.players):
                 try:
                     # Rate Limiting: Pause zwischen Requests
                     if i > 0:
-                        await asyncio.sleep(SLEEP_BETWEEN)
-                    
-                    # Timeout für einzelnen Player
+                        await asyncio.sleep(SLEEP_BETWEEN)                    # Timeout für einzelnen Player
                     try:
                         html = await asyncio.wait_for(
                             self.fetch_player_page(player.url), 
@@ -1394,6 +1434,14 @@ class FutBinBot(commands.Bot):
             if error_rate > 0.5:
                 logging.warning(f"Hohe Fehlerrate ({error_rate:.1%}), reduziere temporär Check-Frequenz")
                 await asyncio.sleep(60)  # Extra 60s Pause
+            
+            # Update Task Health Monitoring
+            self.last_price_check = time.time()
+            self.task_errors["price_checker"] = len(errors)
+            
+        except Exception as e:
+            logging.error(f"Kritischer Fehler in _run_price_check: {e}")
+            self.task_errors["price_checker"] += 10  # Schwerwiegender Fehler
 
     async def send_price_changes(self, changes: List[Dict[str, Any]]):
         """Sendet Preisänderungen mit verbesserter Fehlerbehandlung"""
@@ -1485,18 +1533,29 @@ class FutBinBot(commands.Bot):
         """Background Task für Dashboard-Updates mit verbessertem Error-Handling"""
         try:
             if not self.dashboard_channel:
+                logging.warning("Dashboard-Updater: Kein Dashboard Channel gesetzt")
                 return
             
-            await self.update_dashboard()
+            # Timeout für Dashboard-Update
+            await asyncio.wait_for(self.update_dashboard(), timeout=60.0)
+            logging.debug("Dashboard-Update erfolgreich abgeschlossen")
+            
+            # Update Task Health Monitoring
+            self.last_dashboard_update = time.time()
+            self.task_errors["dashboard_updater"] = 0  # Reset bei Erfolg
             
             # Memory-Management für Discloud
             gc.collect()  # Garbage Collection nach Dashboard-Update
             
+        except asyncio.TimeoutError:
+            logging.error("Dashboard-Update Timeout erreicht (60s)")
+            self.task_errors["dashboard_updater"] += 1
         except Exception as e:
             logging.error(f"Kritischer Fehler im Dashboard-Updater: {e}")
+            self.task_errors["dashboard_updater"] += 1
             # Versuche den Bot zu stabilisieren, nicht abstürzen lassen
             try:
-                await asyncio.sleep(5)  # Kurze Pause vor Retry
+                await asyncio.sleep(10)  # Längere Pause vor Retry
                 gc.collect()  # Memory freigeben
             except:
                 pass
