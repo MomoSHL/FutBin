@@ -283,7 +283,7 @@ class CreateAlertModal(discord.ui.Modal):
     
     alert_type = discord.ui.TextInput(
         label="Alert-Typ (über/unter)",
-        placeholder="über = benachrichtigen wenn Preis erreicht/überschritten wird, unter = benachrichtigen wenn Preis unterschritten wird",
+        placeholder="über = benachrichtigen bei Erreichen/Überschreitung, unter = bei Unterschreitung",
         style=discord.TextStyle.short,
         required=True,
         default="über"
