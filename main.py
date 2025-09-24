@@ -13,6 +13,9 @@ from bs4 import BeautifulSoup
 import yaml
 import shutil
 import gc  # Garbage Collector für Memory-Management
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import os
 
 # Logging Setup
 logging.basicConfig(
@@ -23,6 +26,38 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
+
+# Health Check HTTP Server für Deployment-Plattformen
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == '/health' or self.path == '/':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            response = {
+                'status': 'healthy',
+                'service': 'FutBin Discord Bot',
+                'timestamp': datetime.now().isoformat(),
+                'bot_ready': hasattr(bot, 'user') and bot.user is not None if 'bot' in globals() else False
+            }
+            self.wfile.write(json.dumps(response).encode())
+        else:
+            self.send_response(404)
+            self.end_headers()
+    
+    def log_message(self, format, *args):
+        # Suppress default HTTP server logs
+        pass
+
+def start_health_server():
+    """Startet einen HTTP-Server für Health Checks"""
+    try:
+        port = int(os.environ.get('PORT', 8080))  # Verwendet PORT env var oder default 8080
+        server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
+        logging.info(f"Health Check Server gestartet auf Port {port}")
+        server.serve_forever()
+    except Exception as e:
+        logging.error(f"Health Check Server konnte nicht gestartet werden: {e}")
 
 ###############################################
 # KONFIGURATION
@@ -3024,6 +3059,12 @@ async def debug_info(interaction: discord.Interaction):
 
 if __name__ == "__main__":
     try:
+        # Starte Health Check Server in separatem Thread
+        health_thread = threading.Thread(target=start_health_server, daemon=True)
+        health_thread.start()
+        logging.info("Health Check Server Thread gestartet")
+        
+        # Starte Discord Bot
         bot.run(BOT_TOKEN)
     except Exception as e:
         logging.error(f"Bot konnte nicht gestartet werden: {e}")
