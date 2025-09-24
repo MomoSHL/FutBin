@@ -1992,3 +1992,5 @@ aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gatewa
 [2025-09-24 17:00:53,409] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 10.6s
 [2025-09-24 17:00:57,513] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 10.6s
 [2025-09-24 17:00:58,012] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 17:02:42,807] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 17:02:53,312] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 10.5s
