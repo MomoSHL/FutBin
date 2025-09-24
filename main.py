@@ -139,6 +139,17 @@ class DashboardView(discord.ui.View):
             color=COLOR_NEUTRAL
         )
         await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+        
+    @discord.ui.button(label="🚨 Alerts", style=discord.ButtonStyle.blurple, custom_id="manage_alerts")
+    async def manage_alerts_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        """Zeigt Alert-Management Interface"""
+        view = AlertManagementView(self.bot, interaction.user.id)
+        embed = discord.Embed(
+            title="🚨 Alert-Management",
+            description="Verwalte deine Preis-Alerts für überwachte Spieler.",
+            color=COLOR_BOT
+        )
+        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
     @discord.ui.button(label=" Aktualisieren", style=discord.ButtonStyle.gray, custom_id="refresh_dashboard")
     async def refresh_button(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -156,7 +167,6 @@ class DashboardView(discord.ui.View):
             color=COLOR_UP
         )
         await interaction.followup.send(embed=embed, ephemeral=True)
-    
 class AlertManagementView(discord.ui.View):
     def __init__(self, bot_instance, user_id):
         super().__init__(timeout=300)
@@ -242,105 +252,88 @@ class CreateAlertModal(discord.ui.Modal):
         required=True
     )
     
-    alert_type = discord.ui.TextInput(
-        label="Alert-Typ (über/unter)",
-        placeholder="über oder unter",
-        style=discord.TextStyle.short,
-        required=True
-    )
-    
     price = discord.ui.TextInput(
-        label="Preis (in Coins)",
-        placeholder="z.B. 50000",
+        label="Preis (z.B. 50k, 1.5m, 32000)",
+        placeholder="z.B. 50k für 50.000 Coins",
         style=discord.TextStyle.short,
         required=True
-    )
-    
-    category = discord.ui.TextInput(
-        label="Kategorie (optional)",
-        placeholder="z.B. Investition, Trading",
-        style=discord.TextStyle.short,
-        required=False
     )
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.defer()
         
-        # Validierung
         try:
-            price_value = int(self.price.value.replace(',', '').replace('.', ''))
-        except ValueError:
+            # Parse Preis-Input
+            parsed_price = self.bot.parse_alert_price(str(self.price.value))
+            if parsed_price is None or parsed_price <= 0:
+                embed = discord.Embed(
+                    title="❌ Ungültiger Preis",
+                    description=f"**{self.price.value}** ist kein gültiger Preis.\n\n**Beispiele:**\n• `50k` = 50.000 Coins\n• `1.5m` = 1.500.000 Coins\n• `250000` = 250.000 Coins",
+                    color=COLOR_DOWN
+                )
+                await interaction.followup.send(embed=embed, ephemeral=True)
+                return
+            
+            # Finde Spieler
+            player_found = None
+            for player in self.bot.players:
+                if player.name.lower() == str(self.player_name.value).lower():
+                    player_found = player
+                    break
+            
+            if not player_found:
+                embed = discord.Embed(
+                    title="❌ Spieler nicht gefunden",
+                    description=f"**{self.player_name.value}** wird nicht überwacht.\n\nVerwende `/list_players` um alle Spieler zu sehen.",
+                    color=COLOR_DOWN
+                )
+                await interaction.followup.send(embed=embed, ephemeral=True)
+                return
+            
+            # Setze Alert
+            player_found.alert_above = parsed_price
+            player_found.alert_below = None
+            player_found.alert_user_id = self.user_id
+            
+            # Aktualisiere Config
+            for config_player in self.bot.config.get('players', []):
+                if config_player.get('url') == player_found.url:
+                    config_player['alert_above'] = parsed_price
+                    config_player['alert_below'] = None
+                    config_player['alert_user_id'] = self.user_id
+                    break
+            
+            self.bot._save_config()
+            
+            # Erfolgsmeldung
+            current_price = self.bot.state.get(player_found.url, {}).get('price', 0)
+            status_emoji = "🟢" if isinstance(current_price, int) and current_price >= parsed_price else "🔴"
+            
             embed = discord.Embed(
-                title="❌ Ungültiger Preis",
-                description="Bitte gib eine gültige Zahl ein.",
+                title="✅ Alert erfolgreich gesetzt!",
+                description=f"Du wirst benachrichtigt wenn **{player_found.name}** {parsed_price:,} Coins erreicht oder überschreitet.",
+                color=COLOR_UP
+            )
+            
+            embed.add_field(
+                name="📊 Status",
+                value=f"{status_emoji} **Aktuell**: {current_price:,} Coins\n📈 **Alert bei**: {parsed_price:,} Coins",
+                inline=False
+            )
+            
+            await interaction.followup.send(embed=embed, ephemeral=True)
+            
+            # Aktualisiere Dashboard
+            await self.bot.update_dashboard()
+            
+        except Exception as e:
+            logging.error(f"Fehler beim Erstellen des Alerts: {e}")
+            embed = discord.Embed(
+                title="❌ Fehler beim Alert erstellen",
+                description=f"Ein unerwarteter Fehler ist aufgetreten: {str(e)}",
                 color=COLOR_DOWN
             )
             await interaction.followup.send(embed=embed, ephemeral=True)
-            return
-        
-        alert_type_clean = self.alert_type.value.lower()
-        if alert_type_clean not in ['über', 'unter', 'above', 'below']:
-            embed = discord.Embed(
-                title="❌ Ungültiger Alert-Typ",
-                description="Verwende 'über' oder 'unter'.",
-                color=COLOR_DOWN
-            )
-            await interaction.followup.send(embed=embed, ephemeral=True)
-            return
-        
-        # Finde Spieler
-        player_found = None
-        for player in self.bot.players:
-            if player.name.lower() == self.player_name.value.lower():
-                player_found = player
-                break
-        
-        if not player_found:
-            embed = discord.Embed(
-                title="❌ Spieler nicht gefunden",
-                description=f"**{self.player_name.value}** wird nicht überwacht.",
-                color=COLOR_DOWN
-            )
-            await interaction.followup.send(embed=embed, ephemeral=True)
-            return
-        
-        # Setze Alert
-        if alert_type_clean in ['über', 'above']:
-            player_found.alert_above = price_value
-            direction = "über"
-            emoji = "📈"
-        else:
-            player_found.alert_below = price_value
-            direction = "unter"
-            emoji = "📉"
-        
-        player_found.alert_user_id = self.user_id
-        if self.category.value:
-            player_found.category = self.category.value
-        
-        # Speichere Konfiguration
-        for config_player in self.bot.config.get('players', []):
-            if config_player.get('url') == player_found.url:
-                if alert_type_clean in ['über', 'above']:
-                    config_player['alert_above'] = price_value
-                else:
-                    config_player['alert_below'] = price_value
-                config_player['alert_user_id'] = self.user_id
-                if self.category.value:
-                    config_player['category'] = self.category.value
-                break
-        
-        self.bot._save_config()
-        
-        embed = discord.Embed(
-            title="✅ Alert erstellt",
-            description=f"{emoji} **{player_found.name}**\n\n"
-                       f"**Alert**: {direction} `{price_value:,}` Coins\n"
-                       f"**Kategorie**: {getattr(player_found, 'category', 'Allgemein')}",
-            color=COLOR_UP
-        )
-        
-        await interaction.followup.send(embed=embed, ephemeral=True)
 
 class DeleteAlertView(discord.ui.View):
     def __init__(self, bot_instance, user_id, user_alerts):
@@ -1034,6 +1027,50 @@ class FutBinBot(commands.Bot):
         
         return None
 
+    def parse_alert_price(self, price_text: str) -> Optional[int]:
+        """Parst Preis-Text für Alerts (z.B. 32k -> 32000, 1.5m -> 1500000)"""
+        if not price_text:
+            return None
+        
+        # Bereinige Input
+        price_text = price_text.strip().replace(' ', '').lower()
+        
+        try:
+            # Direkte Zahl ohne Suffix
+            if price_text.isdigit():
+                return int(price_text)
+            
+            # Mit k/m Suffix
+            import re
+            
+            # Pattern für verschiedene Formate
+            patterns = [
+                r'(\d+(?:[.,]\d+)?)\s*k',    # 32k, 32.5k, 32,5k
+                r'(\d+(?:[.,]\d+)?)\s*m',    # 1.5m, 1,5m
+                r'(\d+(?:[.,]\d+)?)k',       # 32k (ohne Space)
+                r'(\d+(?:[.,]\d+)?)m',       # 1.5m (ohne Space)
+                r'(\d+(?:[.,]\d+)?)',        # Nur Zahl
+            ]
+            
+            for pattern in patterns:
+                match = re.search(pattern, price_text)
+                if match:
+                    base_str = match.group(1).replace(',', '.')
+                    base = float(base_str)
+                    
+                    # Multiplier anwenden
+                    if 'k' in price_text:
+                        return int(base * 1000)
+                    elif 'm' in price_text:
+                        return int(base * 1000000)
+                    else:
+                        return int(base)
+                        
+        except (ValueError, AttributeError) as e:
+            logging.warning(f"Konnte Preis nicht parsen: {price_text} - {e}")
+            
+        return None
+
     def _save_state(self):
         """Speichert den aktuellen Zustand ohne Backup"""
         try:
@@ -1456,9 +1493,10 @@ class FutBinBot(commands.Bot):
                     total_max_value += max_price
                     categories[category]['value'] += current_price
                     
-                    # Spielername (maximal 15 Zeichen) + Alert-Indikator
-                    alert_indicator = "🔔" if getattr(player, 'alert_above', None) or getattr(player, 'alert_below', None) else ""
-                    name_with_alert = f"{alert_indicator}{player.name}"[:15].ljust(15)
+                    # Spielername (maximal 13 Zeichen) + Alert-Indikator (immer 2 Zeichen reserviert)
+                    alert_indicator = "🔔" if getattr(player, 'alert_above', None) or getattr(player, 'alert_below', None) else "  "
+                    player_name_short = player.name[:13].ljust(13)
+                    name_with_alert = f"{alert_indicator}{player_name_short}"
                     
                     # Preis formatieren (in K/M)
                     if current_price >= 1_000_000:
@@ -2376,98 +2414,88 @@ async def test_bot(interaction: discord.Interaction):
         await interaction.response.send_message(f"❌ Fehler: {e}", ephemeral=True)
 
 @bot.tree.command(name="set_alert", description="Setzt einen Preis-Alert für einen Spieler")
-async def set_alert(
-    interaction: discord.Interaction, 
-    player_name: str, 
-    alert_type: str = "above", 
-    price: int = 0,
-    category: str = "Allgemein"
-):
-    """Setzt einen Preis-Alert für einen Spieler"""
+async def set_alert(interaction: discord.Interaction, player_name: str, price: str):
+    """Setzt einen Preis-Alert für einen Spieler (z.B. /set_alert Kane 50k)"""
+    await interaction.response.defer()
     
-    # Validiere Alert-Type
-    if alert_type.lower() not in ['above', 'below', 'über', 'unter']:
-        embed = discord.Embed(
-            title="❌ Ungültiger Alert-Typ",
-            description="Verwende `above`/`über` oder `below`/`unter`.",
-            color=COLOR_DOWN
-        )
-        await interaction.response.send_message(embed=embed, ephemeral=True)
-        return
-    
-    # Finde Spieler
-    player_found = None
-    for player in bot.players:
-        if player.name.lower() == player_name.lower():
-            player_found = player
-            break
-    
-    if not player_found:
-        embed = discord.Embed(
-            title="❌ Spieler nicht gefunden",
-            description=f"**{player_name}** wird nicht überwacht.\nVerwende `/list_players` um alle Spieler zu sehen.",
-            color=COLOR_DOWN
-        )
-        await interaction.response.send_message(embed=embed, ephemeral=True)
-        return
-    
-    # Setze Alert-Parameter
-    alert_type_clean = alert_type.lower()
-    if alert_type_clean in ['above', 'über']:
-        player_found.alert_above = price
-        alert_direction = "über"
-        emoji = "📈"
-    else:
-        player_found.alert_below = price
-        alert_direction = "unter"
-        emoji = "📉"
-    
-    player_found.alert_user_id = interaction.user.id
-    player_found.category = category
-    
-    # Aktualisiere Konfiguration
-    for config_player in bot.config.get('players', []):
-        if config_player.get('url') == player_found.url:
-            config_player['alert_above'] = player_found.alert_above
-            config_player['alert_below'] = player_found.alert_below
-            config_player['alert_user_id'] = player_found.alert_user_id
-            config_player['category'] = player_found.category
-            break
-    
-    bot._save_config()
-    
-    embed = discord.Embed(
-        title=f"✅ Alert gesetzt",
-        description=f"{emoji} **{player_found.name}**\n\n"
-                   f"**Alert-Typ**: {alert_direction} `{price:,}` Coins\n"
-                   f"**Kategorie**: {category}\n"
-                   f"**Benachrichtigung**: {interaction.user.mention}",
-        color=COLOR_UP
-    )
-    
-    # Zeige aktuellen Preis
-    current_state = bot.state.get(player_found.url, {})
-    current_price = current_state.get('price')
-    if current_price:
-        embed.add_field(
-            name="💰 Aktueller Preis",
-            value=f"`{current_price:,}` Coins",
-            inline=True
-        )
+    try:
+        # Parse Preis-Input (32k -> 32000, 1.5m -> 1500000)
+        parsed_price = bot.parse_alert_price(price)
+        if parsed_price is None or parsed_price <= 0:
+            embed = discord.Embed(
+                title="❌ Ungültiger Preis",
+                description=f"**{price}** ist kein gültiger Preis.\n\n**Beispiele:**\n• `50k` = 50.000 Coins\n• `1.5m` = 1.500.000 Coins\n• `250000` = 250.000 Coins",
+                color=COLOR_DOWN
+            )
+            await interaction.followup.send(embed=embed, ephemeral=True)
+            return
         
-        # Zeige Status
-        if alert_type_clean in ['above', 'über']:
-            status = "🔴 Alert bereit" if current_price < price else "🟢 Alert bereits erreicht"
-        else:
-            status = "🔴 Alert bereit" if current_price > price else "🟢 Alert bereits erreicht"
+        # Finde Spieler
+        player_found = None
+        for player in bot.players:
+            if player.name.lower() == player_name.lower():
+                player_found = player
+                break
+        
+        if not player_found:
+            embed = discord.Embed(
+                title="❌ Spieler nicht gefunden",
+                description=f"**{player_name}** wird nicht überwacht.\n\nVerwende `/list_players` um alle Spieler zu sehen.",
+                color=COLOR_DOWN
+            )
+            await interaction.followup.send(embed=embed, ephemeral=True)
+            return
+        
+        # Setze Alert (immer "above" - erreicht oder überschritten)
+        player_found.alert_above = parsed_price
+        player_found.alert_below = None  # Entferne "below" Alert falls vorhanden
+        player_found.alert_user_id = interaction.user.id
+        
+        # Aktualisiere Konfiguration
+        for config_player in bot.config.get('players', []):
+            if config_player.get('url') == player_found.url:
+                config_player['alert_above'] = parsed_price
+                config_player['alert_below'] = None
+                config_player['alert_user_id'] = interaction.user.id
+                break
+        
+        bot._save_config()
+        
+        # Erfolgsmeldung
+        current_price = bot.state.get(player_found.url, {}).get('price', 0)
+        status_emoji = "🟢" if isinstance(current_price, int) and current_price >= parsed_price else "🔴"
+        
+        embed = discord.Embed(
+            title="✅ Alert gesetzt!",
+            description=f"Du wirst benachrichtigt wenn **{player_found.name}** {parsed_price:,} Coins erreicht oder überschreitet.",
+            color=COLOR_UP
+        )
         
         embed.add_field(
             name="📊 Status",
-            value=status,
-            inline=True
+            value=f"{status_emoji} **Aktuell**: {current_price:,} Coins\n📈 **Alert bei**: {parsed_price:,} Coins",
+            inline=False
         )
-    
-    await interaction.response.send_message(embed=embed, ephemeral=True)
+        
+        embed.add_field(
+            name="👤 Alert-Inhaber",
+            value=f"{interaction.user.mention} ({interaction.user.display_name})",
+            inline=False
+        )
+        
+        await interaction.followup.send(embed=embed, ephemeral=True)
+        
+        # Aktualisiere Dashboard
+        await bot.update_dashboard()
+        
+    except Exception as e:
+        logging.error(f"Fehler beim Setzen des Alerts: {e}")
+        embed = discord.Embed(
+            title="❌ Fehler beim Alert setzen",
+            description=f"Ein unerwarteter Fehler ist aufgetreten: {str(e)}",
+            color=COLOR_DOWN
+        )
+        await interaction.followup.send(embed=embed, ephemeral=True)
 
 @bot.tree.command(name="list_alerts", description="Zeigt alle deine gesetzten Alerts an")
 async def list_alerts(interaction: discord.Interaction):

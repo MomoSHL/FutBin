@@ -1220,3 +1220,775 @@ discord.app_commands.errors.CommandInvokeError: Command 'dashboard' raised an ex
 [2025-09-24 16:03:08,922] INFO: Dashboard erfolgreich aktualisiert
 [2025-09-24 16:04:08,473] INFO: Starte Preis-Check für 9 Spieler...
 [2025-09-24 16:04:19,019] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 10.5s
+[2025-09-24 16:34:50,586] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-24 16:34:50,589] INFO: Dashboard-Message-ID aus Config geladen: 1420401194886762557
+[2025-09-24 16:34:50,590] INFO: Health Check Server Thread gestartet
+[2025-09-24 16:34:50,591] INFO: logging in using static token
+[2025-09-24 16:34:51,464] INFO: Health Check Server gestartet auf Port 8080
+[2025-09-24 16:34:55,210] INFO: Shard ID None has connected to Gateway (Session ID: 59910472ac961b87a1b9c55c3d6c7e31).
+[2025-09-24 16:34:57,337] INFO: FutBin#9551 ist online und bereit!
+[2025-09-24 16:34:57,337] INFO: Bot ID: 1419302777494048768
+[2025-09-24 16:34:57,337] INFO: Verbunden mit 1 Server(n)
+[2025-09-24 16:34:57,337] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-24 16:34:57,338] INFO: Dashboard Views registriert
+[2025-09-24 16:34:57,338] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-24 16:34:57,338] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-24 16:34:57,338] INFO: - Send Messages: True
+[2025-09-24 16:34:57,338] INFO: - Embed Links: True
+[2025-09-24 16:34:57,339] INFO: - Use External Emojis: True
+[2025-09-24 16:34:57,339] INFO: - Read Message History: True
+[2025-09-24 16:34:57,339] INFO: Preis-Checker gestartet
+[2025-09-24 16:34:57,339] INFO: Dashboard-Updater gestartet
+[2025-09-24 16:34:57,340] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:34:58,080] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-24 16:34:58,081] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-24 16:34:58,081] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-24 16:34:58,081] INFO:   - /dashboard: Erstellt ein neues Dashboard (löscht das alte)
+[2025-09-24 16:34:58,082] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-24 16:34:58,082] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-24 16:34:58,082] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-24 16:34:58,082] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-24 16:34:58,082] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-24 16:34:58,083] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-24 16:34:58,083] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-24 16:34:58,083] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-24 16:34:58,084] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-24 16:34:58,084] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-24 16:34:58,084] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-24 16:34:58,084] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-24 16:34:58,084] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-24 16:34:58,084] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-24 16:34:58,084] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-24 16:34:58,084] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-24 16:34:59,116] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:34:59,137] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-24 16:35:09,980] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:35:09,980] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-24 16:35:16,525] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 19.2s
+[2025-09-24 16:35:31,722] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:36:17,355] INFO: Shard ID None has successfully RESUMED session 59910472ac961b87a1b9c55c3d6c7e31.
+[2025-09-24 16:36:57,349] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:37:40,591] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 43.2s
+[2025-09-24 16:38:12,192] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-24 16:38:12,194] INFO: Dashboard-Message-ID aus Config geladen: 1420401194886762557
+[2025-09-24 16:38:12,205] INFO: Health Check Server Thread gestartet
+[2025-09-24 16:38:12,205] INFO: logging in using static token
+[2025-09-24 16:38:13,134] INFO: Health Check Server gestartet auf Port 8080
+[2025-09-24 16:38:18,001] INFO: Shard ID None has connected to Gateway (Session ID: d80f9178511a3e8c0ceee21dda348000).
+[2025-09-24 16:38:20,208] INFO: FutBin#9551 ist online und bereit!
+[2025-09-24 16:38:20,208] INFO: Bot ID: 1419302777494048768
+[2025-09-24 16:38:20,208] INFO: Verbunden mit 1 Server(n)
+[2025-09-24 16:38:20,209] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-24 16:38:20,209] INFO: Dashboard Views registriert
+[2025-09-24 16:38:20,209] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-24 16:38:20,209] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-24 16:38:20,210] INFO: - Send Messages: True
+[2025-09-24 16:38:20,210] INFO: - Embed Links: True
+[2025-09-24 16:38:20,210] INFO: - Use External Emojis: True
+[2025-09-24 16:38:20,210] INFO: - Read Message History: True
+[2025-09-24 16:38:20,211] INFO: Preis-Checker gestartet
+[2025-09-24 16:38:20,211] INFO: Dashboard-Updater gestartet
+[2025-09-24 16:38:20,212] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:38:20,567] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-24 16:38:20,567] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-24 16:38:20,567] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-24 16:38:20,568] INFO:   - /dashboard: Erstellt ein neues Dashboard (löscht das alte)
+[2025-09-24 16:38:20,568] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-24 16:38:20,568] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-24 16:38:20,568] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-24 16:38:20,569] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-24 16:38:20,569] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-24 16:38:20,569] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-24 16:38:20,569] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-24 16:38:20,569] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-24 16:38:20,569] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-24 16:38:20,570] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-24 16:38:20,570] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-24 16:38:20,570] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-24 16:38:20,570] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-24 16:38:20,570] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-24 16:38:20,570] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-24 16:38:20,570] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-24 16:38:21,078] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-24 16:38:22,901] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:38:27,651] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:38:27,651] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-24 16:38:41,261] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 21.0s
+[2025-09-24 16:40:20,218] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:40:40,486] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 20.3s
+[2025-09-24 16:42:03,241] ERROR: Attempting a reconnect in 1.11s
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1532, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1148, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1179, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 905, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 978, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\client.py", line 724, in connect
+    self.ws = await asyncio.wait_for(coro, timeout=60.0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\gateway.py", line 383, in from_client
+    socket = await client.http.ws_connect(str(url))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\http.py", line 566, in ws_connect
+    return await self.__session.ws_connect(url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 1067, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 770, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 725, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1538, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gateway-us-east1-d.discord.gg:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:42:04,388] ERROR: Attempting a reconnect in 1.57s
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1532, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1148, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1179, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 905, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 978, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\client.py", line 724, in connect
+    self.ws = await asyncio.wait_for(coro, timeout=60.0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\gateway.py", line 383, in from_client
+    socket = await client.http.ws_connect(str(url))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\http.py", line 566, in ws_connect
+    return await self.__session.ws_connect(url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 1067, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 770, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 725, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1538, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gateway-us-east1-d.discord.gg:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:42:05,976] ERROR: Attempting a reconnect in 5.88s
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1532, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1148, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1179, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 905, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 978, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\client.py", line 724, in connect
+    self.ws = await asyncio.wait_for(coro, timeout=60.0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\gateway.py", line 383, in from_client
+    socket = await client.http.ws_connect(str(url))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\http.py", line 566, in ws_connect
+    return await self.__session.ws_connect(url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 1067, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 770, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 725, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1538, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gateway-us-east1-d.discord.gg:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:42:11,866] ERROR: Attempting a reconnect in 13.48s
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1532, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1148, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1179, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 905, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 978, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\client.py", line 724, in connect
+    self.ws = await asyncio.wait_for(coro, timeout=60.0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\gateway.py", line 383, in from_client
+    socket = await client.http.ws_connect(str(url))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\http.py", line 566, in ws_connect
+    return await self.__session.ws_connect(url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 1067, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 770, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 725, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1538, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gateway-us-east1-d.discord.gg:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:42:20,220] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:42:20,221] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/251/ibrahima-konate (Versuch 1)
+[2025-09-24 16:42:22,231] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/251/ibrahima-konate (Versuch 2)
+[2025-09-24 16:42:23,235] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18919/harry-kane (Versuch 1)
+[2025-09-24 16:42:25,237] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18919/harry-kane (Versuch 2)
+[2025-09-24 16:42:25,362] ERROR: Attempting a reconnect in 8.25s
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1532, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1148, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1179, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 905, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 978, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\client.py", line 724, in connect
+    self.ws = await asyncio.wait_for(coro, timeout=60.0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\gateway.py", line 383, in from_client
+    socket = await client.http.ws_connect(str(url))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\http.py", line 566, in ws_connect
+    return await self.__session.ws_connect(url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 1067, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 770, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 725, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1538, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gateway-us-east1-d.discord.gg:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:42:26,240] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/104/sakina-karchaoui (Versuch 1)
+[2025-09-24 16:42:28,255] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/104/sakina-karchaoui (Versuch 2)
+[2025-09-24 16:42:29,270] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18820/ayew (Versuch 1)
+[2025-09-24 16:42:31,275] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18820/ayew (Versuch 2)
+[2025-09-24 16:42:32,282] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/225/william-saliba (Versuch 1)
+[2025-09-24 16:42:33,630] ERROR: Attempting a reconnect in 5.00s
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1532, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1148, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1179, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 905, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 978, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\client.py", line 724, in connect
+    self.ws = await asyncio.wait_for(coro, timeout=60.0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\gateway.py", line 383, in from_client
+    socket = await client.http.ws_connect(str(url))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\http.py", line 566, in ws_connect
+    return await self.__session.ws_connect(url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 1067, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 770, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 725, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1538, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gateway-us-east1-d.discord.gg:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:42:34,290] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/225/william-saliba (Versuch 2)
+[2025-09-24 16:42:35,295] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18924/marcos-llorente-moreno (Versuch 1)
+[2025-09-24 16:42:37,309] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18924/marcos-llorente-moreno (Versuch 2)
+[2025-09-24 16:42:38,321] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/91/achraf-hakimi (Versuch 1)
+[2025-09-24 16:42:38,650] ERROR: Attempting a reconnect in 75.27s
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1532, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1148, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1179, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 905, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 978, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\client.py", line 724, in connect
+    self.ws = await asyncio.wait_for(coro, timeout=60.0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\gateway.py", line 383, in from_client
+    socket = await client.http.ws_connect(str(url))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\http.py", line 566, in ws_connect
+    return await self.__session.ws_connect(url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 1067, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 770, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 725, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1538, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gateway-us-east1-d.discord.gg:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:42:40,332] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/91/achraf-hakimi (Versuch 2)
+[2025-09-24 16:42:41,336] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/331/jeremie-frimpong (Versuch 1)
+[2025-09-24 16:42:53,350] WARNING: Timeout für Frimpong (https://www.futbin.com/26/player/331/jeremie-frimpong)
+[2025-09-24 16:42:55,389] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/417/omar-marmoush (Versuch 1)
+[2025-09-24 16:42:57,406] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/417/omar-marmoush (Versuch 2)
+[2025-09-24 16:42:57,407] INFO: Preis-Check abgeschlossen: 0/9 erfolgreich in 37.2s
+[2025-09-24 16:42:57,408] WARNING: Fehler bei 9 Spielern: Keine Daten: Konaté, Keine Daten: Kane, Keine Daten: Karchaoui, Keine Daten: Abedi Pelé, Keine Daten: Saliba
+[2025-09-24 16:42:57,408] WARNING: Hohe Fehlerrate (100.0%), reduziere temporär Check-Frequenz
+[2025-09-24 16:43:20,224] ERROR: Fehler beim Editieren der Dashboard-Nachricht: Cannot connect to host discord.com:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:43:20,224] ERROR: Fehler beim Aktualisieren des Dashboards: Cannot connect to host discord.com:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:43:53,936] ERROR: Attempting a reconnect in 200.87s
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1532, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1148, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1179, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\resolver.py", line 40, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 905, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 978, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11002] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\client.py", line 724, in connect
+    self.ws = await asyncio.wait_for(coro, timeout=60.0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\asyncio\tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\gateway.py", line 383, in from_client
+    socket = await client.http.ws_connect(str(url))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\discord\http.py", line 566, in ws_connect
+    return await self.__session.ws_connect(url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 1067, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 770, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\client.py", line 725, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 642, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1209, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Momo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\aiohttp\connector.py", line 1538, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gateway-us-east1-d.discord.gg:443 ssl:default [getaddrinfo failed]
+[2025-09-24 16:44:20,220] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:44:20,236] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/251/ibrahima-konate (Versuch 1)
+[2025-09-24 16:44:22,236] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/251/ibrahima-konate (Versuch 2)
+[2025-09-24 16:44:23,242] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18919/harry-kane (Versuch 1)
+[2025-09-24 16:44:25,261] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18919/harry-kane (Versuch 2)
+[2025-09-24 16:44:26,263] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/104/sakina-karchaoui (Versuch 1)
+[2025-09-24 16:44:28,278] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/104/sakina-karchaoui (Versuch 2)
+[2025-09-24 16:44:29,283] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18820/ayew (Versuch 1)
+[2025-09-24 16:44:31,295] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18820/ayew (Versuch 2)
+[2025-09-24 16:44:32,307] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/225/william-saliba (Versuch 1)
+[2025-09-24 16:44:34,317] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/225/william-saliba (Versuch 2)
+[2025-09-24 16:44:35,329] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18924/marcos-llorente-moreno (Versuch 1)
+[2025-09-24 16:44:37,344] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/18924/marcos-llorente-moreno (Versuch 2)
+[2025-09-24 16:44:38,348] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/91/achraf-hakimi (Versuch 1)
+[2025-09-24 16:44:40,364] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/91/achraf-hakimi (Versuch 2)
+[2025-09-24 16:44:41,371] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/331/jeremie-frimpong (Versuch 1)
+[2025-09-24 16:44:43,383] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/331/jeremie-frimpong (Versuch 2)
+[2025-09-24 16:44:44,389] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/417/omar-marmoush (Versuch 1)
+[2025-09-24 16:44:46,403] WARNING: Verbindungsfehler für https://www.futbin.com/26/player/417/omar-marmoush (Versuch 2)
+[2025-09-24 16:44:46,405] INFO: Preis-Check abgeschlossen: 0/9 erfolgreich in 26.2s
+[2025-09-24 16:44:46,405] WARNING: Fehler bei 9 Spielern: Keine Daten: Konaté, Keine Daten: Kane, Keine Daten: Karchaoui, Keine Daten: Abedi Pelé, Keine Daten: Saliba
+[2025-09-24 16:44:46,405] WARNING: Hohe Fehlerrate (100.0%), reduziere temporär Check-Frequenz
+[2025-09-24 16:46:20,215] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:48:06,022] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-24 16:48:06,025] INFO: Dashboard-Message-ID aus Config geladen: 1420401194886762557
+[2025-09-24 16:48:06,034] INFO: Health Check Server Thread gestartet
+[2025-09-24 16:48:06,035] INFO: logging in using static token
+[2025-09-24 16:48:07,067] INFO: Health Check Server gestartet auf Port 8080
+[2025-09-24 16:48:07,444] INFO: Shard ID None has connected to Gateway (Session ID: 5697b78e06656b781273ed522ac7d77b).
+[2025-09-24 16:48:09,453] INFO: FutBin#9551 ist online und bereit!
+[2025-09-24 16:48:09,453] INFO: Bot ID: 1419302777494048768
+[2025-09-24 16:48:09,453] INFO: Verbunden mit 1 Server(n)
+[2025-09-24 16:48:09,454] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-24 16:48:09,454] INFO: Dashboard Views registriert
+[2025-09-24 16:48:09,454] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-24 16:48:09,454] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-24 16:48:09,454] INFO: - Send Messages: True
+[2025-09-24 16:48:09,455] INFO: - Embed Links: True
+[2025-09-24 16:48:09,455] INFO: - Use External Emojis: True
+[2025-09-24 16:48:09,455] INFO: - Read Message History: True
+[2025-09-24 16:48:09,455] INFO: Preis-Checker gestartet
+[2025-09-24 16:48:09,455] INFO: Dashboard-Updater gestartet
+[2025-09-24 16:48:09,456] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:48:09,841] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-24 16:48:09,841] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-24 16:48:09,841] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-24 16:48:09,841] INFO:   - /dashboard: Erstellt ein neues Dashboard (löscht das alte)
+[2025-09-24 16:48:09,842] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-24 16:48:09,842] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-24 16:48:09,842] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-24 16:48:09,842] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-24 16:48:09,843] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-24 16:48:09,843] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-24 16:48:09,843] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-24 16:48:09,843] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-24 16:48:09,843] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-24 16:48:09,843] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-24 16:48:09,843] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-24 16:48:09,844] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-24 16:48:09,844] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-24 16:48:09,844] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-24 16:48:09,844] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-24 16:48:09,844] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-24 16:48:10,115] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:48:10,231] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-24 16:48:16,097] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:48:16,097] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-24 16:48:22,170] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 12.7s
+[2025-09-24 16:50:09,466] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:50:20,948] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 11.5s
+[2025-09-24 16:50:54,975] INFO: Shard ID None has successfully RESUMED session 5697b78e06656b781273ed522ac7d77b.
+[2025-09-24 16:52:09,458] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:52:20,959] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 11.5s
+[2025-09-24 16:52:25,760] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:52:37,072] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 11.3s
+[2025-09-24 16:52:37,561] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:52:45,921] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-24 16:52:45,924] INFO: Dashboard-Message-ID aus Config geladen: 1420401194886762557
+[2025-09-24 16:52:45,935] INFO: Health Check Server Thread gestartet
+[2025-09-24 16:52:45,936] INFO: logging in using static token
+[2025-09-24 16:52:46,806] INFO: Health Check Server gestartet auf Port 8080
+[2025-09-24 16:52:47,519] INFO: Shard ID None has connected to Gateway (Session ID: 8c3a67f41fe4db17f697c0df0a163084).
+[2025-09-24 16:52:49,524] INFO: FutBin#9551 ist online und bereit!
+[2025-09-24 16:52:49,524] INFO: Bot ID: 1419302777494048768
+[2025-09-24 16:52:49,524] INFO: Verbunden mit 1 Server(n)
+[2025-09-24 16:52:49,525] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-24 16:52:49,525] INFO: Dashboard Views registriert
+[2025-09-24 16:52:49,525] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-24 16:52:49,525] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-24 16:52:49,526] INFO: - Send Messages: True
+[2025-09-24 16:52:49,526] INFO: - Embed Links: True
+[2025-09-24 16:52:49,526] INFO: - Use External Emojis: True
+[2025-09-24 16:52:49,526] INFO: - Read Message History: True
+[2025-09-24 16:52:49,526] INFO: Preis-Checker gestartet
+[2025-09-24 16:52:49,527] INFO: Dashboard-Updater gestartet
+[2025-09-24 16:52:49,527] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:52:49,900] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-24 16:52:49,900] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-24 16:52:49,901] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-24 16:52:49,901] INFO:   - /dashboard: Erstellt ein neues Dashboard (löscht das alte)
+[2025-09-24 16:52:49,901] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-24 16:52:49,901] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-24 16:52:49,901] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-24 16:52:49,902] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-24 16:52:49,902] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-24 16:52:49,902] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-24 16:52:49,902] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-24 16:52:49,902] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-24 16:52:49,902] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-24 16:52:49,902] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-24 16:52:49,903] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-24 16:52:49,903] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-24 16:52:49,903] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-24 16:52:49,903] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-24 16:52:49,904] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-24 16:52:49,904] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-24 16:52:50,125] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:52:50,175] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-24 16:52:56,029] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:52:56,029] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-24 16:53:00,957] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 11.4s
+[2025-09-24 16:54:28,894] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:54:40,372] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 11.5s
+[2025-09-24 16:54:40,890] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:54:49,551] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:54:49,597] INFO: Alte Dashboard-Nachricht gelöscht - Message ID: 1420401194886762557
+[2025-09-24 16:54:49,912] INFO: Dashboard-Message-ID 1420423236709122111 in Config gespeichert
+[2025-09-24 16:54:49,912] INFO: Neues Dashboard erstellt via Command - Message ID: 1420423236709122111
+[2025-09-24 16:55:00,764] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 11.2s
+[2025-09-24 16:56:49,541] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:57:00,859] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 11.3s
+[2025-09-24 16:57:50,117] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 16:58:49,526] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 16:59:01,226] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 11.7s
+[2025-09-24 17:00:01,900] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 17:00:12,357] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 10.5s
+[2025-09-24 17:00:12,921] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 17:00:21,146] INFO: Alte Dashboard-Nachricht gelöscht - Message ID: 1420423236709122111
+[2025-09-24 17:00:21,377] INFO: Dashboard-Message-ID 1420424627397853346 in Config gespeichert
+[2025-09-24 17:00:21,377] INFO: Neues Dashboard erstellt via Command - Message ID: 1420424627397853346
+[2025-09-24 17:00:39,476] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-24 17:00:39,479] INFO: Dashboard-Message-ID aus Config geladen: 1420424627397853346
+[2025-09-24 17:00:39,489] INFO: Health Check Server Thread gestartet
+[2025-09-24 17:00:39,490] INFO: logging in using static token
+[2025-09-24 17:00:40,360] INFO: Health Check Server gestartet auf Port 8080
+[2025-09-24 17:00:40,787] INFO: Shard ID None has connected to Gateway (Session ID: 99d20cbed737db7bae7f96420f121dba).
+[2025-09-24 17:00:42,795] INFO: FutBin#9551 ist online und bereit!
+[2025-09-24 17:00:42,795] INFO: Bot ID: 1419302777494048768
+[2025-09-24 17:00:42,795] INFO: Verbunden mit 1 Server(n)
+[2025-09-24 17:00:42,796] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-24 17:00:42,796] INFO: Dashboard Views registriert
+[2025-09-24 17:00:42,796] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-24 17:00:42,796] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-24 17:00:42,796] INFO: - Send Messages: True
+[2025-09-24 17:00:42,796] INFO: - Embed Links: True
+[2025-09-24 17:00:42,797] INFO: - Use External Emojis: True
+[2025-09-24 17:00:42,797] INFO: - Read Message History: True
+[2025-09-24 17:00:42,797] INFO: Preis-Checker gestartet
+[2025-09-24 17:00:42,797] INFO: Dashboard-Updater gestartet
+[2025-09-24 17:00:42,798] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 17:00:43,498] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-24 17:00:43,499] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-24 17:00:43,499] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-24 17:00:43,499] INFO:   - /dashboard: Erstellt ein neues Dashboard (löscht das alte)
+[2025-09-24 17:00:43,499] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-24 17:00:43,499] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-24 17:00:43,500] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-24 17:00:43,500] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-24 17:00:43,500] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-24 17:00:43,500] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-24 17:00:43,500] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-24 17:00:43,501] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-24 17:00:43,501] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-24 17:00:43,501] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-24 17:00:43,501] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-24 17:00:43,501] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-24 17:00:43,502] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-24 17:00:43,502] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-24 17:00:43,502] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-24 17:00:43,502] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-24 17:00:43,693] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 17:00:43,712] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-24 17:00:46,891] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 17:00:49,821] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 17:00:49,821] INFO: [OK] Dashboard erfolgreich erstellt
+[2025-09-24 17:00:53,409] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 10.6s
+[2025-09-24 17:00:57,513] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 10.6s
+[2025-09-24 17:00:58,012] INFO: Dashboard erfolgreich aktualisiert

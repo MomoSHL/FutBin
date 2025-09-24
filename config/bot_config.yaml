@@ -3,7 +3,7 @@ players:
   name: Konaté
   url: https://www.futbin.com/26/player/251/ibrahima-konate
 - active: true
-  alert_above: 0
+  alert_above: 200000
   alert_below: null
   alert_user_id: 416353640073134082
   category: Allgemein
@@ -32,6 +32,6 @@ players:
   url: https://www.futbin.com/26/player/417/omar-marmoush
 settings:
   dashboard_channel_id: 1419372663985541150
-  dashboard_message_id: 1420401194886762557
+  dashboard_message_id: 1420424627397853346
   global_threshold_percent: 5
   platform: ps
