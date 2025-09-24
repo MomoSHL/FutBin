@@ -1994,3 +1994,48 @@ aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host gatewa
 [2025-09-24 17:00:58,012] INFO: Dashboard erfolgreich aktualisiert
 [2025-09-24 17:02:42,807] INFO: Starte Preis-Check für 9 Spieler...
 [2025-09-24 17:02:53,312] INFO: Preis-Check abgeschlossen: 9/9 erfolgreich in 10.5s
+[2025-09-24 17:03:19,619] WARNING: PyNaCl is not installed, voice will NOT be supported
+[2025-09-24 17:03:19,622] INFO: Dashboard-Message-ID aus Config geladen: 1420424627397853346
+[2025-09-24 17:03:19,632] INFO: Health Check Server Thread gestartet
+[2025-09-24 17:03:19,633] INFO: logging in using static token
+[2025-09-24 17:03:20,491] INFO: Health Check Server gestartet auf Port 8080
+[2025-09-24 17:03:20,761] INFO: Shard ID None has connected to Gateway (Session ID: 9ceed01293090ef691590e6f462181cb).
+[2025-09-24 17:03:22,775] INFO: FutBin#9551 ist online und bereit!
+[2025-09-24 17:03:22,775] INFO: Bot ID: 1419302777494048768
+[2025-09-24 17:03:22,775] INFO: Verbunden mit 1 Server(n)
+[2025-09-24 17:03:22,775] INFO: - Server: Midnight 2.0 (ID: 975921760409092118, Members: 54)
+[2025-09-24 17:03:22,776] INFO: Dashboard Views registriert
+[2025-09-24 17:03:22,776] INFO: Dashboard Channel geladen: futbin-bot in Midnight 2.0
+[2025-09-24 17:03:22,776] INFO: Bot Permissions im Dashboard Channel:
+[2025-09-24 17:03:22,777] INFO: - Send Messages: True
+[2025-09-24 17:03:22,777] INFO: - Embed Links: True
+[2025-09-24 17:03:22,777] INFO: - Use External Emojis: True
+[2025-09-24 17:03:22,777] INFO: - Read Message History: True
+[2025-09-24 17:03:22,777] INFO: Preis-Checker gestartet
+[2025-09-24 17:03:22,777] INFO: Dashboard-Updater gestartet
+[2025-09-24 17:03:22,778] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 17:03:23,111] INFO: [OK] 19 Slash Command(s) synchronisiert
+[2025-09-24 17:03:23,111] INFO:   - /setup: Komplettes Setup des FutBin Bots
+[2025-09-24 17:03:23,111] INFO:   - /set_dashboard: Setzt den aktuellen Channel als Dashboard Channel
+[2025-09-24 17:03:23,111] INFO:   - /dashboard: Erstellt ein neues Dashboard (löscht das alte)
+[2025-09-24 17:03:23,112] INFO:   - /add_player: Fügt einen Spieler zur Überwachung hinzu
+[2025-09-24 17:03:23,112] INFO:   - /remove_player: Entfernt einen Spieler aus der Überwachung
+[2025-09-24 17:03:23,112] INFO:   - /list_players: Zeigt alle überwachten Spieler an
+[2025-09-24 17:03:23,112] INFO:   - /force_update: Erzwingt ein sofortiges Dashboard-Update
+[2025-09-24 17:03:23,112] INFO:   - /info: Zeigt Bot-Informationen und Status an
+[2025-09-24 17:03:23,113] INFO:   - /test: Testet Bot-Funktionalität und Permissions
+[2025-09-24 17:03:23,113] INFO:   - /set_alert: Setzt einen Preis-Alert für einen Spieler
+[2025-09-24 17:03:23,113] INFO:   - /list_alerts: Zeigt alle deine gesetzten Alerts an
+[2025-09-24 17:03:23,113] INFO:   - /remove_alert: Entfernt einen Alert von einem Spieler
+[2025-09-24 17:03:23,113] INFO:   - /portfolio: Zeigt detaillierte Portfolio-Statistiken
+[2025-09-24 17:03:23,113] INFO:   - /categories: Zeigt alle verfügbaren Kategorien
+[2025-09-24 17:03:23,114] INFO:   - /set_category: Setzt die Kategorie für einen Spieler
+[2025-09-24 17:03:23,114] INFO:   - /add_note: Fügt eine Notiz zu einem Spieler hinzu
+[2025-09-24 17:03:23,114] INFO:   - /player_info: Zeigt detaillierte Informationen zu einem Spieler
+[2025-09-24 17:03:23,114] INFO:   - /export_portfolio: Exportiert dein Portfolio als Text
+[2025-09-24 17:03:23,114] INFO:   - /debug: Zeigt Debug-Informationen an
+[2025-09-24 17:03:23,323] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 17:03:23,461] INFO: [OK] Test-Nachricht erfolgreich gesendet
+[2025-09-24 17:03:28,854] INFO: Starte Preis-Check für 9 Spieler...
+[2025-09-24 17:03:29,284] INFO: Dashboard erfolgreich aktualisiert
+[2025-09-24 17:03:29,284] INFO: [OK] Dashboard erfolgreich erstellt

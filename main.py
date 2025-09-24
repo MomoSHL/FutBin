@@ -88,6 +88,9 @@ COMMAND_RESPONSE_DELETE_AFTER = 5  # Command-Antworten nach 5 Sekunden löschen
 # Memory-Management
 import gc  # Garbage Collector für Memory-Management
 
+# Semaphore für Preis-Checks (verhindert gleichzeitige Requests)
+price_check_semaphore = asyncio.Semaphore(1)
+
 # Nachrichten-Cleanup Hilfsfunktion
 async def delete_message_after_delay(message, delay_seconds=TEMP_MESSAGE_DELETE_AFTER):
     """Löscht eine Nachricht nach einer bestimmten Zeit"""
@@ -151,11 +154,24 @@ class DashboardView(discord.ui.View):
         )
         await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
-    @discord.ui.button(label=" Aktualisieren", style=discord.ButtonStyle.gray, custom_id="refresh_dashboard")
+    @discord.ui.button(label="🔄 Aktualisieren", style=discord.ButtonStyle.gray, custom_id="dashboard_refresh_button")
     async def refresh_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        # Prüfe, ob die Interaktion bereits beantwortet wurde
+        if interaction.response.is_done():
+            return
+            
         await interaction.response.defer()
         
-        # Führe Preis-Update durch
+        # Führe Preis-Update durch (respektiere Semaphore)
+        if price_check_semaphore.locked():
+            embed = discord.Embed(
+                title="⏳ Preis-Check läuft bereits",
+                description="Ein Preis-Check ist bereits in Bearbeitung. Bitte warte einen Moment.",
+                color=COLOR_NEUTRAL
+            )
+            await interaction.followup.send(embed=embed, ephemeral=True)
+            return
+        
         await self.bot.price_checker()
         
         # Aktualisiere Dashboard
@@ -258,6 +274,14 @@ class CreateAlertModal(discord.ui.Modal):
         style=discord.TextStyle.short,
         required=True
     )
+    
+    alert_type = discord.ui.TextInput(
+        label="Alert-Typ (über/unter)",
+        placeholder="über = benachrichtigen wenn Preis erreicht/überschritten wird, unter = benachrichtigen wenn Preis unterschritten wird",
+        style=discord.TextStyle.short,
+        required=True,
+        default="über"
+    )
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.defer()
@@ -269,6 +293,23 @@ class CreateAlertModal(discord.ui.Modal):
                 embed = discord.Embed(
                     title="❌ Ungültiger Preis",
                     description=f"**{self.price.value}** ist kein gültiger Preis.\n\n**Beispiele:**\n• `50k` = 50.000 Coins\n• `1.5m` = 1.500.000 Coins\n• `250000` = 250.000 Coins",
+                    color=COLOR_DOWN
+                )
+                await interaction.followup.send(embed=embed, ephemeral=True)
+                return
+            
+            # Parse Alert-Typ
+            alert_type_input = str(self.alert_type.value).lower().strip()
+            is_above_alert = True  # Default
+            
+            if alert_type_input in ['unter', 'below', 'less', '<', 'kleiner']:
+                is_above_alert = False
+            elif alert_type_input in ['über', 'ueber', 'above', 'more', '>', 'größer', 'groesser']:
+                is_above_alert = True
+            else:
+                embed = discord.Embed(
+                    title="❌ Ungültiger Alert-Typ",
+                    description=f"**{self.alert_type.value}** ist kein gültiger Alert-Typ.\n\n**Gültige Werte:**\n• `über` - benachrichtigen wenn Preis erreicht/überschritten wird\n• `unter` - benachrichtigen wenn Preis unterschritten wird",
                     color=COLOR_DOWN
                 )
                 await interaction.followup.send(embed=embed, ephemeral=True)
@@ -290,16 +331,27 @@ class CreateAlertModal(discord.ui.Modal):
                 await interaction.followup.send(embed=embed, ephemeral=True)
                 return
             
-            # Setze Alert
-            player_found.alert_above = parsed_price
-            player_found.alert_below = None
+            # Setze Alert basierend auf Typ
+            if is_above_alert:
+                player_found.alert_above = parsed_price
+                player_found.alert_below = None
+                alert_description = f"Du wirst benachrichtigt wenn **{player_found.name}** {parsed_price:,} Coins erreicht oder überschreitet."
+            else:
+                player_found.alert_below = parsed_price
+                player_found.alert_above = None
+                alert_description = f"Du wirst benachrichtigt wenn **{player_found.name}** unter {parsed_price:,} Coins fällt."
+                
             player_found.alert_user_id = self.user_id
             
             # Aktualisiere Config
             for config_player in self.bot.config.get('players', []):
                 if config_player.get('url') == player_found.url:
-                    config_player['alert_above'] = parsed_price
-                    config_player['alert_below'] = None
+                    if is_above_alert:
+                        config_player['alert_above'] = parsed_price
+                        config_player['alert_below'] = None
+                    else:
+                        config_player['alert_below'] = parsed_price  
+                        config_player['alert_above'] = None
                     config_player['alert_user_id'] = self.user_id
                     break
             
@@ -307,17 +359,23 @@ class CreateAlertModal(discord.ui.Modal):
             
             # Erfolgsmeldung
             current_price = self.bot.state.get(player_found.url, {}).get('price', 0)
-            status_emoji = "🟢" if isinstance(current_price, int) and current_price >= parsed_price else "🔴"
+            
+            if is_above_alert:
+                status_emoji = "🟢" if isinstance(current_price, int) and current_price >= parsed_price else "🔴"
+                alert_info = f"📈 **Alert bei**: Über {parsed_price:,} Coins"
+            else:
+                status_emoji = "🟢" if isinstance(current_price, int) and current_price <= parsed_price else "🔴"
+                alert_info = f"📉 **Alert bei**: Unter {parsed_price:,} Coins"
             
             embed = discord.Embed(
                 title="✅ Alert erfolgreich gesetzt!",
-                description=f"Du wirst benachrichtigt wenn **{player_found.name}** {parsed_price:,} Coins erreicht oder überschreitet.",
+                description=alert_description,
                 color=COLOR_UP
             )
             
             embed.add_field(
                 name="📊 Status",
-                value=f"{status_emoji} **Aktuell**: {current_price:,} Coins\n📈 **Alert bei**: {parsed_price:,} Coins",
+                value=f"{status_emoji} **Aktuell**: {current_price:,} Coins\n{alert_info}",
                 inline=False
             )
             
@@ -346,9 +404,9 @@ class DeleteAlertView(discord.ui.View):
         for i, player in enumerate(user_alerts[:25]):
             alerts = []
             if getattr(player, 'alert_above', None):
-                alerts.append(f">{player.alert_above:,}")
+                alerts.append(f"Über {player.alert_above:,}")
             if getattr(player, 'alert_below', None):
-                alerts.append(f"<{player.alert_below:,}")
+                alerts.append(f"Unter {player.alert_below:,}")
             
             options.append(discord.SelectOption(
                 label=player.name,
@@ -1234,102 +1292,108 @@ class FutBinBot(commands.Bot):
         if not self.players:
             return
         
-        start_time = time.time()
-        logging.info(f"Starte Preis-Check für {len(self.players)} Spieler...")
-        
-        changes = []
-        errors = []
-        successful_checks = 0
-        
-        for i, player in enumerate(self.players):
-            try:
-                # Rate Limiting: Pause zwischen Requests
-                if i > 0:
-                    await asyncio.sleep(SLEEP_BETWEEN)
-                
-                # Timeout für einzelnen Player
+        # Verhindere gleichzeitige Preis-Checks
+        if price_check_semaphore.locked():
+            logging.info("Preis-Check übersprungen - bereits in Bearbeitung")
+            return
+            
+        async with price_check_semaphore:
+            start_time = time.time()
+            logging.info(f"Starte Preis-Check für {len(self.players)} Spieler...")
+            
+            changes = []
+            errors = []
+            successful_checks = 0
+            
+            for i, player in enumerate(self.players):
                 try:
-                    html = await asyncio.wait_for(
-                        self.fetch_player_page(player.url), 
-                        timeout=REQUEST_TIMEOUT
-                    )
-                except asyncio.TimeoutError:
-                    logging.warning(f"Timeout für {player.name} ({player.url})")
-                    errors.append(f"Timeout: {player.name}")
-                    continue
-                
-                if not html:
-                    errors.append(f"Keine Daten: {player.name}")
-                    continue
-                
-                # Parse mit Fehlerbehandlung
-                try:
-                    parsed = self.parse_price_and_image(html)
-                    new_price = parsed.get('price')
+                    # Rate Limiting: Pause zwischen Requests
+                    if i > 0:
+                        await asyncio.sleep(SLEEP_BETWEEN)
                     
-                    if new_price is None:
-                        logging.warning(f"Kein Preis gefunden für {player.name}")
-                        errors.append(f"Kein Preis: {player.name}")
+                    # Timeout für einzelnen Player
+                    try:
+                        html = await asyncio.wait_for(
+                            self.fetch_player_page(player.url), 
+                            timeout=REQUEST_TIMEOUT
+                        )
+                    except asyncio.TimeoutError:
+                        logging.warning(f"Timeout für {player.name} ({player.url})")
+                        errors.append(f"Timeout: {player.name}")
                         continue
                     
-                    # Preis-Validierung (unrealistische Preise abfangen)
-                    if new_price < 0 or new_price > 50_000_000:  # Max 50M Coins
-                        logging.warning(f"Unrealistischer Preis für {player.name}: {new_price}")
-                        errors.append(f"Unrealistischer Preis: {player.name}")
+                    if not html:
+                        errors.append(f"Keine Daten: {player.name}")
                         continue
                     
-                    successful_checks += 1
+                    # Parse mit Fehlerbehandlung
+                    try:
+                        parsed = self.parse_price_and_image(html)
+                        new_price = parsed.get('price')
+                        
+                        if new_price is None:
+                            logging.warning(f"Kein Preis gefunden für {player.name}")
+                            errors.append(f"Kein Preis: {player.name}")
+                            continue
+                        
+                        # Preis-Validierung (unrealistische Preise abfangen)
+                        if new_price < 0 or new_price > 50_000_000:  # Max 50M Coins
+                            logging.warning(f"Unrealistischer Preis für {player.name}: {new_price}")
+                            errors.append(f"Unrealistischer Preis: {player.name}")
+                            continue
+                        
+                        successful_checks += 1
+                        
+                        # Prüfe auf signifikante Änderungen
+                        if self.price_changed(player, new_price):
+                            old_price = self.state.get(player.url, {}).get('price')
+                            changes.append({
+                                'name': player.name,
+                                'url': player.url,
+                                'old_price': old_price,
+                                'new_price': new_price,
+                                'image': parsed.get('image')
+                            })
+                            logging.info(f"Preisänderung erkannt: {player.name} {old_price} -> {new_price}")
+                        
+                        # State aktualisieren (auch bei kleinen Änderungen)
+                        self.update_state(player, new_price, parsed.get('image'))
+                        
+                    except Exception as parse_error:
+                        logging.error(f"Parse-Fehler für {player.name}: {parse_error}")
+                        errors.append(f"Parse-Fehler: {player.name}")
+                        continue
                     
-                    # Prüfe auf signifikante Änderungen
-                    if self.price_changed(player, new_price):
-                        old_price = self.state.get(player.url, {}).get('price')
-                        changes.append({
-                            'name': player.name,
-                            'url': player.url,
-                            'old_price': old_price,
-                            'new_price': new_price,
-                            'image': parsed.get('image')
-                        })
-                        logging.info(f"Preisänderung erkannt: {player.name} {old_price} -> {new_price}")
-                    
-                    # State aktualisieren (auch bei kleinen Änderungen)
-                    self.update_state(player, new_price, parsed.get('image'))
-                    
-                except Exception as parse_error:
-                    logging.error(f"Parse-Fehler für {player.name}: {parse_error}")
-                    errors.append(f"Parse-Fehler: {player.name}")
+                except Exception as e:
+                    logging.error(f"Unbekannter Fehler beim Prüfen von {player.name}: {e}")
+                    errors.append(f"Fehler: {player.name}")
                     continue
-                
-            except Exception as e:
-                logging.error(f"Unbekannter Fehler beim Prüfen von {player.name}: {e}")
-                errors.append(f"Fehler: {player.name}")
-                continue
-        
-        # Speichere State
-        try:
-            self._save_state()
-        except Exception as e:
-            logging.error(f"Fehler beim Speichern des States: {e}")
-        
-        # Performance-Logging
-        duration = time.time() - start_time
-        logging.info(f"Preis-Check abgeschlossen: {successful_checks}/{len(self.players)} erfolgreich in {duration:.1f}s")
-        
-        if errors:
-            logging.warning(f"Fehler bei {len(errors)} Spielern: {', '.join(errors[:5])}")
-        
-        # Sende Änderungen mit Fehlerbehandlung
-        if changes and self.dashboard_channel:
+            
+            # Speichere State
             try:
-                await self.send_price_changes(changes)
+                self._save_state()
             except Exception as e:
-                logging.error(f"Fehler beim Senden der Preisänderungen: {e}")
-        
-        # Auto-Recovery: Wenn mehr als 50% Fehler, reduziere temporär die Check-Frequenz
-        error_rate = len(errors) / len(self.players) if self.players else 0
-        if error_rate > 0.5:
-            logging.warning(f"Hohe Fehlerrate ({error_rate:.1%}), reduziere temporär Check-Frequenz")
-            await asyncio.sleep(60)  # Extra 60s Pause
+                logging.error(f"Fehler beim Speichern des States: {e}")
+            
+            # Performance-Logging
+            duration = time.time() - start_time
+            logging.info(f"Preis-Check abgeschlossen: {successful_checks}/{len(self.players)} erfolgreich in {duration:.1f}s")
+            
+            if errors:
+                logging.warning(f"Fehler bei {len(errors)} Spielern: {', '.join(errors[:5])}")
+            
+            # Sende Änderungen mit Fehlerbehandlung
+            if changes and self.dashboard_channel:
+                try:
+                    await self.send_price_changes(changes)
+                except Exception as e:
+                    logging.error(f"Fehler beim Senden der Preisänderungen: {e}")
+            
+            # Auto-Recovery: Wenn mehr als 50% Fehler, reduziere temporär die Check-Frequenz
+            error_rate = len(errors) / len(self.players) if self.players else 0
+            if error_rate > 0.5:
+                logging.warning(f"Hohe Fehlerrate ({error_rate:.1%}), reduziere temporär Check-Frequenz")
+                await asyncio.sleep(60)  # Extra 60s Pause
 
     async def send_price_changes(self, changes: List[Dict[str, Any]]):
         """Sendet Preisänderungen mit verbesserter Fehlerbehandlung"""
@@ -2045,6 +2109,11 @@ async def set_dashboard(interaction: discord.Interaction):
 @bot.tree.command(name="dashboard", description="Erstellt ein neues Dashboard (löscht das alte)")
 async def refresh_dashboard(interaction: discord.Interaction):
     """Erstellt ein neues Dashboard und löscht das alte"""
+    
+    # Prüfe, ob die Interaktion bereits beantwortet wurde
+    if interaction.response.is_done():
+        return
+        
     await interaction.response.defer()
     
     try:
@@ -2414,8 +2483,8 @@ async def test_bot(interaction: discord.Interaction):
         await interaction.response.send_message(f"❌ Fehler: {e}", ephemeral=True)
 
 @bot.tree.command(name="set_alert", description="Setzt einen Preis-Alert für einen Spieler")
-async def set_alert(interaction: discord.Interaction, player_name: str, price: str):
-    """Setzt einen Preis-Alert für einen Spieler (z.B. /set_alert Kane 50k)"""
+async def set_alert(interaction: discord.Interaction, player_name: str, price: str, alert_type: str = "über"):
+    """Setzt einen Preis-Alert für einen Spieler (z.B. /set_alert Kane 50k über)"""
     await interaction.response.defer()
     
     try:
@@ -2425,6 +2494,23 @@ async def set_alert(interaction: discord.Interaction, player_name: str, price: s
             embed = discord.Embed(
                 title="❌ Ungültiger Preis",
                 description=f"**{price}** ist kein gültiger Preis.\n\n**Beispiele:**\n• `50k` = 50.000 Coins\n• `1.5m` = 1.500.000 Coins\n• `250000` = 250.000 Coins",
+                color=COLOR_DOWN
+            )
+            await interaction.followup.send(embed=embed, ephemeral=True)
+            return
+        
+        # Parse Alert-Typ
+        alert_type_lower = alert_type.lower().strip()
+        is_above_alert = True  # Default
+        
+        if alert_type_lower in ['unter', 'below', 'less', '<', 'kleiner']:
+            is_above_alert = False
+        elif alert_type_lower in ['über', 'ueber', 'above', 'more', '>', 'größer', 'groesser']:
+            is_above_alert = True
+        else:
+            embed = discord.Embed(
+                title="❌ Ungültiger Alert-Typ",
+                description=f"**{alert_type}** ist kein gültiger Alert-Typ.\n\n**Gültige Werte:**\n• `über` - benachrichtigen wenn Preis erreicht/überschritten wird\n• `unter` - benachrichtigen wenn Preis unterschritten wird",
                 color=COLOR_DOWN
             )
             await interaction.followup.send(embed=embed, ephemeral=True)
@@ -2446,16 +2532,26 @@ async def set_alert(interaction: discord.Interaction, player_name: str, price: s
             await interaction.followup.send(embed=embed, ephemeral=True)
             return
         
-        # Setze Alert (immer "above" - erreicht oder überschritten)
-        player_found.alert_above = parsed_price
-        player_found.alert_below = None  # Entferne "below" Alert falls vorhanden
+        # Setze Alert basierend auf Typ
+        if is_above_alert:
+            player_found.alert_above = parsed_price
+            player_found.alert_below = None
+            alert_description = f"Du wirst benachrichtigt wenn **{player_found.name}** {parsed_price:,} Coins erreicht oder überschreitet."
+        else:
+            player_found.alert_below = parsed_price
+            player_found.alert_above = None
+            alert_description = f"Du wirst benachrichtigt wenn **{player_found.name}** unter {parsed_price:,} Coins fällt."
         player_found.alert_user_id = interaction.user.id
         
         # Aktualisiere Konfiguration
         for config_player in bot.config.get('players', []):
             if config_player.get('url') == player_found.url:
-                config_player['alert_above'] = parsed_price
-                config_player['alert_below'] = None
+                if is_above_alert:
+                    config_player['alert_above'] = parsed_price
+                    config_player['alert_below'] = None
+                else:
+                    config_player['alert_below'] = parsed_price  
+                    config_player['alert_above'] = None
                 config_player['alert_user_id'] = interaction.user.id
                 break
         
@@ -2463,17 +2559,23 @@ async def set_alert(interaction: discord.Interaction, player_name: str, price: s
         
         # Erfolgsmeldung
         current_price = bot.state.get(player_found.url, {}).get('price', 0)
-        status_emoji = "🟢" if isinstance(current_price, int) and current_price >= parsed_price else "🔴"
+        
+        if is_above_alert:
+            status_emoji = "🟢" if isinstance(current_price, int) and current_price >= parsed_price else "🔴"
+            alert_info = f"📈 **Alert bei**: Über {parsed_price:,} Coins"
+        else:
+            status_emoji = "🟢" if isinstance(current_price, int) and current_price <= parsed_price else "🔴"
+            alert_info = f"📉 **Alert bei**: Unter {parsed_price:,} Coins"
         
         embed = discord.Embed(
             title="✅ Alert gesetzt!",
-            description=f"Du wirst benachrichtigt wenn **{player_found.name}** {parsed_price:,} Coins erreicht oder überschreitet.",
+            description=alert_description,
             color=COLOR_UP
         )
         
         embed.add_field(
             name="📊 Status",
-            value=f"{status_emoji} **Aktuell**: {current_price:,} Coins\n📈 **Alert bei**: {parsed_price:,} Coins",
+            value=f"{status_emoji} **Aktuell**: {current_price:,} Coins\n{alert_info}",
             inline=False
         )
         
