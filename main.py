@@ -11,7 +11,6 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 import yaml
-import shutil
 import gc  # Garbage Collector für Memory-Management
 import threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -65,6 +64,7 @@ def start_health_server():
 
 BOT_TOKEN = "MTQxOTMwMjc3NzQ5NDA0ODc2OA.G9vPX_.TLBWBZLqxMKXMZdLozX1ZSqvMTsfCQ1d8DrgYQ"
 
+
 # FutBin Tracking Konfiguration
 BASE_DIR = Path(__file__).resolve().parent
 CONFIG_FILE = "config/bot_config.yaml"
@@ -81,8 +81,25 @@ DASHBOARD_UPDATE_INTERVAL = 300  # 5 Minuten in Sekunden (erhöht für Discloud)
 PRICE_CHECK_INTERVAL = 120      # 2 Minuten zwischen Preis-Checks (erhöht)
 DASHBOARD_CHANNEL_ID = None     # Wird über Command gesetzt
 
+# Nachrichten-Cleanup Konfiguration
+TEMP_MESSAGE_DELETE_AFTER = 10  # Temporäre Nachrichten nach 10 Sekunden löschen
+COMMAND_RESPONSE_DELETE_AFTER = 5  # Command-Antworten nach 5 Sekunden löschen
+
 # Memory-Management
 import gc  # Garbage Collector für Memory-Management
+
+# Nachrichten-Cleanup Hilfsfunktion
+async def delete_message_after_delay(message, delay_seconds=TEMP_MESSAGE_DELETE_AFTER):
+    """Löscht eine Nachricht nach einer bestimmten Zeit"""
+    try:
+        await asyncio.sleep(delay_seconds)
+        await message.delete()
+    except discord.NotFound:
+        pass  # Nachricht bereits gelöscht
+    except discord.Forbidden:
+        logging.warning("Keine Berechtigung zum Löschen der Nachricht")
+    except Exception as e:
+        logging.error(f"Fehler beim Löschen der Nachricht: {e}")
 
 # Farben für Embeds
 COLOR_UP = 0x2ecc71       # Grün für Preisanstieg
@@ -617,6 +634,11 @@ class FutBinBot(commands.Bot):
         global DASHBOARD_CHANNEL_ID
         DASHBOARD_CHANNEL_ID = settings.get('dashboard_channel_id')
         
+        # Lade Dashboard-Message-ID falls vorhanden
+        self.dashboard_message_id = settings.get('dashboard_message_id')
+        if self.dashboard_message_id:
+            logging.info(f"Dashboard-Message-ID aus Config geladen: {self.dashboard_message_id}")
+        
         self.players = [
             PlayerConfig(
                 name=p.get('name', ''),
@@ -1013,27 +1035,9 @@ class FutBinBot(commands.Bot):
         return None
 
     def _save_state(self):
-        """Speichert den aktuellen Zustand mit Backup-Mechanismus"""
+        """Speichert den aktuellen Zustand ohne Backup"""
         try:
-            # Erstelle Backup des aktuellen States
-            if self.state_path.exists():
-                backup_path = str(self.state_path) + f".backup_{int(time.time())}"
-                try:
-                    import shutil
-                    shutil.copy2(self.state_path, backup_path)
-                    
-                    # Halte nur die letzten 5 Backups
-                    backup_files = sorted([
-                        f for f in self.state_path.parent.glob(f"{self.state_path.name}.backup_*")
-                    ], key=lambda x: x.stat().st_mtime, reverse=True)
-                    
-                    for old_backup in backup_files[5:]:
-                        old_backup.unlink()
-                        
-                except Exception as backup_error:
-                    logging.warning(f"Backup-Erstellung fehlgeschlagen: {backup_error}")
-            
-            # Speichere neuen State
+            # Speichere State direkt (ohne Backup)
             tmp_path = str(self.state_path) + ".tmp"
             with open(tmp_path, 'w', encoding='utf-8') as f:
                 json.dump(self.state, f, ensure_ascii=False, indent=2)
@@ -1043,19 +1047,13 @@ class FutBinBot(commands.Bot):
             
         except Exception as e:
             logging.error(f"Kritischer Fehler beim Speichern des States: {e}")
-            # Versuche Recovery vom Backup
+            # Fallback: Versuche direktes Schreiben
             try:
-                backup_files = sorted([
-                    f for f in self.state_path.parent.glob(f"{self.state_path.name}.backup_*")
-                ], key=lambda x: x.stat().st_mtime, reverse=True)
-                
-                if backup_files:
-                    logging.info(f"Versuche Recovery vom Backup: {backup_files[0]}")
-                    import shutil
-                    shutil.copy2(backup_files[0], self.state_path)
-                    
-            except Exception as recovery_error:
-                logging.error(f"State-Recovery fehlgeschlagen: {recovery_error}")
+                with open(self.state_path, 'w', encoding='utf-8') as f:
+                    json.dump(self.state, f, ensure_ascii=False, indent=2)
+            except Exception as fallback_error:
+                logging.error(f"Fallback-Speichern fehlgeschlagen: {fallback_error}")
+                # State im Memory behalten, aber keine Persistierung möglich
 
     def price_changed(self, player: PlayerConfig, new_price: Optional[int]) -> bool:
         """Überprüft ob sich der Preis signifikant geändert hat"""
@@ -1651,8 +1649,31 @@ class FutBinBot(commands.Bot):
             self.dashboard_message_id = message.id
             logging.info(f"Neues Dashboard erstellt - Message ID: {self.dashboard_message_id}")
             
+            # Speichere die neue Message-ID in der Config
+            await self.save_dashboard_message_id()
+            
         except Exception as e:
             logging.error(f"Fehler beim Aktualisieren des Dashboards: {e}")
+
+    async def save_dashboard_message_id(self):
+        """Speichert die Dashboard-Message-ID in der Config"""
+        try:
+            # Config laden
+            config_data = self.config.copy()
+            if 'settings' not in config_data:
+                config_data['settings'] = {}
+            
+            # Dashboard-Message-ID aktualisieren
+            config_data['settings']['dashboard_message_id'] = self.dashboard_message_id
+            
+            # Config speichern
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+                yaml.dump(config_data, f, default_flow_style=False, allow_unicode=True)
+                
+            logging.info(f"Dashboard-Message-ID {self.dashboard_message_id} in Config gespeichert")
+            
+        except Exception as e:
+            logging.error(f"Fehler beim Speichern der Dashboard-Message-ID: {e}")
 
     async def _create_detailed_portfolio_stats(self, players_list, category_filter=None):
         """Erstellt detaillierte Portfolio-Statistiken für gefilterte Spieler"""
@@ -1866,39 +1887,6 @@ class FutBinBot(commands.Bot):
         
         return "\n".join(lines)
 
-    async def update_dashboard(self):
-        """Aktualisiert das Dashboard"""
-        if not self.dashboard_channel:
-            logging.warning("Dashboard Channel nicht gesetzt - überspringe Update")
-            return
-        
-        embed = await self.create_dashboard_embed()
-        view = DashboardView(self)
-        
-        try:
-            # Wenn es bereits eine Dashboard-Nachricht gibt, editiere sie
-            if self.dashboard_message_id:
-                try:
-                    message = await self.dashboard_channel.fetch_message(self.dashboard_message_id)
-                    await message.edit(embed=embed, view=view)
-                    logging.info("Dashboard erfolgreich aktualisiert")
-                    return
-                except discord.NotFound:
-                    # Nachricht wurde gelöscht, erstelle neue
-                    logging.warning("Dashboard-Nachricht nicht gefunden - erstelle neue")
-                    self.dashboard_message_id = None
-                except Exception as e:
-                    logging.error(f"Fehler beim Editieren der Dashboard-Nachricht: {e}")
-                    self.dashboard_message_id = None
-            
-            # Erstelle neue Dashboard-Nachricht
-            message = await self.dashboard_channel.send(embed=embed, view=view)
-            self.dashboard_message_id = message.id
-            logging.info(f"Neues Dashboard erstellt - Message ID: {self.dashboard_message_id}")
-            
-        except Exception as e:
-            logging.error(f"Fehler beim Aktualisieren des Dashboards: {e}")
-
 # Bot Instanz
 bot = FutBinBot()
 
@@ -2016,9 +2004,9 @@ async def set_dashboard(interaction: discord.Interaction):
     # Erstelle sofort ein Dashboard
     await bot.update_dashboard()
 
-@bot.tree.command(name="dashboard", description="Dashboard neu ausgeben/aktualisieren")
+@bot.tree.command(name="dashboard", description="Erstellt ein neues Dashboard (löscht das alte)")
 async def refresh_dashboard(interaction: discord.Interaction):
-    """Gibt das Dashboard neu aus"""
+    """Erstellt ein neues Dashboard und löscht das alte"""
     await interaction.response.defer()
     
     try:
@@ -2028,18 +2016,40 @@ async def refresh_dashboard(interaction: discord.Interaction):
             await interaction.followup.send("❌ Dashboard Channel nicht konfiguriert! Verwende `/set_dashboard` zuerst.", ephemeral=True)
             return
         
-        # Neue Dashboard-Nachricht erstellen
+        # Setze den Dashboard Channel falls noch nicht gesetzt
+        if not bot.dashboard_channel:
+            bot.dashboard_channel = dashboard_channel
+        
+        # Lösche die alte Dashboard-Nachricht falls vorhanden
+        if bot.dashboard_message_id:
+            try:
+                old_message = await dashboard_channel.fetch_message(bot.dashboard_message_id)
+                await old_message.delete()
+                logging.info(f"Alte Dashboard-Nachricht gelöscht - Message ID: {bot.dashboard_message_id}")
+            except discord.NotFound:
+                logging.info("Alte Dashboard-Nachricht bereits gelöscht oder nicht gefunden")
+            except Exception as e:
+                logging.warning(f"Konnte alte Dashboard-Nachricht nicht löschen: {e}")
+        
+        # Erstelle IMMER eine neue Dashboard-Nachricht
         embed = await bot.create_dashboard_embed()
         view = DashboardView(bot)
         
-        # Dashboard senden
+        # Dashboard senden (neue Nachricht)
         message = await dashboard_channel.send(embed=embed, view=view)
         
-        await interaction.followup.send(f"✅ Dashboard wurde in {dashboard_channel.mention} neu ausgegeben!", ephemeral=True)
+        # Setze die neue Message-ID als aktive Dashboard-Message
+        bot.dashboard_message_id = message.id
+        await bot.save_dashboard_message_id()
+        
+        logging.info(f"Neues Dashboard erstellt via Command - Message ID: {message.id}")
+        
+        # Temporäre Bestätigung (wird nach 5 Sekunden gelöscht)
+        temp_msg = await interaction.followup.send(f"✅ Neues Dashboard erstellt! Das alte wurde entfernt.", ephemeral=True)
         
     except Exception as e:
-        print(f"Fehler beim Dashboard-Update: {e}")
-        await interaction.followup.send(f"❌ Fehler beim Dashboard-Update: {str(e)}", ephemeral=True)
+        logging.error(f"Fehler beim Erstellen eines neuen Dashboards: {e}")
+        await interaction.followup.send(f"❌ Fehler beim Erstellen des Dashboards: {str(e)}", ephemeral=True)
 
 @bot.tree.command(name="add_player", description="Fügt einen Spieler zur Überwachung hinzu")
 async def add_player(interaction: discord.Interaction, futbin_url: str):
