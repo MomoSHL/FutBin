@@ -1068,20 +1068,25 @@ class FutBinBot(commands.Bot):
         if player_version and player_version.lower() != "normal":
             title_suffix += f" [{player_version}]"
             
+        sales_count = len(sales[:10])
         embed = discord.Embed(
-            title=f"🛒 Letzte 10 Verkäufe (PC): {player_name}{title_suffix}",
+            title=f"🛒 Letzte {sales_count} Verkäufe (PC): {player_name}{title_suffix}",
             url=sales_result.get('sales_url', player_url),
             color=0x2ecc71,
             timestamp=datetime.now()
         )
         
-        if player_image:
-            embed.set_thumbnail(url=player_image)
+        final_image = player_image or sales_result.get('image')
+        if final_image:
+            embed.set_thumbnail(url=final_image)
             
         # Build table of sales
+        has_timestamps = any(s.get('timestamp') for s in sales[:10])
+        col2_name = "Datum / Zeit" if has_timestamps else "Eintrag"
+        
         table_lines = [
             f"```",
-            f"{'Nr.':<4}{'Datum / Zeit':<18}{'Preis':>11}  {'Trend':<8}",
+            f"{'Nr.':<4}{col2_name:<18}{'Preis':>11}  {'Trend':<8}",
             f"─" * 43
         ]
         

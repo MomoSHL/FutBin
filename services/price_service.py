@@ -422,140 +422,200 @@ class PriceService:
             return []
 
     async def fetch_player_sales(self, url_or_id: str, platform: Optional[str] = None) -> Dict[str, Any]:
-        """Fetch the last sales for a player from Futbin (defaults to PC platform)"""
+        """
+        Fetch the last sales for a player from Futbin (defaults to PC platform).
+        Uses a two-layer strategy:
+        1. Query the live sales page (/sales/) with Highcharts stock chart.
+        2. Fallback to player page (/player/) extracting data-recent-prices from the PC price box.
+        """
         target_platform = (platform or getattr(self, 'platform', 'pc')).lower()
         if target_platform == "console":
             target_platform = "ps"
             
-        # Build sales URL
+        # Build normalized URLs
         if str(url_or_id).startswith(('http://', 'https://')):
             clean_url = re.sub(r'/market/?$', '', str(url_or_id))
-            clean_url = re.sub(r'/player/', '/sales/', clean_url)
+            clean_url = re.sub(r'/sales/', '/player/', clean_url)
             clean_url = clean_url.split('?')[0]
-            sales_url = f"{clean_url}?platform={target_platform}"
+            player_url = clean_url
+            sales_url = re.sub(r'/player/', '/sales/', clean_url) + f"?platform={target_platform}"
         else:
+            player_url = f"https://www.futbin.com/26/player/{url_or_id}"
             sales_url = f"https://www.futbin.com/26/sales/{url_or_id}?platform={target_platform}"
             
-        self._logger.info(f"Fetching sales from {sales_url}")
+        self._logger.info(f"Fetching sales from {sales_url} (Player URL: {player_url})")
         
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5'
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Referer': player_url
         }
         
+        sales_data = []
+        avg_price = None
+        player_name = None
+        player_image = None
+        
+        # Strategy 1: Fetch and parse Highcharts from live sales page
         try:
             response = await self.http_client.get(sales_url, headers=headers)
-            html_text = await response.text()
-            
-            if not html_text or len(html_text) < 200:
-                return {
-                    'success': False,
-                    'sales': [],
-                    'error': 'Leere Antwort von Futbin erhalten',
-                    'sales_url': sales_url,
-                    'platform': target_platform
-                }
-            
-            marker = "highchartsStockChart("
-            sales_data = []
-            avg_price = None
-            player_name = None
-            
-            # Extract player name from page title if possible
-            try:
-                soup = BeautifulSoup(html_text, 'html.parser')
-                title_el = soup.select_one('title')
-                if title_el:
-                    title_text = title_el.get_text(strip=True)
-                    match_title = re.search(r'(?:EA FC \d+|FIFA \d+)?\s*(.*?)\s+Sales history', title_text, re.I)
-                    if match_title:
-                        player_name = match_title.group(1).strip()
-            except Exception:
-                pass
+            if response.status == 200:
+                html_text = await response.text()
                 
-            idx = 0
-            while True:
-                pos = html_text.find(marker, idx)
-                if pos == -1:
-                    break
-                comma_pos = html_text.find(",", pos + len(marker))
-                if comma_pos == -1:
-                    idx = pos + len(marker)
-                    continue
-                brace_start = html_text.find("{", comma_pos)
-                if brace_start == -1:
-                    idx = comma_pos + 1
-                    continue
-                
-                count = 0
-                in_string = False
-                escape = False
-                brace_end = -1
-                for i in range(brace_start, len(html_text)):
-                    c = html_text[i]
-                    if escape:
-                        escape = False
-                        continue
-                    if c == '\\':
-                        escape = True
-                        continue
-                    if c == '"':
-                        in_string = not in_string
-                        continue
-                    if not in_string:
-                        if c == '{':
-                            count += 1
-                        elif c == '}':
-                            count -= 1
-                            if count == 0:
-                                brace_end = i
-                                break
-                                
-                if brace_end != -1:
-                    json_str = html_text[brace_start:brace_end+1]
-                    try:
-                        chart_data = json.loads(json_str)
-                        chart_title = chart_data.get("title", "")
-                        if "sales" in chart_title.lower() or "live" in chart_title.lower():
-                            avg_price = chart_data.get("avg")
-                            series = chart_data.get("series", [])
-                            if series and "data" in series[0]:
-                                items = series[0]["data"]
-                                # In Highcharts data, the most recent sales are at the end (chronological order)
-                                # Take the last 10 items and reverse so the newest is first
-                                for item in reversed(items[-10:]):
-                                    change_val = None
-                                    if isinstance(item.get("change"), dict):
-                                        change_val = item["change"].get("valueString")
-                                    sales_data.append({
-                                        'date': item.get("name"),
-                                        'timestamp': item.get("x"),
-                                        'price': item.get("y"),
-                                        'change': change_val
-                                    })
-                                break
-                    except Exception as e:
-                        self._logger.debug(f"JSON parse error in highcharts: {e}")
-                    idx = brace_end + 1
-                else:
-                    idx = brace_start + 1
+                # Extract player name from page title
+                try:
+                    soup = BeautifulSoup(html_text, 'html.parser')
+                    title_el = soup.select_one('title')
+                    if title_el:
+                        title_text = title_el.get_text(strip=True)
+                        match_title = re.search(r'(?:EA FC \d+|FIFA \d+)?\s*(.*?)\s+Sales history', title_text, re.I)
+                        if match_title:
+                            player_name = match_title.group(1).strip()
+                except Exception:
+                    pass
                     
-            return {
-                'success': True,
-                'sales': sales_data,
-                'avg_price': avg_price,
-                'player_name': player_name,
-                'sales_url': sales_url,
-                'platform': target_platform
-            }
-            
+                marker = "highchartsStockChart("
+                idx = 0
+                while True:
+                    pos = html_text.find(marker, idx)
+                    if pos == -1:
+                        break
+                    comma_pos = html_text.find(",", pos + len(marker))
+                    if comma_pos == -1:
+                        idx = pos + len(marker)
+                        continue
+                    brace_start = html_text.find("{", comma_pos)
+                    if brace_start == -1:
+                        idx = comma_pos + 1
+                        continue
+                    
+                    count = 0
+                    in_string = False
+                    escape = False
+                    brace_end = -1
+                    for i in range(brace_start, len(html_text)):
+                        c = html_text[i]
+                        if escape:
+                            escape = False
+                            continue
+                        if c == '\\':
+                            escape = True
+                            continue
+                        if c == '"':
+                            in_string = not in_string
+                            continue
+                        if not in_string:
+                            if c == '{':
+                                count += 1
+                            elif c == '}':
+                                count -= 1
+                                if count == 0:
+                                    brace_end = i
+                                    break
+                                    
+                    if brace_end != -1:
+                        json_str = html_text[brace_start:brace_end+1]
+                        try:
+                            chart_data = json.loads(json_str)
+                            chart_title = chart_data.get("title", "")
+                            if "sales" in chart_title.lower() or "live" in chart_title.lower():
+                                avg_price = chart_data.get("avg")
+                                series = chart_data.get("series", [])
+                                if series and "data" in series[0]:
+                                    items = series[0]["data"]
+                                    for item in reversed(items[-10:]):
+                                        change_val = None
+                                        if isinstance(item.get("change"), dict):
+                                            change_val = item["change"].get("valueString")
+                                        sales_data.append({
+                                            'date': item.get("name"),
+                                            'timestamp': item.get("x"),
+                                            'price': item.get("y"),
+                                            'change': change_val
+                                        })
+                                    break
+                        except Exception as e:
+                            self._logger.debug(f"JSON parse error in highcharts: {e}")
+                        idx = brace_end + 1
+                    else:
+                        idx = brace_start + 1
         except Exception as e:
-            self._logger.error(f"Failed to fetch player sales from {sales_url}: {e}")
-            return {
-                'success': False,
-                'sales': [],
-                'error': str(e),
-                'sales_url': sales_url,
-                'platform': target_platform
-            }
+            self._logger.warning(f"Strategy 1 (sales page) error for {sales_url}: {e}")
+
+        # Strategy 2: Fallback to Player Page and extract data-recent-prices attribute
+        if not sales_data:
+            self._logger.info(f"Sales page returned no sales, falling back to player page {player_url}")
+            try:
+                p_resp = await self.http_client.get(player_url, headers=headers)
+                if p_resp.status == 200:
+                    p_html = await p_resp.text()
+                    p_soup = BeautifulSoup(p_html, 'html.parser')
+                    
+                    if not player_name:
+                        player_name = self._extract_name_from_soup(p_soup)
+                    player_image = self._extract_image_from_soup(p_soup)
+                    
+                    platform_class = "platform-pc-only" if target_platform == "pc" else "platform-ps-only"
+                    box = p_soup.select_one(f'.price-box.{platform_class}') or p_soup.select_one(f'.{platform_class}')
+                    
+                    prices = []
+                    if box:
+                        graph_el = box.select_one('[data-recent-prices]')
+                        if graph_el and graph_el.get('data-recent-prices'):
+                            raw_val = graph_el.get('data-recent-prices', '')
+                            prices = [int(p.strip()) for p in raw_val.split(',') if p.strip().isdigit()]
+                            
+                        if not prices:
+                            lowest_wrapper = box.select_one('.lowest-prices-wrapper')
+                            if lowest_wrapper:
+                                for p_el in lowest_wrapper.find_all(class_='price'):
+                                    txt = re.sub(r'[^\d]', '', p_el.get_text())
+                                    if txt.isdigit():
+                                        prices.append(int(txt))
+                                        
+                    # Global search in HTML if not found in platform box
+                    if not prices:
+                        m = re.search(rf'class="[^"]*{platform_class}[^"]*".*?data-recent-prices="([^"]+)"', p_html, re.DOTALL)
+                        if m:
+                            prices = [int(p.strip()) for p in m.group(1).split(',') if p.strip().isdigit()]
+                        else:
+                            m_any = re.search(r'data-recent-prices="([^"]+)"', p_html)
+                            if m_any:
+                                prices = [int(p.strip()) for p in m_any.group(1).split(',') if p.strip().isdigit()]
+                                
+                    if prices:
+                        if not avg_price and prices:
+                            avg_price = int(sum(prices) / len(prices))
+                            
+                        # Build formatted sales entries with trend calculations
+                        for idx, pr in enumerate(prices[:10], 1):
+                            trend_str = None
+                            if idx < len(prices):
+                                prev = prices[idx]
+                                if prev > 0:
+                                    diff = ((pr - prev) / prev) * 100
+                                    if diff > 0:
+                                        trend_str = f"+{diff:.1f}%"
+                                    elif diff < 0:
+                                        trend_str = f"{diff:.1f}%"
+                                    else:
+                                        trend_str = "0.0%"
+                            sales_data.append({
+                                'date': f"Verkauf #{idx}",
+                                'timestamp': None,
+                                'price': pr,
+                                'change': trend_str
+                            })
+            except Exception as e:
+                self._logger.error(f"Strategy 2 (player page fallback) error for {player_url}: {e}")
+
+        return {
+            'success': True if sales_data else False,
+            'sales': sales_data,
+            'avg_price': avg_price,
+            'player_name': player_name,
+            'image': player_image,
+            'sales_url': sales_url,
+            'platform': target_platform
+        }
