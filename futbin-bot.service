@@ -1,0 +1,32 @@
+[Unit]
+Description=FUTBin Discord Bot Service
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Benutzer anpassen (z. B. ubuntu, root oder dein Ubuntu-Nutzername)
+User=ubuntu
+Group=ubuntu
+
+# Arbeitsverzeichnis anpassen (Pfad zu deinem Bot-Ordner auf Ubuntu)
+WorkingDirectory=/home/ubuntu/botBin
+
+# Startbefehl mit der virtuellen Python-Umgebung
+ExecStart=/home/ubuntu/botBin/.venv/bin/python /home/ubuntu/botBin/main.py
+
+# Automatischer Neustart bei Fehlern oder Verbindungsabbrüchen
+Restart=always
+RestartSec=10
+
+# Umgebungsvariablen
+Environment=PYTHONUNBUFFERED=1
+Environment=LANG=C.UTF-8
+Environment=LC_ALL=C.UTF-8
+
+# Standard-Logging an journalctl
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

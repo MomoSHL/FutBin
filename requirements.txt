@@ -1,15 +1,21 @@
 # Discord Bot Dependencies
 discord.py>=2.3.0
 
-# Web Scraping & HTTP Requests
+# HTTP Clients
+aiohttp>=3.8.0
 requests>=2.31.0
+
+# Web Scraping
 beautifulsoup4>=4.12.0
 
 # Configuration & Data Handling
 PyYAML>=6.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+python-dotenv>=1.0.0
 
-# Asynchronous Programming (meist schon in Python enthalten, aber für Klarheit)
-asyncio
+# System monitoring
+psutil>=5.9
 
 # Standard Library Modules (bereits in Python enthalten - nur zur Dokumentation)
 # json

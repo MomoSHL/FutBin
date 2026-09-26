@@ -1,0 +1,14 @@
+services:
+  futbin-bot:
+    build: .
+    container_name: futbin-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+    ports:
+      - "8080:8080"

@@ -1,0 +1,21 @@
+# Environment secrets (Token niemals auf GitHub hochladen!)
+.env
+.env.local
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Logs
+logs/*.log
+*.log
+
+# Backups
+backups/

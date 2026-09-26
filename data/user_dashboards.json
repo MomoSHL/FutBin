@@ -1,0 +1,139 @@
+{
+  "280018417300406272_emre": {
+    "name": "emre",
+    "owner_id": 280018417300406272,
+    "player_urls": [
+      "https://www.futbin.com/26/player/225/william-saliba",
+      "https://www.futbin.com/26/player/132/kadidiatou-diani/market",
+      "https://www.futbin.com/26/player/234/viktor-gyokeres",
+      "https://www.futbin.com/26/player/111/aitana-bonmati-conca/market",
+      "https://www.futbin.com/26/player/85/lamine-yamal-nasraoui-ebana/market",
+      "https://www.futbin.com/26/player/18820/ayew"
+    ],
+    "created_at": "2025-09-27T12:48:37.046957",
+    "last_updated": "2025-10-07T08:14:13.296913",
+    "notes": "",
+    "is_active": true,
+    "dashboard_message_id": null,
+    "dashboard_channel_id": null,
+    "track_portfolio_value": true,
+    "currency_symbol": "💰",
+    "show_percentage_changes": true,
+    "show_24h_changes": true,
+    "purchase_prices": {
+      "https://www.futbin.com/26/player/225/william-saliba": 165000,
+      "https://www.futbin.com/26/player/111/aitana-bonmati-conca/market": 460000,
+      "https://www.futbin.com/26/player/85/lamine-yamal-nasraoui-ebana/market": 250000,
+      "https://www.futbin.com/26/player/18820/ayew": 530000
+    },
+    "purchase_dates": {
+      "https://www.futbin.com/26/player/225/william-saliba": "2025-09-29T21:49:48.883332",
+      "https://www.futbin.com/26/player/111/aitana-bonmati-conca/market": "2025-09-29T21:50:03.230976",
+      "https://www.futbin.com/26/player/85/lamine-yamal-nasraoui-ebana/market": "2025-09-29T21:50:14.388212",
+      "https://www.futbin.com/26/player/18820/ayew": "2025-09-29T21:50:28.713491"
+    },
+    "max_players_per_page": 10,
+    "sort_by": "price_desc",
+    "show_images": true,
+    "show_purchase_prices": true
+  },
+  "416353640073134082_new": {
+    "name": "new",
+    "owner_id": 416353640073134082,
+    "player_urls": [
+      "https://www.futbin.com/26/player/259/tijjani-reijnders/market",
+      "https://www.futbin.com/26/player/18922/benjamin-pavard/market",
+      "https://www.futbin.com/26/player/41/florian-wirtz",
+      "https://www.futbin.com/26/player/68/vitor-machado-ferreira",
+      "https://www.futbin.com/26/player/225/william-saliba",
+      "https://www.futbin.com/26/player/221/marcos-aoas-correa/market",
+      "https://www.futbin.com/26/player/243/claudia-pina-medina/market",
+      "https://www.futbin.com/26/player/251/ibrahima-konate"
+    ],
+    "created_at": "2025-09-29T21:16:35.949514",
+    "last_updated": "2025-10-07T08:14:13.299907",
+    "notes": "",
+    "is_active": true,
+    "dashboard_message_id": 1425012514185543792,
+    "dashboard_channel_id": 1424745377566953585,
+    "track_portfolio_value": true,
+    "currency_symbol": "💰",
+    "show_percentage_changes": true,
+    "show_24h_changes": true,
+    "purchase_prices": {
+      "https://www.futbin.com/26/player/259/tijjani-reijnders/market": 191000,
+      "https://www.futbin.com/26/player/18922/benjamin-pavard/market": 60000,
+      "https://www.futbin.com/26/player/41/florian-wirtz": 291000,
+      "https://www.futbin.com/26/player/238/nuno-alexandre-tavares-mendes/market": 192000,
+      "https://www.futbin.com/26/player/68/vitor-machado-ferreira": 89000,
+      "https://www.futbin.com/26/player/257/melchie-dumornay/market": 42000,
+      "https://www.futbin.com/26/player/225/william-saliba": 118000,
+      "https://www.futbin.com/26/player/221/marcos-aoas-correa/market": 50000,
+      "https://www.futbin.com/26/player/243/claudia-pina-medina/market": 4200
+    },
+    "purchase_dates": {
+      "https://www.futbin.com/26/player/259/tijjani-reijnders/market": "2025-10-03T10:36:10.622336",
+      "https://www.futbin.com/26/player/18922/benjamin-pavard/market": "2025-10-03T10:35:51.499248",
+      "https://www.futbin.com/26/player/41/florian-wirtz": "2025-10-03T10:36:27.637806",
+      "https://www.futbin.com/26/player/238/nuno-alexandre-tavares-mendes/market": "2025-10-03T10:36:58.286528",
+      "https://www.futbin.com/26/player/68/vitor-machado-ferreira": "2025-10-03T21:58:00.958313",
+      "https://www.futbin.com/26/player/257/melchie-dumornay/market": "2025-10-04T14:47:34.792285",
+      "https://www.futbin.com/26/player/225/william-saliba": "2025-10-04T16:18:22.128852",
+      "https://www.futbin.com/26/player/221/marcos-aoas-correa/market": "2025-10-04T21:07:37.663976",
+      "https://www.futbin.com/26/player/243/claudia-pina-medina/market": "2025-10-04T21:11:39.666834"
+    },
+    "max_players_per_page": 10,
+    "sort_by": "price_desc",
+    "show_images": true,
+    "show_purchase_prices": true
+  },
+  "416353640073134082_momo": {
+    "name": "Momo",
+    "owner_id": 416353640073134082,
+    "player_urls": [
+      "https://www.futbin.com/26/player/243/claudia-pina-medina/market",
+      "https://www.futbin.com/26/player/874/salma-paralluelo",
+      "https://www.futbin.com/26/player/41/florian-wirtz",
+      "https://www.futbin.com/26/player/132/diani",
+      "https://www.futbin.com/26/player/259/reijnders",
+      "https://www.futbin.com/26/player/68/vitor-machado-ferreira",
+      "https://www.futbin.com/26/player/17305/bacha",
+      "https://www.futbin.com/26/player/225/william-saliba",
+      "https://www.futbin.com/26/player/221/marquinhos"
+    ],
+    "created_at": "2025-10-06T14:58:38.495587",
+    "last_updated": "2025-10-07T08:48:37.033373",
+    "notes": "Importiert von FUTBin Squad 285792",
+    "is_active": true,
+    "dashboard_message_id": 1425012516811182091,
+    "dashboard_channel_id": 1424745377566953585,
+    "track_portfolio_value": true,
+    "currency_symbol": "💰",
+    "show_percentage_changes": true,
+    "show_24h_changes": true,
+    "purchase_prices": {
+      "https://www.futbin.com/26/player/243/claudia-pina-medina/market": 4200,
+      "https://www.futbin.com/26/player/68/vitor-machado-ferreira": 89000,
+      "https://www.futbin.com/26/player/225/william-saliba": 118000,
+      "https://www.futbin.com/26/player/41/florian-wirtz": 291000,
+      "https://www.futbin.com/26/player/874/salma-paralluelo": 84000,
+      "https://www.futbin.com/26/player/17305/bacha": 17500,
+      "https://www.futbin.com/26/player/259/reijnders": 191000,
+      "https://www.futbin.com/26/player/221/marquinhos": 50000
+    },
+    "purchase_dates": {
+      "https://www.futbin.com/26/player/243/claudia-pina-medina/market": "2025-10-06T15:00:24.945732",
+      "https://www.futbin.com/26/player/68/vitor-machado-ferreira": "2025-10-06T15:01:07.730636",
+      "https://www.futbin.com/26/player/225/william-saliba": "2025-10-06T15:01:19.823036",
+      "https://www.futbin.com/26/player/41/florian-wirtz": "2025-10-06T15:01:41.844739",
+      "https://www.futbin.com/26/player/874/salma-paralluelo": "2025-10-06T15:02:21.229945",
+      "https://www.futbin.com/26/player/17305/bacha": "2025-10-06T15:03:13.443355",
+      "https://www.futbin.com/26/player/259/reijnders": "2025-10-06T15:03:34.303925",
+      "https://www.futbin.com/26/player/221/marquinhos": "2025-10-06T15:04:07.710653"
+    },
+    "max_players_per_page": 10,
+    "sort_by": "price_desc",
+    "show_images": true,
+    "show_purchase_prices": true
+  }
+}

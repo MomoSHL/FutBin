@@ -3,35 +3,151 @@ players:
   name: Konaté
   url: https://www.futbin.com/26/player/251/ibrahima-konate
 - active: true
-  alert_above: 200000
-  alert_below: null
-  alert_user_id: 416353640073134082
-  category: Allgemein
-  name: Kane
-  url: https://www.futbin.com/26/player/18919/harry-kane
-- active: true
-  name: Karchaoui
-  url: https://www.futbin.com/26/player/104/sakina-karchaoui
-- active: true
   name: Abedi Pelé
   url: https://www.futbin.com/26/player/18820/ayew
 - active: true
   name: Saliba
   url: https://www.futbin.com/26/player/225/william-saliba
 - active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
   name: Marcos Llorente
+  notes: ''
+  threshold_percent: null
   url: https://www.futbin.com/26/player/18924/marcos-llorente-moreno
 - active: true
   name: Hakimi
   url: https://www.futbin.com/26/player/91/achraf-hakimi
 - active: true
-  name: Frimpong
-  url: https://www.futbin.com/26/player/331/jeremie-frimpong
+  name: Aitana Bonmatí
+  url: https://www.futbin.com/26/player/111/aitana-bonmati-conca/market
 - active: true
-  name: Marmoush
-  url: https://www.futbin.com/26/player/417/omar-marmoush
+  name: Lamine Yamal
+  url: https://www.futbin.com/26/player/85/lamine-yamal-nasraoui-ebana/market
+- active: true
+  name: Musiala
+  url: https://www.futbin.com/26/player/46/jamal-musiala/market
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
+  name: Gyökeres
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/234/viktor-gyokeres
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
+  name: de Jong
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/218/frenkie-de-jong/market
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
+  name: Nuno Mendes
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/238/nuno-alexandre-tavares-mendes/market
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
+  name: Pavard
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/18922/benjamin-pavard/market
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
+  name: Wirtz
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/41/florian-wirtz
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
+  name: Vitinha
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/68/vitor-machado-ferreira
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
+  name: Claudia Pina
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/243/claudia-pina-medina/market
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
+  name: Dumornay
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/257/melchie-dumornay/market
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Squad 285792
+  name: Salma Paralluelo
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/874/salma-paralluelo
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Squad 285792
+  name: Reijnders
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/259/reijnders
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Squad 285792
+  name: Bacha
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/17305/bacha
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Squad 285792
+  name: Marquinhos
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/221/marquinhos
+- active: true
+  alert_above: null
+  alert_below: null
+  alert_user_id: null
+  category: Allgemein
+  name: Diani
+  notes: ''
+  threshold_percent: null
+  url: https://www.futbin.com/26/player/132/kadidiatou-diani
 settings:
   dashboard_channel_id: 1419372663985541150
-  dashboard_message_id: 1420424627397853346
+  dashboard_message_id: 1421064772371222599
   global_threshold_percent: 5
-  platform: ps
+  platform: pc
