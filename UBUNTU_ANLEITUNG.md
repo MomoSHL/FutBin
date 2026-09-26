@@ -11,15 +11,46 @@ Diese Anleitung führt dich Schritt für Schritt durch die Einrichtung des Bots 
 
 ---
 
+## 👤 Schritt 0: Benutzer `fifa` anlegen & einrichten
+
+Führe diese Befehle als `root` oder mit deinem aktuellen `sudo`-Benutzer aus:
+
+```bash
+# 1. Benutzer 'fifa' erstellen und Passwort vergeben
+sudo adduser fifa
+
+# 2. Dem Benutzer sudo-Rechte (Admin-Rechte) zuweisen
+sudo usermod -aG sudo fifa
+
+# 3. (Optional) SSH-Schlüssel des aktuellen Benutzers für fifa freigeben
+sudo mkdir -p /home/fifa/.ssh
+sudo cp ~/.ssh/authorized_keys /home/fifa/.ssh/ 2>/dev/null || true
+sudo chown -R fifa:fifa /home/fifa/.ssh
+sudo chmod 700 /home/fifa/.ssh
+sudo chmod 600 /home/fifa/.ssh/authorized_keys 2>/dev/null || true
+
+# 4. Zum neuen Benutzer 'fifa' wechseln
+su - fifa
+```
+
+---
+
 ## 🚀 Option 1: Native Installation & 24/7-Betrieb mit `systemd` (Empfohlen)
 
-### 1. Projekt auf den Ubuntu-Server übertragen
+### 1. Projekt auf den Ubuntu-Server übertragen (als Benutzer `fifa`)
+In das Home-Verzeichnis von `fifa` wechseln:
+```bash
+cd /home/fifa
+```
 Falls du Git verwendest:
 ```bash
 git clone <DEIN_REPO_URL> botBin
 cd botBin
 ```
-Oder per SCP / SFTP in deinen Benutzerordner kopieren (z. B. `/home/ubuntu/botBin`).
+Oder per SCP von deinem Windows-PC direkt an `fifa` senden:
+```powershell
+scp -r "c:\Users\Momo\OneDrive - Charité - Universitätsmedizin Berlin\Dokumente\Pyth\Fifa\botBin" fifa@DEINE_SERVER_IP:/home/fifa/botBin
+```
 
 ---
 
@@ -64,10 +95,7 @@ Wenn der Bot online geht und das Dashboard initialisiert, beende ihn mit `STRG +
 ### 5. Als 24/7-Hintergrunddienst einrichten (`systemd`)
 Damit der Bot automatisch beim Serverstart hochfährt und bei Abstürzen neustartet:
 
-1. Passe in der Datei `futbin-bot.service` deinen Benutzernamen und Pfad an (falls dein Pfad nicht `/home/ubuntu/botBin` ist):
-   ```bash
-   nano futbin-bot.service
-   ```
+1. Die Service-Datei `futbin-bot.service` ist bereits für den Benutzer `fifa` und den Pfad `/home/fifa/botBin` vorkonfiguriert!
 2. Kopiere die Service-Datei in das Systemverzeichnis:
    ```bash
    sudo cp futbin-bot.service /etc/systemd/system/futbin-bot.service
