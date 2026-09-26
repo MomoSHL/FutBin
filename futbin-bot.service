@@ -5,14 +5,15 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=fifa
-Group=fifa
+# Benutzer anpassen (z. B. ubuntu, root oder dein Ubuntu-Nutzername)
+User=ubuntu
+Group=ubuntu
 
-# Arbeitsverzeichnis
-WorkingDirectory=/home/fifa/botBin
+# Arbeitsverzeichnis anpassen (Pfad zu deinem Bot-Ordner auf Ubuntu)
+WorkingDirectory=/home/ubuntu/botBin
 
 # Startbefehl mit der virtuellen Python-Umgebung
-ExecStart=/home/fifa/botBin/.venv/bin/python /home/fifa/botBin/main.py
+ExecStart=/home/ubuntu/botBin/.venv/bin/python /home/ubuntu/botBin/main.py
 
 # Automatischer Neustart bei Fehlern oder Verbindungsabbrüchen
 Restart=always
