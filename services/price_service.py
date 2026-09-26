@@ -457,9 +457,14 @@ class PriceService:
         player_name = None
         player_image = None
         
+        sales_status = None
+        player_status = None
+        error_msg = None
+        
         # Strategy 1: Fetch and parse Highcharts from live sales page
         try:
             response = await self.http_client.get(sales_url, headers=headers)
+            sales_status = response.status
             if response.status == 200:
                 html_text = await response.text()
                 
@@ -540,14 +545,19 @@ class PriceService:
                         idx = brace_end + 1
                     else:
                         idx = brace_start + 1
+            else:
+                self._logger.warning(f"Strategy 1 (sales page) returned HTTP {response.status} for {sales_url}")
+                error_msg = f"Verkaufsseite meldet HTTP {response.status}"
         except Exception as e:
             self._logger.warning(f"Strategy 1 (sales page) error for {sales_url}: {e}")
+            error_msg = str(e)
 
         # Strategy 2: Fallback to Player Page and extract data-recent-prices attribute
         if not sales_data:
             self._logger.info(f"Sales page returned no sales, falling back to player page {player_url}")
             try:
                 p_resp = await self.http_client.get(player_url, headers=headers)
+                player_status = p_resp.status
                 if p_resp.status == 200:
                     p_html = await p_resp.text()
                     p_soup = BeautifulSoup(p_html, 'html.parser')
@@ -607,8 +617,18 @@ class PriceService:
                                 'price': pr,
                                 'change': trend_str
                             })
+                        error_msg = None
+                    else:
+                        error_msg = f"Keine recent-prices im HTML gefunden (HTTP {p_resp.status})"
+                else:
+                    self._logger.warning(f"Strategy 2 (player page) returned HTTP {p_resp.status} for {player_url}")
+                    error_msg = f"Spielerseite meldet HTTP {p_resp.status}"
             except Exception as e:
                 self._logger.error(f"Strategy 2 (player page fallback) error for {player_url}: {e}")
+                error_msg = str(e)
+
+        if not sales_data and not error_msg:
+            error_msg = f"Keine Verkaufsdaten auf FUTBin gefunden (HTTP {sales_status or player_status or 'N/A'})"
 
         return {
             'success': True if sales_data else False,
@@ -616,6 +636,7 @@ class PriceService:
             'avg_price': avg_price,
             'player_name': player_name,
             'image': player_image,
+            'error': error_msg if not sales_data else None,
             'sales_url': sales_url,
             'platform': target_platform
         }
