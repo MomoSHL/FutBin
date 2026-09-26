@@ -5,6 +5,7 @@ from collections.abc import Awaitable
 from dataclasses import dataclass
 from typing import Any, Callable, Optional, Union
 
+import os
 import aiohttp
 import requests
 
@@ -93,11 +94,11 @@ class HttpClient:
             connector=connector,
         )
         if HAS_CURL_CFFI:
-            self._requests_session = cffi_requests.Session(impersonate="chrome124")
-            self._logger.info("HTTP client started with curl_cffi (Chrome impersonation enabled)")
+            self._requests_session = cffi_requests.Session(impersonate="chrome131")
+            self._logger.info("HTTP client started with curl_cffi (Chrome 131 impersonation enabled)")
         else:
             self._requests_session = requests.Session()
-            self._logger.info("HTTP client started with standard requests")
+            self._logger.warning("HTTP client started with standard requests (curl_cffi is NOT available!)")
 
     async def close(self) -> None:
         self._closing = True
@@ -110,26 +111,68 @@ class HttpClient:
         self._logger.info("HTTP client session closed")
 
     def _sync_request(self, method: str, url: str, headers: Optional[dict[str, str]] = None) -> AdaptedResponse:
-        merged_headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-            'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Referer': 'https://www.futbin.com/',
-        }
-        if self._default_headers:
-            merged_headers.update(self._default_headers)
-        if headers:
-            merged_headers.update(headers)
-            
-        if self._requests_session is not None:
+        proxy = os.getenv('FUTBIN_PROXY')
+        proxies = {"http": proxy, "https": proxy} if proxy else None
+
+        if HAS_CURL_CFFI:
+            # When using curl_cffi, NEVER override User-Agent or Sec-Ch-* headers!
+            # Cloudflare WAF detects discrepancies between Sec-Ch-Ua-Platform and User-Agent OS.
+            req_headers = {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Referer': 'https://www.futbin.com/',
+            }
+            if self._default_headers:
+                req_headers.update(self._default_headers)
+            if headers:
+                req_headers.update(headers)
+            # Remove any user-agent or client hints to allow curl_cffi to send authentic matching headers
+            for k in list(req_headers.keys()):
+                if k.lower() in ('user-agent', 'sec-ch-ua', 'sec-ch-ua-platform', 'sec-ch-ua-mobile', 'host'):
+                    del req_headers[k]
+
             sess = self._requests_session
-        elif HAS_CURL_CFFI:
-            sess = cffi_requests.Session(impersonate="chrome124")
+            if sess is None:
+                sess = cffi_requests.Session(impersonate="chrome131")
+                self._requests_session = sess
+
+            try:
+                resp = sess.request(method, url, headers=req_headers, timeout=self._timeout, proxies=proxies)
+                if resp.status_code != 403:
+                    return AdaptedResponse(resp)
+                self._logger.warning(f"HTTP 403 for {url} with chrome131. Attempting browser profile rotation...")
+            except Exception as e:
+                self._logger.warning(f"Request failed for {url} with chrome131 ({e}). Attempting rotation...")
+
+            # Fallback browser profiles (e.g. Safari does not send Client Hints, avoiding platform checks)
+            for fallback_imp in ["safari180", "firefox135", "edge101"]:
+                try:
+                    f_sess = cffi_requests.Session(impersonate=fallback_imp)
+                    resp = f_sess.request(method, url, headers=req_headers, timeout=self._timeout, proxies=proxies)
+                    if resp.status_code == 200:
+                        self._logger.info(f"Successfully fetched {url} using {fallback_imp} (HTTP 200)")
+                        self._requests_session = f_sess
+                        return AdaptedResponse(resp)
+                    else:
+                        self._logger.warning(f"Fallback {fallback_imp} returned HTTP {resp.status_code} for {url}")
+                except Exception as fe:
+                    self._logger.warning(f"Fallback {fallback_imp} error for {url}: {fe}")
+
+            return AdaptedResponse(resp)
         else:
-            sess = requests.Session()
-            
-        resp = sess.request(method, url, headers=merged_headers, timeout=self._timeout)
-        return AdaptedResponse(resp)
+            merged_headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Referer': 'https://www.futbin.com/',
+            }
+            if self._default_headers:
+                merged_headers.update(self._default_headers)
+            if headers:
+                merged_headers.update(headers)
+            sess = self._requests_session or requests.Session()
+            resp = sess.request(method, url, headers=merged_headers, timeout=self._timeout, proxies=proxies)
+            return AdaptedResponse(resp)
 
     async def _with_retry(
         self,
