@@ -8,6 +8,13 @@ from typing import Any, Callable, Optional, Union
 import aiohttp
 import requests
 
+try:
+    from curl_cffi import requests as cffi_requests
+    HAS_CURL_CFFI = True
+except ImportError:
+    cffi_requests = None
+    HAS_CURL_CFFI = False
+
 
 @dataclass(slots=True)
 class RetryConfig:
@@ -18,18 +25,18 @@ class RetryConfig:
 
 
 class AdaptedResponse:
-    """Wrapper around requests.Response providing an aiohttp-compatible async interface."""
+    """Wrapper around requests or curl_cffi Response providing an aiohttp-compatible async interface."""
 
-    def __init__(self, response: requests.Response):
+    def __init__(self, response: Any):
         self._resp = response
-        self.status = response.status_code
-        self.status_code = response.status_code
-        self.headers = response.headers
+        self.status = getattr(response, 'status_code', 200)
+        self.status_code = self.status
+        self.headers = getattr(response, 'headers', {})
 
     async def text(self, encoding: Optional[str] = None) -> str:
         if encoding:
             self._resp.encoding = encoding
-        elif not self._resp.encoding or self._resp.encoding.lower() == 'iso-8859-1':
+        elif hasattr(self._resp, 'encoding') and (not self._resp.encoding or self._resp.encoding.lower() == 'iso-8859-1'):
             self._resp.encoding = 'utf-8'
         return self._resp.text
 
@@ -61,7 +68,7 @@ class HttpClient:
         retry_config: RetryConfig | None = None,
     ) -> None:
         self._session: aiohttp.ClientSession | None = None
-        self._requests_session: requests.Session | None = None
+        self._requests_session: Any = None
         self._timeout = timeout
         self._default_headers = default_headers or {}
         self._semaphore = asyncio.Semaphore(max_concurrency)
@@ -85,8 +92,12 @@ class HttpClient:
             headers=self._default_headers,
             connector=connector,
         )
-        self._requests_session = requests.Session()
-        self._logger.info("HTTP client session started")
+        if HAS_CURL_CFFI:
+            self._requests_session = cffi_requests.Session(impersonate="chrome124")
+            self._logger.info("HTTP client started with curl_cffi (Chrome impersonation enabled)")
+        else:
+            self._requests_session = requests.Session()
+            self._logger.info("HTTP client started with standard requests")
 
     async def close(self) -> None:
         self._closing = True
@@ -102,13 +113,21 @@ class HttpClient:
         merged_headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Referer': 'https://www.futbin.com/',
         }
         if self._default_headers:
             merged_headers.update(self._default_headers)
         if headers:
             merged_headers.update(headers)
-        sess = self._requests_session or requests.Session()
+            
+        if self._requests_session is not None:
+            sess = self._requests_session
+        elif HAS_CURL_CFFI:
+            sess = cffi_requests.Session(impersonate="chrome124")
+        else:
+            sess = requests.Session()
+            
         resp = sess.request(method, url, headers=merged_headers, timeout=self._timeout)
         return AdaptedResponse(resp)
 
