@@ -35,3 +35,4 @@ services:
       - TZ=Europe/Berlin
     ports:
       - "8191:8191"
+
