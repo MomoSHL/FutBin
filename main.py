@@ -978,8 +978,20 @@ class FutBinBot(commands.Bot):
         # 2. Search Futbin API
         try:
             results = await self.price_service.search_player(q)
+            
+            # If no results for multi-word query, try searching individual words (longest first, min len 3)
+            if not results:
+                words_in_q = sorted([w for w in re.findall(r'[a-zA-Z0-9]+', q) if len(w) >= 3], key=len, reverse=True)
+                for w in words_in_q:
+                    if w.lower() in ('the', 'von', 'van', 'der', 'die', 'das', 'del', 'san', 'und', 'and', 'fc', 'fifa'):
+                        continue
+                    word_results = await self.price_service.search_player(w)
+                    if word_results:
+                        results = word_results
+                        break
+
             if results:
-                # Find the result that matches the query name
+                # 1. Exact or word-boundary match
                 for res in results:
                     if matches_player_name(q, res['name']):
                         return {
@@ -990,19 +1002,46 @@ class FutBinBot(commands.Bot):
                             'image': res.get('image', ''),
                             'is_monitored': False
                         }
-                # If no strict word-boundary match, but results were returned and query is an exact substring of first result
-                first = results[0]
+                
+                # 2. Substring match
                 q_norm = normalize_player_text(q)
-                f_norm = normalize_player_text(first['name'])
-                if q_norm in f_norm:
-                    return {
-                        'name': first['name'],
-                        'url': first['url'],
-                        'rating': first.get('rating', ''),
-                        'version': first.get('version', ''),
-                        'image': first.get('image', ''),
-                        'is_monitored': False
-                    }
+                for res in results:
+                    r_norm = normalize_player_text(res['name'])
+                    if q_norm in r_norm or r_norm in q_norm:
+                        return {
+                            'name': res['name'],
+                            'url': res['url'],
+                            'rating': res.get('rating', ''),
+                            'version': res.get('version', ''),
+                            'image': res.get('image', ''),
+                            'is_monitored': False
+                        }
+
+                # 3. Individual word overlap (length >= 3)
+                q_words = [w for w in re.findall(r'[a-z0-9]+', q_norm) if len(w) >= 3]
+                if q_words:
+                    for res in results:
+                        r_norm = normalize_player_text(res['name'])
+                        if any(w in r_norm for w in q_words):
+                            return {
+                                'name': res['name'],
+                                'url': res['url'],
+                                'rating': res.get('rating', ''),
+                                'version': res.get('version', ''),
+                                'image': res.get('image', ''),
+                                'is_monitored': False
+                            }
+
+                # 4. Fallback to first search result
+                first = results[0]
+                return {
+                    'name': first['name'],
+                    'url': first['url'],
+                    'rating': first.get('rating', ''),
+                    'version': first.get('version', ''),
+                    'image': first.get('image', ''),
+                    'is_monitored': False
+                }
         except Exception as e:
             logging.error(f"Error searching player for '{q}': {e}")
             
