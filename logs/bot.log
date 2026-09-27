@@ -29642,3 +29642,56 @@ discord.app_commands.errors.CommandInvokeError: Command 'dashboard' raised an ex
 [2026-09-27 19:32:11,721] INFO [services.price_service]: Fetching sales from https://www.futbin.com/27/sales/257/florian-wirtz?platform=pc (Player URL: https://www.futbin.com/27/player/257/florian-wirtz)
 [2026-09-27 19:32:12,016] INFO [services.price_service]: Fetching sales from https://www.futbin.com/27/sales/115/georgia-stanway?platform=pc (Player URL: https://www.futbin.com/27/player/115/georgia-stanway)
 [2026-09-27 19:32:12,274] INFO [services.http_client]: HTTP client session closed
+[2026-09-27 19:53:32,020] WARNING [discord.client]: PyNaCl is not installed, voice will NOT be supported
+[2026-09-27 19:53:32,020] WARNING [discord.client]: davey is not installed, voice will NOT be supported
+[2026-09-27 19:53:32,022] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:53:32,022] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:53:32,023] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:55:03,002] WARNING [discord.client]: PyNaCl is not installed, voice will NOT be supported
+[2026-09-27 19:55:03,003] WARNING [discord.client]: davey is not installed, voice will NOT be supported
+[2026-09-27 19:55:03,004] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:55:03,004] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:55:03,004] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:55:03,009] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:55:03,010] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:55:03,010] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:55:03,010] INFO [services.http_client]: HTTP client started with curl_cffi (Chrome 131 impersonation enabled)
+[2026-09-27 19:55:11,377] ERROR [asyncio]: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000002C586FD6510>
+[2026-09-27 19:55:28,307] WARNING [discord.client]: PyNaCl is not installed, voice will NOT be supported
+[2026-09-27 19:55:28,308] WARNING [discord.client]: davey is not installed, voice will NOT be supported
+[2026-09-27 19:55:28,310] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:55:28,312] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:55:28,313] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:55:28,317] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:55:28,318] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:55:28,318] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:55:28,319] INFO [services.http_client]: HTTP client started with curl_cffi (Chrome 131 impersonation enabled)
+[2026-09-27 19:55:36,673] ERROR [asyncio]: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x00000149C04DAB10>
+[2026-09-27 19:55:45,300] WARNING [discord.client]: PyNaCl is not installed, voice will NOT be supported
+[2026-09-27 19:55:45,300] WARNING [discord.client]: davey is not installed, voice will NOT be supported
+[2026-09-27 19:55:45,302] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:55:45,303] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:55:45,304] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:55:45,309] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:55:45,309] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:55:45,310] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:55:45,310] INFO [services.http_client]: HTTP client started with curl_cffi (Chrome 131 impersonation enabled)
+[2026-09-27 19:55:53,630] INFO [services.state_service]: No config file found, starting with empty configuration
+[2026-09-27 19:55:53,630] INFO [services.state_service]: No state file found, starting with empty state
+[2026-09-27 19:55:53,631] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:55:54,159] INFO [services.http_client]: HTTP client session closed
+[2026-09-27 19:56:29,878] WARNING [discord.client]: PyNaCl is not installed, voice will NOT be supported
+[2026-09-27 19:56:29,879] WARNING [discord.client]: davey is not installed, voice will NOT be supported
+[2026-09-27 19:56:29,882] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:56:29,883] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:56:29,884] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:56:29,889] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:56:29,889] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:56:29,889] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:56:29,890] INFO [services.http_client]: HTTP client started with curl_cffi (Chrome 131 impersonation enabled)
+[2026-09-27 19:56:38,230] INFO [services.state_service]: No config file found, starting with empty configuration
+[2026-09-27 19:56:38,230] INFO [services.state_service]: No state file found, starting with empty state
+[2026-09-27 19:56:38,230] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:56:38,605] INFO [services.http_client]: HTTP client session closed

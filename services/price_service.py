@@ -7,9 +7,8 @@ import asyncio
 import logging
 import re
 import json
-import time
 from dataclasses import dataclass
-from typing import Dict, Any, Optional, List, Tuple
+from typing import Dict, Any, Optional, List
 from bs4 import BeautifulSoup
 
 from .http_client import HttpClient
@@ -48,22 +47,13 @@ class PlayerPrice:
 
 
 class PriceService:
-    """Service for fetching and parsing FutBin player prices with high-speed in-memory caching"""
+    """Service for fetching and parsing FutBin player prices"""
     
-    SEARCH_CACHE_TTL = 1800   # 30 minutes
-    SALES_CACHE_TTL = 45      # 45 seconds
-    PRICE_CACHE_TTL = 30      # 30 seconds
-
     def __init__(self, http_client: HttpClient, max_concurrent_requests: int = 3, platform: str = "pc"):
         self.http_client = http_client
         self.platform = (platform or "pc").lower()
         self._semaphore = asyncio.Semaphore(max_concurrent_requests)
         self._logger = logging.getLogger(__name__)
-
-        # In-memory TTL caches for instant responses (0ms)
-        self._search_cache: Dict[str, Tuple[float, List[Dict[str, Any]]]] = {}
-        self._sales_cache: Dict[str, Tuple[float, Dict[str, Any]]] = {}
-        self._price_cache: Dict[str, Tuple[float, PlayerPrice]] = {}
         
         # Alias for backward compatibility
         self.fetch_price = self.fetch_player_price
@@ -105,19 +95,9 @@ class PriceService:
         ]
 
     async def search_player(self, query: str) -> List[Dict[str, Any]]:
-        """Search for players by name on Futbin Search API with caching"""
+        """Search for players by name on Futbin Search API"""
         if not query or len(query.strip()) < 2:
             return []
-            
-        clean_q = query.strip().lower()
-        now = time.time()
-        
-        # Check cache
-        if clean_q in self._search_cache:
-            ts, cached_res = self._search_cache[clean_q]
-            if now - ts < self.SEARCH_CACHE_TTL and cached_res:
-                self._logger.debug(f"Search cache HIT for '{query}' ({len(cached_res)} results)")
-                return cached_res
             
         import urllib.parse
         encoded_query = urllib.parse.quote(query.strip())
@@ -208,14 +188,7 @@ class PriceService:
                     'image': player_img,
                     'club_image': club_img
                 })
-            
-            if results:
-                self._search_cache[clean_q] = (now, results)
-
             return results
-        except Exception as e:
-            self._logger.error(f"Failed to search players for '{query}': {e}")
-            return []
         except Exception as e:
             self._logger.error(f"Failed to search players for '{query}': {e}")
             return []
@@ -257,17 +230,7 @@ class PriceService:
         return None
 
     async def fetch_player_price(self, url: str, retry_resolved: bool = True) -> PlayerPrice:
-        """Fetch and parse a single player's price data, with auto-resolution fallback and caching"""
-        cache_key = url.strip()
-        now = time.time()
-        
-        # Check cache
-        if cache_key in self._price_cache:
-            ts, cached_price = self._price_cache[cache_key]
-            if now - ts < self.PRICE_CACHE_TTL and cached_price.success:
-                self._logger.debug(f"Price cache HIT for {url} ({cached_price.price})")
-                return cached_price
-
+        """Fetch and parse a single player's price data, with auto-resolution fallback"""
         async with self._semaphore:
             try:
                 headers = {
@@ -290,7 +253,6 @@ class PriceService:
                         self._logger.info(f"Resolved {url} -> {resolved['url']}. Retrying fetch...")
                         res = await self.fetch_player_price(resolved['url'], retry_resolved=False)
                         if res.success:
-                            self._price_cache[cache_key] = (now, res)
                             return res
 
                 if not html_content or len(html_content) < 100 or is_blocked:
@@ -313,14 +275,13 @@ class PriceService:
                     if resolved and resolved.get('url') and resolved['url'] != target_url:
                         res = await self.fetch_player_price(resolved['url'], retry_resolved=False)
                         if res.success:
-                            self._price_cache[cache_key] = (now, res)
                             return res
 
                 name = parsed_data.get("name")
                 price = parsed_data.get("price")
                 is_success = price is not None and bool(name)
                 
-                result_price = PlayerPrice(
+                return PlayerPrice(
                     price=price,
                     image_url=parsed_data.get("image"),
                     name=name,
@@ -329,11 +290,6 @@ class PriceService:
                     error=None if is_success else "Could not extract price or player name",
                     card_version=parsed_data.get("card_version", "")
                 )
-                
-                if is_success:
-                    self._price_cache[cache_key] = (now, result_price)
-                    
-                return result_price
                 
             except Exception as e:
                 self._logger.error(f"Failed to fetch price for {url}: {e}")
@@ -600,7 +556,7 @@ class PriceService:
 
     async def fetch_player_sales(self, url_or_id: str, platform: Optional[str] = None, retry_resolved: bool = True) -> Dict[str, Any]:
         """
-        Fetch the last sales for a player from Futbin (defaults to PC platform) with caching.
+        Fetch the last sales for a player from Futbin (defaults to PC platform).
         Uses a two-layer strategy:
         1. Query the live sales page (/sales/) with Highcharts stock chart.
         2. Fallback to player page (/player/) extracting data-recent-prices from the PC price box.
@@ -620,14 +576,6 @@ class PriceService:
             player_url = f"https://www.futbin.com/27/player/{url_or_id}"
             sales_url = f"https://www.futbin.com/27/sales/{url_or_id}?platform={target_platform}"
             
-        cache_key = f"{sales_url}:{target_platform}"
-        now = time.time()
-        if cache_key in self._sales_cache:
-            ts, cached_sales = self._sales_cache[cache_key]
-            if now - ts < self.SALES_CACHE_TTL and cached_sales.get('success'):
-                self._logger.debug(f"Sales cache HIT for {sales_url} ({len(cached_sales.get('sales', []))} sales)")
-                return cached_sales
-
         self._logger.info(f"Fetching sales from {sales_url} (Player URL: {player_url})")
         
         headers = {
@@ -824,7 +772,6 @@ class PriceService:
                             res['image'] = resolved['image']
                         if not res.get('player_name') and resolved.get('name'):
                             res['player_name'] = resolved['name']
-                        self._sales_cache[cache_key] = (now, res)
                         return res
             except Exception as re_e:
                 self._logger.debug(f"Search API resolution retry failed in fetch_player_sales: {re_e}")
@@ -832,7 +779,7 @@ class PriceService:
         if not sales_data and not error_msg:
             error_msg = f"Keine Verkaufsdaten auf FUTBin gefunden (HTTP {sales_status or player_status or 'N/A'})"
 
-        result = {
+        return {
             'success': True if sales_data else False,
             'sales': sales_data,
             'avg_price': avg_price,
@@ -842,8 +789,3 @@ class PriceService:
             'sales_url': sales_url,
             'platform': target_platform
         }
-        
-        if result['success']:
-            self._sales_cache[cache_key] = (now, result)
-            
-        return result

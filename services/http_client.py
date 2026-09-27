@@ -1,6 +1,6 @@
 """
-High-performance HTTP client service with Cloudflare bypass,
-persistent FlareSolverr session management, cookie synchronization, and connection pooling.
+HTTP client service with Cloudflare bypass, FlareSolverr integration,
+browser profile rotation, and connection pooling.
 """
 
 import asyncio
@@ -9,7 +9,6 @@ import random
 import os
 import json
 import re
-import time
 from collections.abc import Awaitable
 from dataclasses import dataclass
 from typing import Any, Callable, Optional, Union, Dict
@@ -27,10 +26,10 @@ except ImportError:
 
 @dataclass(slots=True)
 class RetryConfig:
-    attempts: int = 2
-    backoff_base: float = 0.5
-    backoff_max: float = 3.0
-    jitter: float = 0.2
+    attempts: int = 3
+    backoff_base: float = 0.75
+    backoff_max: float = 6.0
+    jitter: float = 0.35
 
 
 class AdaptedResponse:
@@ -77,7 +76,7 @@ class AdaptedResponse:
 
 
 class HttpClient:
-    """High-performance HTTP client with FlareSolverr persistent session and Cloudflare clearance propagation."""
+    """Shared HTTP client with semaphore-guarded execution, retry logic, FlareSolverr, and Cloudflare bypass."""
 
     CLOUDFLARE_MARKERS = (
         'just a moment',
@@ -93,8 +92,8 @@ class HttpClient:
         self,
         *,
         default_headers: Optional[dict[str, str]] = None,
-        timeout: float = 12.0,
-        max_concurrency: int = 6,
+        timeout: float = 14.0,
+        max_concurrency: int = 4,
         retry_config: RetryConfig | None = None,
     ) -> None:
         self._session: aiohttp.ClientSession | None = None
@@ -105,12 +104,10 @@ class HttpClient:
         self._retry_config = retry_config or RetryConfig()
         self._closing = False
         self._logger = logging.getLogger(__name__)
-
+        
         self._cached_cookies: Dict[str, str] = {}
         self._cached_user_agent: Optional[str] = None
         self._flaresolverr_active = False
-        self._flaresolverr_session_id: Optional[str] = None
-        self._last_clearance_update: float = 0
 
     @property
     def session(self) -> aiohttp.ClientSession:
@@ -138,7 +135,7 @@ class HttpClient:
         await self._check_flaresolverr_availability()
 
     async def _check_flaresolverr_availability(self) -> None:
-        """Check FlareSolverr and initialize persistent browser session"""
+        """Check whether FlareSolverr is configured and reachable"""
         candidates = [
             os.getenv('FLARESOLVERR_URL'),
             'http://flaresolverr:8191/v1',
@@ -163,25 +160,6 @@ class HttpClient:
             self._flaresolverr_active = True
             os.environ['FLARESOLVERR_URL'] = valid_url
             self._logger.info(f"FlareSolverr detected and active at {valid_url}")
-
-            # Create persistent session for ultra-fast FlareSolverr queries (<500ms)
-            def _create_fs_session():
-                try:
-                    r = requests.post(
-                        valid_url,
-                        json={"cmd": "sessions.create", "session": "futbin_bot_session"},
-                        headers={"Content-Type": "application/json"},
-                        timeout=5.0
-                    )
-                    if r.status_code == 200:
-                        data = r.json()
-                        if data.get("status") == "ok":
-                            self._flaresolverr_session_id = data.get("session", "futbin_bot_session")
-                            self._logger.info(f"FlareSolverr persistent session created: {self._flaresolverr_session_id}")
-                except Exception as e:
-                    self._logger.debug(f"Could not create FlareSolverr session: {e}")
-
-            await asyncio.to_thread(_create_fs_session)
         else:
             self._logger.debug("FlareSolverr not detected on default endpoints. Direct / curl_cffi mode active.")
 
@@ -205,26 +183,29 @@ class HttpClient:
         return any(marker in lower for marker in self.CLOUDFLARE_MARKERS)
 
     def _sync_flaresolverr_request(self, url: str) -> Optional[AdaptedResponse]:
-        """Resolve challenge via FlareSolverr with persistent session"""
+        """Try resolving challenge via FlareSolverr if configured"""
         flaresolverr_url = os.getenv('FLARESOLVERR_URL')
         if not flaresolverr_url and not self._flaresolverr_active:
             return None
 
         fs_endpoint = flaresolverr_url or 'http://flaresolverr:8191/v1'
         try:
-            payload: Dict[str, Any] = {
+            payload = {
                 "cmd": "request.get",
                 "url": url,
                 "maxTimeout": int(self._timeout * 1000)
             }
-            if self._flaresolverr_session_id:
-                payload["session"] = self._flaresolverr_session_id
+            if self._cached_cookies:
+                payload["cookies"] = [
+                    {"name": k, "value": v, "domain": ".futbin.com"}
+                    for k, v in self._cached_cookies.items()
+                ]
 
             resp = requests.post(
                 fs_endpoint,
                 json=payload,
                 headers={"Content-Type": "application/json"},
-                timeout=self._timeout + 4
+                timeout=self._timeout + 6
             )
             if resp.status_code == 200:
                 data = resp.json()
@@ -232,32 +213,19 @@ class HttpClient:
                     solution = data.get("solution", {})
                     response_text = solution.get("response", "")
                     status = solution.get("status", 200)
-
-                    # Extract clearance cookies & User-Agent
+                    
                     cookies_list = solution.get("cookies", [])
-                    cookies_updated = False
                     for cookie in cookies_list:
                         name = cookie.get("name")
                         value = cookie.get("value")
                         if name and value:
                             self._cached_cookies[name] = value
-                            cookies_updated = True
 
                     user_agent = solution.get("userAgent")
                     if user_agent:
                         self._cached_user_agent = user_agent
 
-                    if cookies_updated:
-                        self._last_clearance_update = time.time()
-                        # Sync cookies into curl_cffi session so future direct requests take <50ms!
-                        if self._requests_session is not None and HAS_CURL_CFFI:
-                            for k, v in self._cached_cookies.items():
-                                try:
-                                    self._requests_session.cookies.set(k, v, domain=".futbin.com")
-                                except Exception:
-                                    pass
-
-                    self._logger.info(f"FlareSolverr resolved {url} (HTTP {status})")
+                    self._logger.info(f"Cloudflare challenge successfully solved via FlareSolverr for {url}")
                     return AdaptedResponse(resp, custom_text=response_text, custom_status=status)
                 else:
                     self._logger.warning(f"FlareSolverr returned non-ok status: {data.get('message')}")
@@ -278,10 +246,13 @@ class HttpClient:
                     'X-Requested-With': 'XMLHttpRequest',
                     'Referer': 'https://www.futbin.com/',
                     'Origin': 'https://www.futbin.com',
+                    'Sec-Fetch-Dest': 'empty',
+                    'Sec-Fetch-Mode': 'cors',
+                    'Sec-Fetch-Site': 'same-origin',
                 }
             else:
                 req_headers = {
-                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
                     'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
                     'Referer': 'https://www.futbin.com/',
                 }
@@ -294,6 +265,11 @@ class HttpClient:
             if headers:
                 req_headers.update(headers)
 
+            if not self._cached_user_agent:
+                for k in list(req_headers.keys()):
+                    if k.lower() in ('user-agent', 'sec-ch-ua', 'sec-ch-ua-platform', 'sec-ch-ua-mobile', 'host'):
+                        del req_headers[k]
+
             sess = self._requests_session
             if sess is None:
                 sess = cffi_requests.Session(impersonate="chrome131")
@@ -303,35 +279,62 @@ class HttpClient:
                 for k, v in self._cached_cookies.items():
                     sess.cookies.set(k, v, domain=".futbin.com")
 
-            # 1. Fast Direct Attempt (takes ~50-150ms if clearance cookies are cached)
+            last_resp = None
             try:
                 resp = sess.request(method, url, headers=req_headers, timeout=self._timeout, proxies=proxies)
                 body_text = resp.text if hasattr(resp, 'text') else ''
                 if resp.status_code == 200 and not self._is_cloudflare_challenge(resp.status_code, body_text):
                     return AdaptedResponse(resp)
+                last_resp = resp
             except Exception as e:
-                self._logger.debug(f"Direct request for {url} failed ({e})")
+                self._logger.debug(f"Request failed for {url} with chrome131 ({e}). Trying fallback profiles...")
 
-            # 2. If FlareSolverr is active, go directly to FlareSolverr without 15s wasted fallback iterations!
-            if self._flaresolverr_active:
-                fs_resp = self._sync_flaresolverr_request(url)
-                if fs_resp and fs_resp.status == 200:
-                    return fs_resp
+            # Fallback browser profiles
+            for fallback_imp in ["chrome124", "safari180", "firefox135", "edge101"]:
+                try:
+                    f_sess = cffi_requests.Session(impersonate=fallback_imp)
+                    if self._cached_cookies:
+                        for k, v in self._cached_cookies.items():
+                            f_sess.cookies.set(k, v, domain=".futbin.com")
+                    resp = f_sess.request(method, url, headers=req_headers, timeout=self._timeout, proxies=proxies)
+                    body_text = resp.text if hasattr(resp, 'text') else ''
+                    if resp.status_code == 200 and not self._is_cloudflare_challenge(resp.status_code, body_text):
+                        self._logger.info(f"Successfully fetched {url} using {fallback_imp} (HTTP 200)")
+                        self._requests_session = f_sess
+                        return AdaptedResponse(resp)
+                    last_resp = resp
+                except Exception as fe:
+                    self._logger.debug(f"Fallback {fallback_imp} error for {url}: {fe}")
 
-            # 3. Fallback to Safari profile if FlareSolverr was not available
+            # Try FlareSolverr if direct requests were challenged / blocked (HTTP 403)
+            fs_resp = self._sync_flaresolverr_request(url)
+            if fs_resp and fs_resp.status == 200:
+                return fs_resp
+
+            # Try standard requests as final fallback
             try:
-                f_sess = cffi_requests.Session(impersonate="safari180")
+                std_headers = {
+                    'User-Agent': self._cached_user_agent or 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+                    'Accept': 'application/json, text/plain, */*' if is_xhr else 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                    'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
+                    'Referer': 'https://www.futbin.com/',
+                }
+                if headers:
+                    std_headers.update(headers)
+                std_sess = requests.Session()
                 if self._cached_cookies:
-                    for k, v in self._cached_cookies.items():
-                        f_sess.cookies.set(k, v, domain=".futbin.com")
-                resp = f_sess.request(method, url, headers=req_headers, timeout=self._timeout, proxies=proxies)
-                body_text = resp.text if hasattr(resp, 'text') else ''
-                if resp.status_code == 200 and not self._is_cloudflare_challenge(resp.status_code, body_text):
-                    return AdaptedResponse(resp)
-            except Exception:
-                pass
+                    std_sess.cookies.update(self._cached_cookies)
+                std_resp = std_sess.request(method, url, headers=std_headers, timeout=self._timeout, proxies=proxies)
+                body_text = std_resp.text if hasattr(std_resp, 'text') else ''
+                if std_resp.status_code == 200 and not self._is_cloudflare_challenge(std_resp.status_code, body_text):
+                    self._logger.info(f"Successfully fetched {url} using standard requests fallback (HTTP 200)")
+                    return AdaptedResponse(std_resp)
+                if not last_resp:
+                    last_resp = std_resp
+            except Exception as std_e:
+                self._logger.debug(f"Standard requests fallback error for {url}: {std_e}")
 
-            return AdaptedResponse(None, custom_text="", custom_status=503)
+            return AdaptedResponse(last_resp) if last_resp else AdaptedResponse(None, custom_text="", custom_status=503)
 
         else:
             merged_headers = {
@@ -348,21 +351,20 @@ class HttpClient:
             sess = self._requests_session or requests.Session()
             if self._cached_cookies:
                 sess.cookies.update(self._cached_cookies)
-
             try:
                 resp = sess.request(method, url, headers=merged_headers, timeout=self._timeout, proxies=proxies)
                 body_text = resp.text if hasattr(resp, 'text') else ''
                 if resp.status_code == 200 and not self._is_cloudflare_challenge(resp.status_code, body_text):
                     return AdaptedResponse(resp)
-            except Exception:
-                pass
+            except Exception as e:
+                self._logger.debug(f"Sync request failed for {url}: {e}")
 
-            if self._flaresolverr_active:
-                fs_resp = self._sync_flaresolverr_request(url)
-                if fs_resp and fs_resp.status == 200:
-                    return fs_resp
+            # Try FlareSolverr
+            fs_resp = self._sync_flaresolverr_request(url)
+            if fs_resp and fs_resp.status == 200:
+                return fs_resp
 
-            return AdaptedResponse(None, custom_text="", custom_status=503)
+            return AdaptedResponse(resp if 'resp' in locals() else None, custom_text="", custom_status=503)
 
     async def _with_retry(
         self,
@@ -388,6 +390,13 @@ class HttpClient:
                     break
                 backoff = min(cfg.backoff_base * (2 ** (attempt - 1)), cfg.backoff_max)
                 backoff += random.uniform(0, cfg.jitter)
+                self._logger.warning(
+                    "HTTP request failed (attempt %s/%s): %s. Backing off %.2fs",
+                    attempt,
+                    cfg.attempts,
+                    exc,
+                    backoff,
+                )
                 await asyncio.sleep(backoff)
         if last_exc:
             raise last_exc
@@ -418,7 +427,8 @@ class HttpClient:
                 if response.status == 403:
                     return await asyncio.to_thread(self._sync_request, "GET", url, headers)
                 return response
-            except Exception:
+            except Exception as exc:
+                self._logger.warning("aiohttp request failed (%s), attempting requests fallback", exc)
                 return await asyncio.to_thread(self._sync_request, "GET", url, headers)
 
     async def head(self, url: str, *, headers: Optional[dict[str, str]] = None) -> Union[aiohttp.ClientResponse, AdaptedResponse]:
