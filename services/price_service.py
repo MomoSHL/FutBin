@@ -105,12 +105,28 @@ class PriceService:
         
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
-            'Accept': 'application/json, text/plain, */*'
+            'Accept': 'application/json, text/plain, */*',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Referer': 'https://www.futbin.com/',
         }
         
         try:
             response = await self.http_client.get(url, headers=headers)
-            data = await response.json(content_type=None)
+            if response.status != 200:
+                self._logger.warning(f"Search API returned HTTP {response.status} for query '{query}'")
+                return []
+                
+            text = await response.text()
+            if not text or not text.strip() or text.strip().startswith('<'):
+                self._logger.warning(f"Search API returned non-JSON/HTML for query '{query}' (Cloudflare block)")
+                return []
+                
+            try:
+                data = json.loads(text)
+            except Exception as je:
+                self._logger.warning(f"JSON decode failed for search '{query}': {je}")
+                return []
+                
             if not isinstance(data, list):
                 return []
                 
@@ -200,8 +216,11 @@ class PriceService:
                 response = await self.http_client.get(target_url, headers=headers)
                 html_content = await response.text()
                 
+                # Check for Cloudflare challenge / blocked status
+                is_blocked = response.status in (403, 404, 503) or (html_content and "Just a moment..." in html_content)
+                
                 # If response is blocked (403), not found (404), or empty, try auto-resolving to current FC 27 URL
-                if (not html_content or len(html_content) < 100 or response.status in (403, 404)) and retry_resolved:
+                if (not html_content or len(html_content) < 100 or is_blocked) and retry_resolved:
                     self._logger.info(f"Direct fetch for {target_url} returned status {response.status}. Attempting Search API auto-resolution...")
                     resolved = await self.resolve_player_url(url)
                     if resolved and resolved.get('url') and resolved['url'] != target_url:
@@ -210,14 +229,14 @@ class PriceService:
                         if res.success:
                             return res
 
-                if not html_content or len(html_content) < 100:
+                if not html_content or len(html_content) < 100 or is_blocked:
                     return PlayerPrice(
                         price=None, 
                         image_url=None, 
                         name=None, 
                         raw_html="", 
                         success=False,
-                        error=f"Empty or too short HTML response (HTTP {response.status})",
+                        error=f"HTTP {response.status} from FutBin (Cloudflare block or unavailable)",
                         card_version=""
                     )
                 
@@ -232,12 +251,14 @@ class PriceService:
                         if res.success:
                             return res
 
-                is_success = parsed_data.get("price") is not None or bool(parsed_data.get("name"))
+                name = parsed_data.get("name")
+                price = parsed_data.get("price")
+                is_success = price is not None and bool(name)
                 
                 return PlayerPrice(
-                    price=parsed_data.get("price"),
+                    price=price,
                     image_url=parsed_data.get("image"),
-                    name=parsed_data.get("name"),
+                    name=name,
                     raw_html=html_content,
                     success=is_success,
                     error=None if is_success else "Could not extract price or player name",
@@ -378,27 +399,34 @@ class PriceService:
         return None
 
     def _extract_name_from_soup(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract player name using multiple selector strategies"""
+        """Extract player name using multiple selector strategies, filtering out Cloudflare blocks"""
+        CLOUDFLARE_BLOCKED = (
+            'just a moment', 'attention required', 'cloudflare', 'security check',
+            'access denied', 'turnstile', 'challenge-platform', 'robot check',
+            'ddos-guard', '403 forbidden', 'error 403', '503 service', 'page not found'
+        )
+        
         for selector in self.name_selectors:
             elements = soup.select(selector)
             for element in elements:
                 name = element.get_text(strip=True)
                 if name and len(name) > 1:
-                    # Clean up titles that contain extra info
                     clean_name = re.sub(r'\s+EA\s+FC\s+\d+.*$', '', name, flags=re.I).strip()
-                    if clean_name and len(clean_name) > 1:
+                    if clean_name and not any(b in clean_name.lower() for b in CLOUDFLARE_BLOCKED):
                         return clean_name
-                    return name
         
         # Fallback: Extract from title
         title_element = soup.select_one('title')
         if title_element:
             title = title_element.get_text(strip=True)
-            # Common title patterns: "Player Name - FC 27 Player Prices - FUTBIN" or "Player Name FC 27 - FUTBIN"
+            if any(b in title.lower() for b in CLOUDFLARE_BLOCKED):
+                return None
             if ' - ' in title:
-                return title.split(' - ')[0].strip()
+                name_part = title.split(' - ')[0].strip()
+                if not any(b in name_part.lower() for b in CLOUDFLARE_BLOCKED):
+                    return name_part
             clean_title = re.sub(r'\s+(?:EA\s+)?FC\s+\d+.*$', '', title, flags=re.I).strip()
-            if clean_title:
+            if clean_title and not any(b in clean_title.lower() for b in CLOUDFLARE_BLOCKED):
                 return clean_title
         
         return None
