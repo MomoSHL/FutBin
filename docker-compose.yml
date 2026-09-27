@@ -3,8 +3,16 @@ services:
     build: .
     container_name: futbin-bot
     restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+      - 8.8.4.4
     env_file:
       - .env
+    environment:
+      - FLARESOLVERR_URL=http://flaresolverr:8191/v1
+    depends_on:
+      - flaresolverr
     volumes:
       - ./config:/app/config
       - ./data:/app/data
@@ -12,3 +20,18 @@ services:
       - ./backups:/app/backups
     ports:
       - "8080:8080"
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=Europe/Berlin
+    ports:
+      - "8191:8191"
