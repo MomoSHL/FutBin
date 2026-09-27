@@ -69,15 +69,21 @@ class PriceService:
         
         # Image extraction selectors
         self.image_selectors = [
+            '.playercard-27-base-img',
             '.playercard-26-base-img',
             '.playercard-base-img',
             '[class*="playercard"][class*="img"]',
+            '[class*="playercard"][class*="base-img"]',
             '.player-img img',
-            '.card-image img'
+            '.card-image img',
+            'img.player-image'
         ]
         
         # Name extraction selectors
         self.name_selectors = [
+            '.comment-sidebar-button-title',
+            '.playercard-27-name.text-ellipsis',
+            '.playercard-27-name',
             '.playercard-26-name.text-ellipsis',
             '.playercard-26-name', 
             'h1.player_name',
@@ -88,19 +94,122 @@ class PriceService:
             '[class*="player"][class*="name"]'
         ]
 
-    async def fetch_player_price(self, url: str) -> PlayerPrice:
-        """Fetch and parse a single player's price data"""
+    async def search_player(self, query: str) -> List[Dict[str, Any]]:
+        """Search for players by name on Futbin Search API"""
+        if not query or len(query.strip()) < 2:
+            return []
+            
+        import urllib.parse
+        encoded_query = urllib.parse.quote(query.strip())
+        url = f"https://www.futbin.com/players/search?query={encoded_query}&targetPage=PLAYER_PAGE"
+        
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+            'Accept': 'application/json, text/plain, */*'
+        }
+        
+        try:
+            response = await self.http_client.get(url, headers=headers)
+            data = await response.json(content_type=None)
+            if not isinstance(data, list):
+                return []
+                
+            results = []
+            for item in data:
+                location = item.get('location', {})
+                rel_url = location.get('url', '')
+                if not rel_url:
+                    continue
+                full_url = f"https://www.futbin.com{rel_url}" if rel_url.startswith('/') else rel_url
+                
+                # Player image
+                player_img = ""
+                pimg_dict = item.get('playerImage', {}).get('fixed', {}).get('url', {})
+                if isinstance(pimg_dict, dict):
+                    player_img = pimg_dict.get('image1x', '')
+                
+                # Club image
+                club_img = ""
+                cimg_dict = item.get('clubImage', {}).get('fixed', {}).get('url', {}).get('day', {})
+                if isinstance(cimg_dict, dict):
+                    club_img = cimg_dict.get('image1x', '')
+                    
+                rating = item.get('ratingSquare', {}).get('rating', '')
+                
+                results.append({
+                    'id': item.get('id'),
+                    'name': item.get('name', ''),
+                    'position': item.get('position', ''),
+                    'version': item.get('version', 'Normal'),
+                    'rating': str(rating),
+                    'url': full_url,
+                    'image': player_img,
+                    'club_image': club_img
+                })
+            return results
+        except Exception as e:
+            self._logger.error(f"Failed to search players for '{query}': {e}")
+            return []
+
+    async def resolve_player_url(self, query_or_url: str) -> Optional[Dict[str, Any]]:
+        """
+        Resolve any player URL (including outdated /26/, /25/ or slug) or query to the current FC 27 URL and metadata.
+        Uses the FutBin Search API.
+        """
+        if not query_or_url:
+            return None
+
+        query = str(query_or_url).strip()
+        # If it's a URL, extract player name / slug or ID
+        if query.startswith(('http://', 'https://')):
+            # Check if it contains a slug like /26/player/234/viktor-gyokeres
+            slug_match = re.search(r'/(?:player|sales)/\d+/([^/?#]+)', query)
+            if slug_match:
+                query = slug_match.group(1).replace('-', ' ')
+            else:
+                id_match = re.search(r'/(?:player|sales)/(\d+)', query)
+                query = id_match.group(1) if id_match else ""
+
+        if not query:
+            return None
+
+        try:
+            results = await self.search_player(query)
+            if results:
+                clean_q = re.sub(r'[^a-zA-Z0-9]', '', query).lower()
+                for r in results:
+                    clean_name = re.sub(r'[^a-zA-Z0-9]', '', r.get('name', '')).lower()
+                    if clean_q and (clean_q in clean_name or clean_name in clean_q):
+                        return r
+                return results[0]
+        except Exception as e:
+            self._logger.debug(f"Failed to resolve player URL for '{query_or_url}': {e}")
+
+        return None
+
+    async def fetch_player_price(self, url: str, retry_resolved: bool = True) -> PlayerPrice:
+        """Fetch and parse a single player's price data, with auto-resolution fallback"""
         async with self._semaphore:
             try:
-                # Fetch HTML content
                 headers = {
                     'Cache-Control': 'no-cache',
                     'Pragma': 'no-cache'
                 }
                 
-                response = await self.http_client.get(url, headers=headers)
+                target_url = url
+                response = await self.http_client.get(target_url, headers=headers)
                 html_content = await response.text()
                 
+                # If response is blocked (403), not found (404), or empty, try auto-resolving to current FC 27 URL
+                if (not html_content or len(html_content) < 100 or response.status in (403, 404)) and retry_resolved:
+                    self._logger.info(f"Direct fetch for {target_url} returned status {response.status}. Attempting Search API auto-resolution...")
+                    resolved = await self.resolve_player_url(url)
+                    if resolved and resolved.get('url') and resolved['url'] != target_url:
+                        self._logger.info(f"Resolved {url} -> {resolved['url']}. Retrying fetch...")
+                        res = await self.fetch_player_price(resolved['url'], retry_resolved=False)
+                        if res.success:
+                            return res
+
                 if not html_content or len(html_content) < 100:
                     return PlayerPrice(
                         price=None, 
@@ -108,29 +217,49 @@ class PriceService:
                         name=None, 
                         raw_html="", 
                         success=False,
-                        error="Empty or too short HTML response",
+                        error=f"Empty or too short HTML response (HTTP {response.status})",
                         card_version=""
                     )
                 
                 # Parse the content
                 parsed_data = self._parse_player_data(html_content)
                 
+                # If price is None but URL was an old /26/ URL, try resolving
+                if parsed_data.get("price") is None and retry_resolved and ('/26/' in url or '/25/' in url):
+                    resolved = await self.resolve_player_url(url)
+                    if resolved and resolved.get('url') and resolved['url'] != target_url:
+                        res = await self.fetch_player_price(resolved['url'], retry_resolved=False)
+                        if res.success:
+                            return res
+
+                is_success = parsed_data.get("price") is not None or bool(parsed_data.get("name"))
+                
                 return PlayerPrice(
                     price=parsed_data.get("price"),
                     image_url=parsed_data.get("image"),
                     name=parsed_data.get("name"),
                     raw_html=html_content,
-                    success=True,
+                    success=is_success,
+                    error=None if is_success else "Could not extract price or player name",
                     card_version=parsed_data.get("card_version", "")
                 )
                 
             except Exception as e:
                 self._logger.error(f"Failed to fetch price for {url}: {e}")
+                
+                if retry_resolved:
+                    try:
+                        resolved = await self.resolve_player_url(url)
+                        if resolved and resolved.get('url') and resolved['url'] != url:
+                            return await self.fetch_player_price(resolved['url'], retry_resolved=False)
+                    except Exception:
+                        pass
+
                 return PlayerPrice(
-                    price=None,
-                    image_url=None,
-                    name=None,
-                    raw_html="",
+                    price=None, 
+                    image_url=None, 
+                    name=None, 
+                    raw_html="", 
                     success=False,
                     error=str(e),
                     card_version=""
@@ -255,15 +384,22 @@ class PriceService:
             for element in elements:
                 name = element.get_text(strip=True)
                 if name and len(name) > 1:
+                    # Clean up titles that contain extra info
+                    clean_name = re.sub(r'\s+EA\s+FC\s+\d+.*$', '', name, flags=re.I).strip()
+                    if clean_name and len(clean_name) > 1:
+                        return clean_name
                     return name
         
         # Fallback: Extract from title
         title_element = soup.select_one('title')
         if title_element:
             title = title_element.get_text(strip=True)
-            # Common title patterns: "Player Name - FC 26 Player Prices - FUTBIN"
+            # Common title patterns: "Player Name - FC 27 Player Prices - FUTBIN" or "Player Name FC 27 - FUTBIN"
             if ' - ' in title:
                 return title.split(' - ')[0].strip()
+            clean_title = re.sub(r'\s+(?:EA\s+)?FC\s+\d+.*$', '', title, flags=re.I).strip()
+            if clean_title:
+                return clean_title
         
         return None
 
@@ -364,64 +500,7 @@ class PriceService:
             
         return None
 
-    async def search_player(self, query: str) -> List[Dict[str, Any]]:
-        """Search for players by name on Futbin"""
-        if not query or len(query.strip()) < 2:
-            return []
-            
-        import urllib.parse
-        encoded_query = urllib.parse.quote(query.strip())
-        url = f"https://www.futbin.com/players/search?query={encoded_query}&targetPage=PLAYER_PAGE"
-        
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
-            'Accept': 'application/json, text/plain, */*'
-        }
-        
-        try:
-            response = await self.http_client.get(url, headers=headers)
-            data = await response.json(content_type=None)
-            if not isinstance(data, list):
-                return []
-                
-            results = []
-            for item in data:
-                location = item.get('location', {})
-                rel_url = location.get('url', '')
-                if not rel_url:
-                    continue
-                full_url = f"https://www.futbin.com{rel_url}" if rel_url.startswith('/') else rel_url
-                
-                # Player image
-                player_img = ""
-                pimg_dict = item.get('playerImage', {}).get('fixed', {}).get('url', {})
-                if isinstance(pimg_dict, dict):
-                    player_img = pimg_dict.get('image1x', '')
-                
-                # Club image
-                club_img = ""
-                cimg_dict = item.get('clubImage', {}).get('fixed', {}).get('url', {}).get('day', {})
-                if isinstance(cimg_dict, dict):
-                    club_img = cimg_dict.get('image1x', '')
-                    
-                rating = item.get('ratingSquare', {}).get('rating', '')
-                
-                results.append({
-                    'id': item.get('id'),
-                    'name': item.get('name', ''),
-                    'position': item.get('position', ''),
-                    'version': item.get('version', 'Normal'),
-                    'rating': str(rating),
-                    'url': full_url,
-                    'image': player_img,
-                    'club_image': club_img
-                })
-            return results
-        except Exception as e:
-            self._logger.error(f"Failed to search players for '{query}': {e}")
-            return []
-
-    async def fetch_player_sales(self, url_or_id: str, platform: Optional[str] = None) -> Dict[str, Any]:
+    async def fetch_player_sales(self, url_or_id: str, platform: Optional[str] = None, retry_resolved: bool = True) -> Dict[str, Any]:
         """
         Fetch the last sales for a player from Futbin (defaults to PC platform).
         Uses a two-layer strategy:
@@ -440,8 +519,8 @@ class PriceService:
             player_url = clean_url
             sales_url = re.sub(r'/player/', '/sales/', clean_url) + f"?platform={target_platform}"
         else:
-            player_url = f"https://www.futbin.com/26/player/{url_or_id}"
-            sales_url = f"https://www.futbin.com/26/sales/{url_or_id}?platform={target_platform}"
+            player_url = f"https://www.futbin.com/27/player/{url_or_id}"
+            sales_url = f"https://www.futbin.com/27/sales/{url_or_id}?platform={target_platform}"
             
         self._logger.info(f"Fetching sales from {sales_url} (Player URL: {player_url})")
         
@@ -626,6 +705,22 @@ class PriceService:
             except Exception as e:
                 self._logger.error(f"Strategy 2 (player page fallback) error for {player_url}: {e}")
                 error_msg = str(e)
+
+        # Strategy 3: If both failed and retry_resolved is allowed, try resolving URL via Search API
+        if not sales_data and retry_resolved:
+            try:
+                resolved = await self.resolve_player_url(url_or_id)
+                if resolved and resolved.get('url') and resolved['url'] != player_url:
+                    self._logger.info(f"Retrying fetch_player_sales with resolved URL: {resolved['url']}")
+                    res = await self.fetch_player_sales(resolved['url'], platform=target_platform, retry_resolved=False)
+                    if res.get('success'):
+                        if not res.get('image') and resolved.get('image'):
+                            res['image'] = resolved['image']
+                        if not res.get('player_name') and resolved.get('name'):
+                            res['player_name'] = resolved['name']
+                        return res
+            except Exception as re_e:
+                self._logger.debug(f"Search API resolution retry failed in fetch_player_sales: {re_e}")
 
         if not sales_data and not error_msg:
             error_msg = f"Keine Verkaufsdaten auf FUTBin gefunden (HTTP {sales_status or player_status or 'N/A'})"

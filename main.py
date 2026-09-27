@@ -590,7 +590,7 @@ class AddPlayerModal(discord.ui.Modal):
 
     url = discord.ui.TextInput(
         label="FutBin URL",
-        placeholder="https://www.futbin.com/26/player/234/viktor-gyokeres",
+        placeholder="https://www.futbin.com/27/player/234/viktor-gyokeres",
         style=discord.TextStyle.short,
         required=True
     )
@@ -604,7 +604,7 @@ class AddPlayerModal(discord.ui.Modal):
         if not futbin_url.startswith("https://www.futbin.com/"):
             await interaction.followup.send(
                 "❌ Ungültige URL. Die URL muss mit `https://www.futbin.com/` beginnen.\n"
-                "Beispiel: `https://www.futbin.com/26/player/234/viktor-gyokeres`",
+                "Beispiel: `https://www.futbin.com/27/player/234/viktor-gyokeres`",
                 ephemeral=True
             )
             return
@@ -1813,7 +1813,7 @@ async def setup_bot(interaction: discord.Interaction):
             "• Or use `/add_player <url>` for command-based management\n"
             "• The dashboard updates automatically every 5 minutes\n"
             "• Prices are checked every ~4.5 minutes\n"
-            "• Example URL: `https://www.futbin.com/26/player/234/viktor-gyokeres`"
+            "• Example URL: `https://www.futbin.com/27/player/234/viktor-gyokeres`"
         ),
         inline=False
     )
@@ -1893,7 +1893,7 @@ async def add_player(interaction: discord.Interaction, futbin_url: str):
     if not futbin_url.startswith("https://www.futbin.com/"):
         await interaction.response.send_message(
             "❌ Invalid URL. URL must start with `https://www.futbin.com/`\n"
-            "Example: `https://www.futbin.com/26/player/234/viktor-gyokeres`",
+            "Example: `https://www.futbin.com/27/player/234/viktor-gyokeres`",
             ephemeral=True
         )
         return
@@ -2391,7 +2391,7 @@ async def price_command(interaction: discord.Interaction, spieler: str):
                 await interaction.followup.send(
                     f"❌ Spieler **{spieler}** nicht gefunden.\n"
                     "Verwende die Autocomplete-Funktion oder gib eine vollständige FUTBin URL ein:\n"
-                    "`https://www.futbin.com/26/player/234/viktor-gyokeres`",
+                    "`https://www.futbin.com/27/player/234/viktor-gyokeres`",
                     ephemeral=True
                 )
                 return
@@ -3829,19 +3829,20 @@ async def import_squad(interaction: discord.Interaction, squad_url: str, dashboa
         user_id = interaction.user.id
         
         # Validate URL format
-        squad_pattern = r'https?://(?:www\.)?futbin\.com/26/squad/(\d+)'
+        squad_pattern = r'https?://(?:www\.)?futbin\.com/(\d+)/squad/(\d+)'
         match = re.match(squad_pattern, squad_url.strip())
         
         if not match:
             await interaction.followup.send(
-                "❌ Ungültige URL! Bitte verwende eine EA FC 26 Squad URL.\n"
-                "Format: `https://www.futbin.com/26/squad/XXXXXX`",
+                "❌ Ungültige URL! Bitte verwende eine gültige FUTBin Squad URL.\n"
+                "Format: `https://www.futbin.com/27/squad/XXXXXX`",
                 ephemeral=True
             )
             return
         
-        squad_id = match.group(1)
-        logging.info(f"Importing squad {squad_id} for user {user_id}")
+        squad_year = match.group(1)
+        squad_id = match.group(2)
+        logging.info(f"Importing squad {squad_id} (year {squad_year}) for user {user_id}")
         
         # Fetch squad page
         try:
@@ -4002,7 +4003,8 @@ async def import_squad(interaction: discord.Interaction, squad_url: str, dashboa
             player_id = player_data['id']
             player_name = player_data['name']
             player_slug = create_player_slug(player_name)
-            player_url = f"https://www.futbin.com/26/player/{player_id}/{player_slug}"
+            year_to_use = squad_year or "27"
+            player_url = f"https://www.futbin.com/{year_to_use}/player/{player_id}/{player_slug}"
             player_urls.append(player_url)
             player_card_versions[player_url] = player_data.get('card_version', '')
         
@@ -4035,7 +4037,8 @@ async def import_squad(interaction: discord.Interaction, squad_url: str, dashboa
         url_to_player_data = {}
         for player_data in player_ids:
             player_slug = create_player_slug(player_data['name'])
-            player_url = f"https://www.futbin.com/26/player/{player_data['id']}/{player_slug}"
+            year_to_use = squad_year or "27"
+            player_url = f"https://www.futbin.com/{year_to_use}/player/{player_data['id']}/{player_slug}"
             url_to_player_data[player_url] = player_data
         
         for url in player_urls:

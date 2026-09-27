@@ -158,6 +158,25 @@ class HttpClient:
                 except Exception as fe:
                     self._logger.warning(f"Fallback {fallback_imp} error for {url}: {fe}")
 
+            # If curl_cffi profiles failed with 403, try standard requests with realistic headers as final fallback
+            if resp.status_code == 403:
+                try:
+                    std_headers = {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                        'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
+                        'Referer': 'https://www.futbin.com/',
+                    }
+                    if headers:
+                        std_headers.update(headers)
+                    std_sess = requests.Session()
+                    std_resp = std_sess.request(method, url, headers=std_headers, timeout=self._timeout, proxies=proxies)
+                    if std_resp.status_code == 200:
+                        self._logger.info(f"Successfully fetched {url} using standard requests fallback (HTTP 200)")
+                        return AdaptedResponse(std_resp)
+                except Exception as std_e:
+                    self._logger.debug(f"Standard requests fallback failed for {url}: {std_e}")
+
             return AdaptedResponse(resp)
         else:
             merged_headers = {
