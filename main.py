@@ -2315,66 +2315,9 @@ async def show_stats(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
-@bot.tree.command(name="check_market", description="Überprüfe den Status der Datenquellen und Cloudflare-Bypass")
-async def check_market_cmd(interaction: discord.Interaction):
-    """Diagnose data provider connectivity and Cloudflare status"""
-    await interaction.response.defer(ephemeral=True)
-
-    t0 = time.time()
-    search_test = await bot.price_service.search_player("Musiala")
-    t_search = int((time.time() - t0) * 1000)
-
-    t1 = time.time()
-    sales_test = await bot.price_service.fetch_player_sales("https://www.futbin.com/27/player/257/florian-wirtz", platform="pc")
-    t_sales = int((time.time() - t1) * 1000)
-
-    flaresolverr_url = os.getenv('FLARESOLVERR_URL')
-    proxy = os.getenv('FUTBIN_PROXY') or os.getenv('MARKET_PROXY') or os.getenv('HTTP_PROXY')
-
-    embed = discord.Embed(
-        title="🌐 EA FC / FutBin Verbindungsstatus",
-        color=0x2ecc71 if (search_test and sales_test.get('success')) else 0xe74c3c,
-        timestamp=datetime.now()
-    )
-
-    embed.add_field(
-        name="🔍 Such-API",
-        value=f"✅ OK ({len(search_test)} Treffer, {t_search}ms)" if search_test else f"❌ 0 Treffer / Blockiert ({t_search}ms)",
-        inline=True
-    )
-
-    embed.add_field(
-        name="📈 Live Verkäufe",
-        value=f"✅ OK ({len(sales_test.get('sales', []))} Sales, {t_sales}ms)" if sales_test.get('success') else f"❌ Fehler: {str(sales_test.get('error', 'Unbekannt'))[:40]}",
-        inline=True
-    )
-
-    embed.add_field(
-        name="🛡️ Cloudflare Bypass",
-        value=f"✅ FlareSolverr aktiv (`{flaresolverr_url}`)" if flaresolverr_url else "⚡ Direkt / curl_cffi Profile",
-        inline=False
-    )
-
-    if proxy:
-        embed.add_field(
-            name="🔒 Proxy",
-            value=f"`{proxy.split('@')[-1]}`",
-            inline=True
-        )
-
-    embed.add_field(
-        name="🎮 Plattform",
-        value=bot.price_service.platform.upper(),
-        inline=True
-    )
-
-    await interaction.followup.send(embed=embed, ephemeral=True)
-
-
 # ==============================================
 # PRICE COMMAND
 # ==============================================
-
 
 async def tracked_player_autocomplete(
     interaction: discord.Interaction,

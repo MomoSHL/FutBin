@@ -165,8 +165,7 @@ class UserDashboardService:
                 timestamp=datetime.now()
             )
             embed.set_footer(text=f"{self._get_platform_name()} • Persönliches Dashboard")
-            return embed
-
+            return (embed, None)  # No summary for empty dashboard
         
         # Build player data in same format as general dashboard
         player_table_data = []

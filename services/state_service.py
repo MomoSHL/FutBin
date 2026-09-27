@@ -552,11 +552,10 @@ class StateService:
                     config_data = yaml.safe_load(f) or {}
             
             # Update players section
-            if not isinstance(config_data.get('players'), list):
-                config_data['players'] = []
+            config_data.setdefault('players', [])
             
             # Create URL -> config mapping for easy updates
-            existing_players = {p.get('url'): p for p in config_data['players'] if isinstance(p, dict)}
+            existing_players = {p.get('url'): p for p in config_data['players']}
             
             # Rebuild players list
             new_players = []
