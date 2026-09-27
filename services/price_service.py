@@ -154,10 +154,31 @@ class PriceService:
                 return []
 
             text = await response.text()
-            if not text or not text.strip() or text.strip().startswith('<'):
+            if not text or not text.strip():
                 return []
 
-            data = json.loads(text)
+            clean_text = text.strip()
+            # If FlareSolverr wrapped JSON in HTML <pre>...</pre> tags
+            if '<pre' in clean_text:
+                m_pre = re.search(r'<pre[^>]*>(.*?)</pre>', clean_text, re.DOTALL)
+                if m_pre:
+                    clean_text = m_pre.group(1).strip()
+            elif clean_text.startswith('<'):
+                m_json = re.search(r'(\[\s*\{.*?\}\s*\])', clean_text, re.DOTALL)
+                if m_json:
+                    clean_text = m_json.group(1).strip()
+                else:
+                    return []
+
+            import html as html_lib
+            clean_text = html_lib.unescape(clean_text)
+
+            try:
+                data = json.loads(clean_text)
+            except Exception as je:
+                self._logger.debug(f"JSON decode failed for search '{query}': {je}")
+                return []
+
             if not isinstance(data, list):
                 return []
 

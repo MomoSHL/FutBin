@@ -29630,3 +29630,15 @@ discord.app_commands.errors.CommandInvokeError: Command 'dashboard' raised an ex
 [2026-09-27 00:42:39,252] INFO [services.http_client]: HTTP client session started
 [2026-09-27 00:42:39,253] INFO [services.price_service]: Fetching sales from https://www.futbin.com/26/sales/251/ibrahima-konate?platform=pc
 [2026-09-27 00:42:39,695] INFO [services.http_client]: HTTP client session closed
+[2026-09-27 19:32:02,293] WARNING [discord.client]: PyNaCl is not installed, voice will NOT be supported
+[2026-09-27 19:32:02,295] WARNING [discord.client]: davey is not installed, voice will NOT be supported
+[2026-09-27 19:32:02,296] INFO [services.state_service]: Loaded 0 players from config
+[2026-09-27 19:32:02,297] INFO [services.state_service]: Loaded 0 player states
+[2026-09-27 19:32:02,298] INFO [services.state_service]: Loaded 0 user dashboards
+[2026-09-27 19:32:02,305] INFO [services.http_client]: HTTP client started with curl_cffi (Chrome 131 impersonation enabled)
+[2026-09-27 19:32:10,737] INFO [services.price_service]: Fetching sales from https://www.futbin.com/27/sales/115/georgia-stanway?platform=pc (Player URL: https://www.futbin.com/27/player/115/georgia-stanway)
+[2026-09-27 19:32:11,066] INFO [services.price_service]: Fetching sales from https://www.futbin.com/27/sales/257/florian-wirtz?platform=pc (Player URL: https://www.futbin.com/27/player/257/florian-wirtz)
+[2026-09-27 19:32:11,373] INFO [services.price_service]: Fetching sales from https://www.futbin.com/27/sales/346/jamal-musiala?platform=pc (Player URL: https://www.futbin.com/27/player/346/jamal-musiala)
+[2026-09-27 19:32:11,721] INFO [services.price_service]: Fetching sales from https://www.futbin.com/27/sales/257/florian-wirtz?platform=pc (Player URL: https://www.futbin.com/27/player/257/florian-wirtz)
+[2026-09-27 19:32:12,016] INFO [services.price_service]: Fetching sales from https://www.futbin.com/27/sales/115/georgia-stanway?platform=pc (Player URL: https://www.futbin.com/27/player/115/georgia-stanway)
+[2026-09-27 19:32:12,274] INFO [services.http_client]: HTTP client session closed
